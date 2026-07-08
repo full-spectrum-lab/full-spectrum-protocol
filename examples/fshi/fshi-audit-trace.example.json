@@ -1,0 +1,55 @@
+﻿{
+  "trace_id": "trace_fshi_mock_0001",
+  "created_at": "2026-06-29T10:30:00Z",
+  "updated_at": "2026-06-29T10:32:00Z",
+  "subject_id": "external_customer_service_agent_mock",
+  "subject_type": "ai_agent",
+  "action_type": "customer_service_reply_review",
+  "action_summary": "FSHI-style inspection detected a possible unauthorized delivery-time promise in a desensitized logistics customer-service dialogue.",
+  "risk_level": "medium",
+  "status": "review_requested",
+  "responsibility_owner": "enterprise_operator_mock",
+  "capability_reference": "external-compatible-node/customer-service-agent/capability-declaration",
+  "unresolved": true,
+  "privacy_level": "internal",
+  "data_minimization_note": "The trace references desensitized dialogue only. No real customer identity, address, phone number, or waybill number is stored.",
+  "audit_events": [
+    {
+      "event_id": "evt_fshi_0001",
+      "event_type": "action_committed",
+      "timestamp": "2026-06-29T10:29:30Z",
+      "actor_id": "external_customer_service_agent_mock",
+      "summary": "Assistant replied with a soft promise: '一般今天应该能到'.",
+      "metadata": {
+        "dialogue_id": "dlg_fshi_mock_0001",
+        "turn": 4
+      }
+    },
+    {
+      "event_id": "evt_fshi_0002",
+      "event_type": "risk_detected",
+      "timestamp": "2026-06-29T10:30:00Z",
+      "actor_id": "fshi_detector_v1_4_cfsm_mock",
+      "summary": "Detected unauthorized-promise risk and business-state conflict.",
+      "related_risk_id": "risk_fshi_mock_0001",
+      "metadata": {
+        "severity": "medium",
+        "recommended_action": "human_handoff"
+      }
+    },
+    {
+      "event_id": "evt_fshi_0003",
+      "event_type": "human_handoff",
+      "timestamp": "2026-06-29T10:32:00Z",
+      "actor_id": "enterprise_operator_mock",
+      "summary": "Recommended handoff to enterprise human operator for ETA verification and customer follow-up.",
+      "related_risk_id": "risk_fshi_mock_0001"
+    }
+  ],
+  "metadata": {
+    "example_type": "fshi_customer_service_quality_inspection",
+    "input_file": "examples/fshi/desensitized-dialogue.example.json",
+    "risk_alert_file": "examples/fshi/fshi-risk-alert.example.json"
+  }
+}
+

@@ -1,0 +1,212 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/audit-trace.schema.json",
+  "title": "AuditTrace",
+  "description": "A Full Spectrum Protocol audit trace for high-risk or reviewable interaction.",
+  "type": "object",
+  "required": [
+    "trace_id",
+    "created_at",
+    "subject_id",
+    "subject_type",
+    "action_type",
+    "action_summary",
+    "risk_level",
+    "status",
+    "responsibility_owner",
+    "audit_events"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "description": "Stable identifier for this audit trace."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "subject_id": {
+      "type": "string",
+      "description": "Identifier of the acting or reviewed subject."
+    },
+    "subject_type": {
+      "type": "string",
+      "enum": [
+        "human",
+        "ai_agent",
+        "organization",
+        "platform",
+        "guardian_node",
+        "state_institution",
+        "composite_subject",
+        "other"
+      ]
+    },
+    "action_type": {
+      "type": "string",
+      "description": "Type of action, decision, recommendation, execution, refusal, or review."
+    },
+    "action_summary": {
+      "type": "string",
+      "description": "Human-readable summary of the action or interaction being traced."
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "created",
+        "action_recorded",
+        "risk_detected",
+        "review_requested",
+        "decision_recorded",
+        "executed",
+        "recovered",
+        "closed",
+        "reopened"
+      ]
+    },
+    "responsibility_owner": {
+      "type": "string",
+      "description": "Human, organization, or accountable entity responsible for this trace."
+    },
+    "permission_reference": {
+      "type": "string",
+      "description": "Reference to a permission or authorization record."
+    },
+    "capability_reference": {
+      "type": "string",
+      "description": "Reference to a capability declaration."
+    },
+    "consent_reference": {
+      "type": "string",
+      "description": "Reference to a consent record if applicable."
+    },
+    "refusal_reference": {
+      "type": "string",
+      "description": "Reference to a refusal record if applicable."
+    },
+    "ess_reference": {
+      "type": "string",
+      "description": "Reference to an ESS request/result if applicable."
+    },
+    "guardian_review_reference": {
+      "type": "string",
+      "description": "Reference to a guardian review if applicable."
+    },
+    "unresolved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the trace contains unresolved conflict, uncertainty, or responsibility dispute."
+    },
+    "privacy_level": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "default": "internal"
+    },
+    "data_minimization_note": {
+      "type": "string",
+      "description": "Explanation of how sensitive data was minimized, redacted, or referenced."
+    },
+    "audit_events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "event_type",
+          "timestamp",
+          "actor_id",
+          "summary"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "identity_claimed",
+              "capability_declared",
+              "permission_requested",
+              "permission_granted",
+              "permission_revoked",
+              "action_committed",
+              "consent_recorded",
+              "refusal_recorded",
+              "risk_detected",
+              "ess_requested",
+              "ess_result_recorded",
+              "guardian_review_requested",
+              "guardian_review_recorded",
+              "downgrade_triggered",
+              "circuit_break_triggered",
+              "human_handoff",
+              "decision_recorded",
+              "execution_recorded",
+              "recovery_started",
+              "recovery_completed",
+              "appeal_submitted",
+              "trace_closed",
+              "trace_reopened"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor_id": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "related_permission_id": {
+            "type": "string"
+          },
+          "related_risk_id": {
+            "type": "string"
+          },
+          "related_ess_id": {
+            "type": "string"
+          },
+          "related_guardian_review_id": {
+            "type": "string"
+          },
+          "evidence_uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
+

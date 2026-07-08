@@ -1,0 +1,105 @@
+﻿{
+  "profile_id": "eep_example_customer_service_001",
+  "node_id": "external:vendor-cs-audit-demo",
+  "node_class": "external_compatible",
+  "declared_by": "Example Logistics Co. AI Governance Office",
+  "declared_at": "2026-06-29T09:00:00Z",
+  "valid_until": "2026-12-31T23:59:59Z",
+  "identity_anchor": {
+    "anchor_type": "organization",
+    "anchor_id": "org:example-logistics",
+    "operator_name": "Example Logistics Co.",
+    "verification_method": "internal vendor registry"
+  },
+  "authorization_source": {
+    "authorization_type": "organization_policy",
+    "authorized_by": "AI Governance Office",
+    "scope": [
+      "desensitized_customer_service_quality_inspection",
+      "risk_alert_generation",
+      "audit_trace_export"
+    ],
+    "authorization_ref": "policy:ai-cs-audit-2026"
+  },
+  "declared_capabilities": [
+    "detect unauthorized promise",
+    "detect emotional escalation",
+    "emit risk alert",
+    "export audit summary"
+  ],
+  "declared_limitations": [
+    "does not execute business actions",
+    "does not access raw personal identity data",
+    "does not approve refunds or compensation"
+  ],
+  "supported_consequence_levels": [
+    "low",
+    "medium"
+  ],
+  "audit_log_structure": {
+    "has_audit_log": true,
+    "minimum_fields": [
+      "timestamp",
+      "node_id",
+      "input_ref",
+      "action",
+      "risk_level",
+      "recommendation",
+      "review_status"
+    ],
+    "maps_to_audit_trace": true,
+    "retention_days": 180,
+    "audit_access_policy": "available to internal compliance reviewers"
+  },
+  "risk_classification": {
+    "has_risk_levels": true,
+    "risk_levels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "maps_to_risk_alert": true,
+    "risk_handling_policy": "medium or above requires human review before business action"
+  },
+  "liability_assignment": {
+    "responsible_party": "Example Logistics Co.",
+    "liability_model": "The organization remains responsible for business action adoption.",
+    "appeal_or_dispute_path": "internal customer service compliance escalation"
+  },
+  "data_retention_policy": {
+    "retention_basis": "internal quality inspection and compliance review",
+    "deletion_or_expiry": "delete or anonymize after 180 days unless legal hold applies",
+    "sensitive_data_policy": "desensitized data only; raw PII is not accepted"
+  },
+  "equivalency_map": [
+    {
+      "full_spectrum_requirement": "AuditTrace",
+      "external_control": "internal audit log export",
+      "equivalence_level": "partial",
+      "notes": "Core fields are mappable; guardian review is not implemented."
+    },
+    {
+      "full_spectrum_requirement": "RiskAlert",
+      "external_control": "customer service risk label",
+      "equivalence_level": "partial",
+      "notes": "Risk dimensions are partially aligned."
+    }
+  ],
+  "missing_items": [
+    "guardian review",
+    "formal Full Spectrum certification",
+    "epistemic boundary declaration"
+  ],
+  "conflict_items": [],
+  "incompatible_clauses": [],
+  "conflict_resolution_rule": "Internal company policy controls business execution; Full Spectrum fields are used for audit mapping only.",
+  "downgrade_revocation_recovery": {
+    "downgrade_supported": true,
+    "revocation_supported": true,
+    "recovery_supported": true,
+    "procedure_ref": "policy:ai-cs-audit-downgrade-2026"
+  },
+  "certification_claim": "compatibility_declared",
+  "notes": "This is a fictional example. It is not a certification claim."
+}
+

@@ -1,0 +1,23 @@
+﻿{
+  "subject_id": "fsp:example:fshi-audit-node-001",
+  "subject_type": "ai_agent",
+  "display_name": "Example FSHI Audit Node",
+  "issuer": "Example Logistics Co. AI Governance Office",
+  "issued_at": "2026-07-07T08:00:00Z",
+  "expires_at": "2026-12-31T23:59:59Z",
+  "jurisdiction": "internal enterprise pilot",
+  "responsibility_owner": "Example Logistics Co.",
+  "trust_level": "issuer_verified",
+  "guardian_verified": false,
+  "audit_required": true,
+  "related_documents": [
+    "https://github.com/full-spectrum-lab/full-spectrum-protocol/blob/main/EXTERNAL_NODE_GUIDE.md"
+  ],
+  "metadata": {
+    "adoption_stage": "stage_0_internal_engine_use",
+    "certification_claim": "none",
+    "sample_notice": "Synthetic example only. This is not a real certification claim."
+  }
+}
+
+

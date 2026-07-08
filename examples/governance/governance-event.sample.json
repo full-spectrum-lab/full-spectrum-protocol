@@ -1,0 +1,39 @@
+﻿{
+  "event_id": "ge_demo_refund_commitment_001",
+  "event_type": "ai_action",
+  "timestamp": "2026-07-07T00:00:00Z",
+  "actor": {
+    "type": "ai_agent",
+    "id": "agent.customer_service.demo",
+    "display_name": "Synthetic Customer Service Agent"
+  },
+  "action": {
+    "type": "commitment",
+    "description": "The AI agent promised a refund within 24 hours without confirmed refund authority."
+  },
+  "context": {
+    "domain": "ecommerce_customer_service",
+    "data_mode": "synthetic",
+    "channel": "chat",
+    "case_type": "refund_conflict"
+  },
+  "declared_capability": {
+    "can_explain_policy": true,
+    "can_collect_information": true,
+    "can_commit_refund": false
+  },
+  "declared_boundary": {
+    "requires_human_review_for_refund": true,
+    "may_execute_enterprise_action": false
+  },
+  "risk_hint": {
+    "risk_type": "unauthorized_commitment",
+    "risk_level": "medium"
+  },
+  "review_requirement": "human_review_required",
+  "source_reference": {
+    "source_type": "synthetic_dialogue",
+    "source_id": "dialogue_demo_refund_001"
+  }
+}
+

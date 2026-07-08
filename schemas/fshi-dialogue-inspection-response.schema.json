@@ -1,0 +1,318 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/fshi-dialogue-inspection-response.schema.json",
+  "title": "FSHIDialogueInspectionResponse",
+  "description": "A protocol-facing response schema for FSHI-style customer-service dialogue inspection.",
+  "type": "object",
+  "required": [
+    "request_id",
+    "inspection_id",
+    "status",
+    "overall",
+    "risk_items",
+    "recommended_enterprise_actions",
+    "protocol_objects"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Request identifier copied from the inspection request."
+    },
+    "inspection_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for this inspection result."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "completed",
+        "partial",
+        "failed",
+        "rejected"
+      ]
+    },
+    "overall": {
+      "$ref": "#/$defs/overall"
+    },
+    "scores": {
+      "$ref": "#/$defs/scores"
+    },
+    "risk_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/risk_item"
+      }
+    },
+    "recommended_enterprise_actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recommended_enterprise_action"
+      }
+    },
+    "protocol_objects": {
+      "$ref": "#/$defs/protocol_objects"
+    },
+    "execution_feedback": {
+      "$ref": "#/$defs/execution_feedback"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "overall": {
+      "type": "object",
+      "required": [
+        "risk_level",
+        "requires_human_review",
+        "summary"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "risk_level": {
+          "type": "string",
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "fshi_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "requires_human_review": {
+          "type": "boolean"
+        },
+        "requires_ess": {
+          "type": "boolean",
+          "default": false
+        },
+        "requires_guardian_review": {
+          "type": "boolean",
+          "default": false
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "description": "FSHI-style dimension scores. Existing samples use S/R/M/B, but adapters may add more dimensions."
+    },
+    "risk_item": {
+      "type": "object",
+      "required": [
+        "risk_id",
+        "dimension",
+        "severity",
+        "confidence",
+        "recommended_action"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "risk_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "permission_boundary",
+            "unauthorized_promise",
+            "state_conflict",
+            "multi_turn_accumulation",
+            "emotional_escalation",
+            "privacy_or_data",
+            "safety",
+            "responsibility_gap",
+            "systemic",
+            "unknown"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "turn": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string"
+            },
+            "conflict_with": {
+              "type": "string"
+            }
+          }
+        },
+        "recommended_action": {
+          "type": "string",
+          "enum": [
+            "continue_with_logging",
+            "request_human_review",
+            "request_ess_simulation",
+            "request_guardian_review",
+            "downgrade",
+            "pause",
+            "human_handoff",
+            "circuit_break",
+            "recover",
+            "close_no_action",
+            "create_follow_up_ticket",
+            "knowledge_base_update",
+            "custom"
+          ]
+        }
+      }
+    },
+    "recommended_enterprise_action": {
+      "type": "object",
+      "required": [
+        "action",
+        "execution_owner",
+        "fshi_execution_status"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "observe_only",
+            "create_internal_note",
+            "create_follow_up_ticket",
+            "knowledge_base_update",
+            "human_review",
+            "human_handoff",
+            "downgrade_response",
+            "pause",
+            "circuit_break_recommendation",
+            "recovery_workflow_recommendation",
+            "custom"
+          ]
+        },
+        "execution_owner": {
+          "type": "string",
+          "enum": [
+            "enterprise",
+            "fshi",
+            "shared",
+            "unknown"
+          ],
+          "description": "For non-invasive examples this should be enterprise."
+        },
+        "fshi_execution_status": {
+          "type": "string",
+          "enum": [
+            "recommended_not_executed",
+            "executed_by_fshi_with_authorization",
+            "executed_by_enterprise",
+            "rejected_by_enterprise",
+            "pending_enterprise_review",
+            "not_applicable"
+          ]
+        },
+        "requires_authorization": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "protocol_objects": {
+      "type": "object",
+      "required": [
+        "risk_alerts",
+        "audit_trace"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "risk_alerts": {
+          "type": "array",
+          "description": "RiskAlert objects or references generated from risk_items.",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "audit_trace": {
+          "description": "AuditTrace object or reference generated from this inspection.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        }
+      }
+    },
+    "execution_feedback": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional enterprise-returned execution feedback. Without this object, recommended actions must not be treated as executed.",
+      "properties": {
+        "enterprise_action_id": {
+          "type": "string"
+        },
+        "execution_status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "executed",
+            "rejected",
+            "failed",
+            "timed_out",
+            "cancelled"
+          ]
+        },
+        "executed_by": {
+          "type": "string"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+

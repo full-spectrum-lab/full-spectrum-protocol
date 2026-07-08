@@ -1,0 +1,118 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/capability-declaration.schema.json",
+  "title": "CapabilityDeclaration",
+  "description": "A Full Spectrum Protocol declaration of capabilities, boundaries, and review requirements for a subject.",
+  "type": "object",
+  "required": [
+    "subject_id",
+    "capabilities",
+    "prohibited_actions",
+    "risk_level",
+    "requires_human_review",
+    "fallback_mode"
+  ],
+  "properties": {
+    "subject_id": {
+      "type": "string",
+      "description": "Subject identifier matching an IdentityClaim."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Declared actions or functions the subject can perform."
+    },
+    "prohibited_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Actions the subject explicitly must not perform."
+    },
+    "required_permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Permission names or scopes required before capability execution."
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "can_execute_actions": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_make_promises": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_handle_personal_data": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_access_external_tools": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_trigger_circuit_break": {
+      "type": "boolean",
+      "default": false
+    },
+    "requires_human_review": {
+      "type": "boolean"
+    },
+    "human_review_threshold": {
+      "type": "string",
+      "enum": [
+        "none",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "high"
+    },
+    "fallback_mode": {
+      "type": "string",
+      "enum": [
+        "continue_with_logging",
+        "downgrade",
+        "pause",
+        "human_handoff",
+        "circuit_break"
+      ]
+    },
+    "domain_scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recovery_contact": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
+

@@ -1,0 +1,152 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/risk-alert.schema.json",
+  "title": "RiskAlert",
+  "description": "A Full Spectrum Protocol risk alert for high-risk or reviewable interaction.",
+  "type": "object",
+  "required": [
+    "risk_id",
+    "created_at",
+    "detector_id",
+    "affected_subject_id",
+    "risk_dimension",
+    "severity",
+    "confidence",
+    "urgency",
+    "summary",
+    "recommended_action"
+  ],
+  "properties": {
+    "risk_id": {
+      "type": "string",
+      "description": "Stable identifier for this risk alert."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "detector_id": {
+      "type": "string",
+      "description": "Subject or system that detected the risk."
+    },
+    "affected_subject_id": {
+      "type": "string",
+      "description": "Subject primarily affected by the risk."
+    },
+    "related_trace_id": {
+      "type": "string",
+      "description": "AuditTrace identifier if this alert is linked to an audit trace."
+    },
+    "risk_dimension": {
+      "type": "string",
+      "enum": [
+        "permission_boundary",
+        "unauthorized_promise",
+        "state_conflict",
+        "multi_turn_accumulation",
+        "emotional_escalation",
+        "privacy_or_data",
+        "safety",
+        "responsibility_gap",
+        "systemic",
+        "unknown"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Detection confidence from 0 to 1."
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "immediate"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "description": "Human-readable risk summary."
+    },
+    "evidence_summary": {
+      "type": "string",
+      "description": "Brief evidence summary without unnecessary sensitive data."
+    },
+    "evidence_uri": {
+      "type": "string",
+      "format": "uri",
+      "description": "Reference to evidence if available and lawful."
+    },
+    "recommended_action": {
+      "type": "string",
+      "enum": [
+        "continue_with_logging",
+        "request_human_review",
+        "request_ess_simulation",
+        "request_guardian_review",
+        "downgrade",
+        "pause",
+        "human_handoff",
+        "circuit_break",
+        "recover",
+        "close_no_action"
+      ]
+    },
+    "requires_ess": {
+      "type": "boolean",
+      "default": false
+    },
+    "requires_guardian_review": {
+      "type": "boolean",
+      "default": false
+    },
+    "requires_human_review": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "under_review",
+        "accepted",
+        "disputed",
+        "mitigated",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "privacy_level": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "default": "internal"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
+

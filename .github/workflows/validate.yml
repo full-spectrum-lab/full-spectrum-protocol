@@ -1,0 +1,43 @@
+﻿name: Validate protocol contracts
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate schemas, samples, and text hygiene
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check common mojibake patterns
+        shell: pwsh
+        run: ./scripts/check-mojibake.ps1
+
+      - name: Check local documentation links
+        shell: pwsh
+        run: ./scripts/check-doc-links.ps1
+
+      - name: Validate FSHI contract chain
+        shell: pwsh
+        run: ./scripts/validate-fshi-contract.ps1
+
+      - name: Validate node contract sample
+        shell: pwsh
+        run: ./scripts/validate-node-contract.ps1
+
+      - name: Validate GovernanceEvent sample
+        shell: pwsh
+        run: ./scripts/validate-governance-event.ps1
+

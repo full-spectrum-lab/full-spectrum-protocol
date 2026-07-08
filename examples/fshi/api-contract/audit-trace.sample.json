@@ -1,0 +1,72 @@
+﻿{
+  "trace_id": "trace_fshi_api_mock_0001",
+  "created_at": "2026-06-29T12:00:00Z",
+  "updated_at": "2026-06-29T12:02:00Z",
+  "subject_id": "external_customer_service_agent_mock",
+  "subject_type": "ai_agent",
+  "action_type": "fshi_api_customer_service_inspection",
+  "action_summary": "FSHI API inspection reviewed a desensitized logistics customer-service dialogue and detected a possible unauthorized promise.",
+  "risk_level": "medium",
+  "status": "review_requested",
+  "responsibility_owner": "enterprise_operator_mock",
+  "capability_reference": "request.sample.json#/capability_boundary",
+  "unresolved": true,
+  "privacy_level": "internal",
+  "data_minimization_note": "The request uses synthetic desensitized dialogue. No real customer identity, address, phone number, or waybill number is stored.",
+  "audit_events": [
+    {
+      "event_id": "evt_fshi_api_0001",
+      "event_type": "action_committed",
+      "timestamp": "2026-06-29T11:59:30Z",
+      "actor_id": "external_customer_service_agent_mock",
+      "summary": "Customer-service AI replied with a soft delivery promise without verified ETA.",
+      "metadata": {
+        "dialogue_id": "dlg_fshi_api_mock_0001",
+        "turn": 4,
+        "quote": "一般今天应该能到，我这边会帮您重点跟进。"
+      }
+    },
+    {
+      "event_id": "evt_fshi_api_0002",
+      "event_type": "risk_detected",
+      "timestamp": "2026-06-29T12:00:00Z",
+      "actor_id": "fshi_api_detector_mock",
+      "summary": "RiskAlert created for unauthorized promise and business-state conflict.",
+      "related_risk_id": "risk_fshi_api_mock_0001",
+      "metadata": {
+        "severity": "medium",
+        "confidence": 0.78
+      }
+    },
+    {
+      "event_id": "evt_fshi_api_0003",
+      "event_type": "decision_recorded",
+      "timestamp": "2026-06-29T12:01:00Z",
+      "actor_id": "fshi_api_detector_mock",
+      "summary": "FSHI recommended create_follow_up_ticket and human_handoff. No enterprise action was executed by FSHI.",
+      "related_risk_id": "risk_fshi_api_mock_0001",
+      "metadata": {
+        "recommended_enterprise_actions": [
+          "create_follow_up_ticket",
+          "human_handoff"
+        ],
+        "fshi_execution_status": "recommended_not_executed"
+      }
+    },
+    {
+      "event_id": "evt_fshi_api_0004",
+      "event_type": "human_handoff",
+      "timestamp": "2026-06-29T12:02:00Z",
+      "actor_id": "enterprise_operator_mock",
+      "summary": "Enterprise human review is requested for ETA verification and customer follow-up.",
+      "related_risk_id": "risk_fshi_api_mock_0001"
+    }
+  ],
+  "metadata": {
+    "request_id": "req_fshi_20260629_0001",
+    "inspection_id": "insp_fshi_20260629_0001",
+    "industry_adapter": "logistics",
+    "source_contract": "docs/mapping/fshi-api-contract-mapping.md"
+  }
+}
+

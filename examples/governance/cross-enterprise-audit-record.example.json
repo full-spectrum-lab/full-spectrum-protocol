@@ -1,0 +1,186 @@
+﻿{
+  "record_id": "cear_fshi_api_mock_0001",
+  "created_at": "2026-06-29T12:03:00Z",
+  "updated_at": "2026-06-29T12:10:00Z",
+  "status": "under_review",
+  "purpose": "Cross-enterprise audit of an AI customer-service risk handoff",
+  "case_id": "case_logistics_customer_service_001",
+  "related_fshi_inspection_id": "insp_fshi_20260629_0001",
+  "jurisdiction": [
+    "CN"
+  ],
+  "participants": [
+    {
+      "participant_id": "org_platform_demo",
+      "participant_type": "platform",
+      "role": "E-commerce platform and customer-service workflow owner",
+      "responsibility_owner": "platform_customer_service_governance_team",
+      "jurisdiction": "CN"
+    },
+    {
+      "participant_id": "org_merchant_demo",
+      "participant_type": "organization",
+      "role": "Merchant providing product and order context",
+      "responsibility_owner": "merchant_operations_team",
+      "jurisdiction": "CN"
+    },
+    {
+      "participant_id": "agent_service_demo",
+      "participant_type": "ai_agent",
+      "role": "AI customer-service assistant",
+      "responsibility_owner": "platform_customer_service_governance_team",
+      "jurisdiction": "CN"
+    },
+    {
+      "participant_id": "fshi_detector_demo",
+      "participant_type": "auditor",
+      "role": "Non-invasive FSHI inspection node",
+      "responsibility_owner": "fshi_operator_demo",
+      "jurisdiction": "CN"
+    }
+  ],
+  "data_sources": [
+    {
+      "source_id": "src_dialogue_desensitized_001",
+      "provider_id": "org_platform_demo",
+      "data_type": "desensitized multi-turn customer-service dialogue",
+      "desensitization_status": "desensitized",
+      "purpose": "Risk inspection and responsibility review",
+      "time_range": "2026-07-03T07:55:00Z/2026-07-03T08:10:00Z",
+      "data_residency": "CN",
+      "cross_border_transfer": "not_allowed",
+      "evidence_ref": "internal://platform/case/case_logistics_customer_service_001/dialogue_redacted",
+      "data_minimization_note": "Customer name, phone, address, order number, and merchant staff identifiers were removed before inspection."
+    },
+    {
+      "source_id": "src_order_state_001",
+      "provider_id": "org_merchant_demo",
+      "data_type": "minimal order state snapshot",
+      "desensitization_status": "pseudonymized",
+      "purpose": "Check whether AI promise conflicts with actual fulfillment state",
+      "time_range": "2026-07-03T08:00:00Z/2026-07-03T08:20:00Z",
+      "data_residency": "CN",
+      "cross_border_transfer": "not_allowed",
+      "evidence_ref": "internal://merchant/case/case_logistics_customer_service_001/order_state"
+    }
+  ],
+  "processing_nodes": [
+    {
+      "node_id": "agent_service_demo",
+      "node_type": "ai_agent",
+      "operator_id": "org_platform_demo",
+      "role": "Generated customer-service response before review",
+      "input_refs": [
+        "src_dialogue_desensitized_001",
+        "src_order_state_001"
+      ],
+      "output_refs": [
+        "trace_fshi_api_mock_0001"
+      ]
+    },
+    {
+      "node_id": "fshi_detector_demo",
+      "node_type": "fshi_detector",
+      "operator_id": "fshi_operator_demo",
+      "role": "Detected state conflict and unauthorized promise risk",
+      "input_refs": [
+        "src_dialogue_desensitized_001",
+        "src_order_state_001"
+      ],
+      "output_refs": [
+        "risk_fshi_api_mock_0001",
+        "trace_fshi_api_mock_0001"
+      ]
+    },
+    {
+      "node_id": "human_reviewer_demo",
+      "node_type": "human_review",
+      "operator_id": "org_platform_demo",
+      "role": "Enterprise-side final review and execution decision",
+      "input_refs": [
+        "risk_fshi_api_mock_0001",
+        "trace_fshi_api_mock_0001"
+      ],
+      "output_refs": [
+        "claim_fshi_api_mock_0001"
+      ]
+    }
+  ],
+  "risk_alerts": [
+    {
+      "risk_id": "risk_fshi_api_mock_0001",
+      "risk_dimension": "state_conflict",
+      "severity": "medium",
+      "summary": "The AI assistant made a fulfillment promise that may conflict with the available order state.",
+      "source_ref": "examples/fshi/api-contract/risk-alert.sample.json"
+    }
+  ],
+  "audit_traces": [
+    {
+      "trace_id": "trace_fshi_api_mock_0001",
+      "subject_id": "agent_service_demo",
+      "status": "risk_detected",
+      "summary": "FSHI recorded the risk detection chain and recommended enterprise-side human review.",
+      "source_ref": "examples/fshi/api-contract/audit-trace.sample.json"
+    }
+  ],
+  "responsibility_claims": [
+    {
+      "claim_id": "claim_fshi_api_mock_0001",
+      "claimant_id": "org_platform_demo",
+      "claim_type": "shares",
+      "scope": "Customer-service AI workflow governance",
+      "summary": "The platform accepts responsibility for reviewing and deciding whether to execute the recommended correction. FSHI only issued a non-invasive recommendation.",
+      "evidence_refs": [
+        "risk_fshi_api_mock_0001",
+        "trace_fshi_api_mock_0001"
+      ],
+      "review_status": "under_review"
+    },
+    {
+      "claim_id": "claim_fshi_api_mock_0002",
+      "claimant_id": "fshi_operator_demo",
+      "claim_type": "denies",
+      "scope": "Enterprise business execution",
+      "summary": "The FSHI node does not execute enterprise customer-service actions and does not replace enterprise review.",
+      "evidence_refs": [
+        "trace_fshi_api_mock_0001"
+      ],
+      "review_status": "accepted"
+    }
+  ],
+  "review_status": "under_review",
+  "disputes": [
+    {
+      "dispute_id": "disp_fshi_api_mock_0001",
+      "raised_by": "org_merchant_demo",
+      "summary": "Merchant requests confirmation that product fulfillment data was correctly interpreted before any customer-facing correction.",
+      "status": "under_review"
+    }
+  ],
+  "access_policy": {
+    "visibility": "restricted",
+    "allowed_participants": [
+      "org_platform_demo",
+      "org_merchant_demo",
+      "fshi_operator_demo"
+    ],
+    "field_redactions": [
+      "raw_dialogue",
+      "customer_personal_data",
+      "merchant_internal_notes"
+    ],
+    "export_restrictions": "Export only minimized summaries unless enterprise compliance approves additional evidence sharing."
+  },
+  "retention_policy": {
+    "storage_owner": "org_platform_demo",
+    "retention_period": "P180D",
+    "deletion_or_review_at": "2026-12-26T00:00:00Z",
+    "legal_hold": false
+  },
+  "metadata": {
+    "profile_version": "draft-0006",
+    "note": "Synthetic example. No real customer, merchant, or enterprise data is included."
+  }
+}
+

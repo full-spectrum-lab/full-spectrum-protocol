@@ -1,0 +1,453 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/cross-enterprise-audit-record.schema.json",
+  "title": "CrossEnterpriseAuditRecord",
+  "description": "A draft Full Spectrum profile for cross-enterprise AI audit interoperability.",
+  "type": "object",
+  "required": [
+    "record_id",
+    "created_at",
+    "status",
+    "purpose",
+    "participants",
+    "data_sources",
+    "processing_nodes",
+    "review_status",
+    "access_policy",
+    "retention_policy"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "description": "Stable identifier for this cross-enterprise audit record."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "open",
+        "under_review",
+        "disputed",
+        "resolved",
+        "closed",
+        "archived"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "description": "Purpose of this record, such as AI customer-service audit, procurement review, compliance investigation, or risk handoff."
+    },
+    "case_id": {
+      "type": "string",
+      "description": "Local or shared case, ticket, complaint, task, or workflow identifier."
+    },
+    "related_fshi_inspection_id": {
+      "type": "string"
+    },
+    "jurisdiction": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Relevant jurisdiction or compliance regions."
+    },
+    "participants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "participant_id",
+          "participant_type",
+          "role"
+        ],
+        "properties": {
+          "participant_id": {
+            "type": "string"
+          },
+          "participant_type": {
+            "type": "string",
+            "enum": [
+              "organization",
+              "platform",
+              "ai_agent",
+              "service_provider",
+              "auditor",
+              "guardian_node",
+              "regulator",
+              "human",
+              "composite_subject",
+              "other"
+            ]
+          },
+          "role": {
+            "type": "string"
+          },
+          "responsibility_owner": {
+            "type": "string"
+          },
+          "jurisdiction": {
+            "type": "string"
+          },
+          "external_ethics_profile_id": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "provider_id",
+          "data_type",
+          "desensitization_status",
+          "purpose"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "data_type": {
+            "type": "string"
+          },
+          "desensitization_status": {
+            "type": "string",
+            "enum": [
+              "synthetic",
+              "desensitized",
+              "pseudonymized",
+              "aggregated",
+              "raw_internal_only",
+              "unknown"
+            ]
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "time_range": {
+            "type": "string"
+          },
+          "data_residency": {
+            "type": "string"
+          },
+          "cross_border_transfer": {
+            "type": "string",
+            "enum": [
+              "not_applicable",
+              "not_allowed",
+              "requires_assessment",
+              "approved",
+              "unknown"
+            ]
+          },
+          "evidence_ref": {
+            "type": "string"
+          },
+          "data_minimization_note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "processing_nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "node_type",
+          "operator_id",
+          "role"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string"
+          },
+          "node_type": {
+            "type": "string",
+            "enum": [
+              "human_review",
+              "ai_agent",
+              "model",
+              "tool",
+              "orchestrator",
+              "fshi_detector",
+              "guardian_node",
+              "enterprise_system",
+              "external_compatible_node",
+              "certified_node",
+              "other"
+            ]
+          },
+          "operator_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "input_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risk_alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "risk_id"
+        ],
+        "properties": {
+          "risk_id": {
+            "type": "string"
+          },
+          "risk_dimension": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "source_ref": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "audit_traces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "trace_id"
+        ],
+        "properties": {
+          "trace_id": {
+            "type": "string"
+          },
+          "subject_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "source_ref": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responsibility_claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "claimant_id",
+          "claim_type",
+          "scope",
+          "summary"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "claimant_id": {
+            "type": "string"
+          },
+          "claim_type": {
+            "type": "string",
+            "enum": [
+              "accepts",
+              "denies",
+              "shares",
+              "disputes",
+              "unknown"
+            ]
+          },
+          "scope": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "review_status": {
+            "type": "string",
+            "enum": [
+              "unreviewed",
+              "under_review",
+              "accepted",
+              "rejected",
+              "disputed",
+              "closed"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "unreviewed",
+        "under_review",
+        "reviewed",
+        "disputed",
+        "closed"
+      ]
+    },
+    "disputes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "dispute_id",
+          "raised_by",
+          "summary",
+          "status"
+        ],
+        "properties": {
+          "dispute_id": {
+            "type": "string"
+          },
+          "raised_by": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "under_review",
+              "resolved",
+              "closed"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "access_policy": {
+      "type": "object",
+      "required": [
+        "visibility"
+      ],
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "shared_internal",
+            "restricted",
+            "confidential"
+          ]
+        },
+        "allowed_participants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "field_redactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "export_restrictions": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "retention_policy": {
+      "type": "object",
+      "required": [
+        "storage_owner",
+        "retention_period"
+      ],
+      "properties": {
+        "storage_owner": {
+          "type": "string"
+        },
+        "retention_period": {
+          "type": "string"
+        },
+        "deletion_or_review_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "legal_hold": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
+
+

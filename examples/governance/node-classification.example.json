@@ -1,0 +1,37 @@
+﻿{
+  "examples": [
+    {
+      "node_id": "tool:text-draft-helper",
+      "node_class": "external_tool",
+      "consequence_level": "none",
+      "allowed_use": "private draft generation",
+      "full_spectrum_digital_identity": false,
+      "responsibility_note": "If adopted into a consequential workflow, the adopting subject is responsible."
+    },
+    {
+      "node_id": "external:vendor-cs-audit-demo",
+      "node_class": "external_compatible",
+      "consequence_level": "medium",
+      "allowed_use": "desensitized customer-service risk flagging",
+      "full_spectrum_digital_identity": false,
+      "responsibility_note": "May interoperate through External Ethics Profile but must not claim certification."
+    },
+    {
+      "node_id": "fsp:candidate:fshi-audit-demo",
+      "node_class": "candidate",
+      "consequence_level": "medium",
+      "allowed_use": "limited FSHI audit demo and trace accumulation",
+      "full_spectrum_digital_identity": "provisional",
+      "responsibility_note": "Candidate status requires review before high-consequence use."
+    },
+    {
+      "node_id": "fsp:certified:example-node",
+      "node_class": "full_spectrum_certified",
+      "consequence_level": "high",
+      "allowed_use": "authorized high-consequence workflow only",
+      "full_spectrum_digital_identity": true,
+      "responsibility_note": "Certification requires protocol commitment, audit, risk handling, authorization, and recovery mechanisms."
+    }
+  ]
+}
+

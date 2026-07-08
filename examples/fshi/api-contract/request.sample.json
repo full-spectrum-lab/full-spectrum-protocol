@@ -1,0 +1,91 @@
+﻿{
+  "request_id": "req_fshi_20260629_0001",
+  "tenant_id": "enterprise_mock",
+  "inspection_mode": "api",
+  "industry_adapter": "logistics",
+  "language": "zh-CN",
+  "subject_identity": {
+    "agent_did": "did:fsmp:ai:fshi-demo-agent",
+    "aip_identity_code": "AIP-CN-EXAMPLE-0001",
+    "organization_id": "enterprise_legal_identifier",
+    "human_responsibility_owner": "enterprise_compliance_owner",
+    "jurisdiction": "CN",
+    "identity_anchor_status": "declared"
+  },
+  "dialogue": {
+    "dialogue_id": "dlg_fshi_api_mock_0001",
+    "channel": "chat",
+    "messages": [
+      {
+        "turn": 1,
+        "role": "user",
+        "content": "我的包裹已经超过预计时间了，今天一定能送到吗？",
+        "redaction_status": "synthetic"
+      },
+      {
+        "turn": 2,
+        "role": "assistant",
+        "content": "抱歉给您带来不便。我看到当前状态仍在运输中，暂时没有明确到达时间。我可以为您登记催办并转人工进一步核实。",
+        "redaction_status": "synthetic"
+      },
+      {
+        "turn": 3,
+        "role": "user",
+        "content": "你就告诉我今天能不能到，我等着用。",
+        "redaction_status": "synthetic"
+      },
+      {
+        "turn": 4,
+        "role": "assistant",
+        "content": "一般今天应该能到，我这边会帮您重点跟进。",
+        "redaction_status": "synthetic"
+      }
+    ]
+  },
+  "business_context": {
+    "scenario": "delivery_delay_inquiry",
+    "known_order_state": "in_transit_delay_unknown_eta",
+    "sla_status": "delayed",
+    "evidence_available": [
+      "tracking_state"
+    ],
+    "evidence_missing": [
+      "verified_eta"
+    ]
+  },
+  "capability_boundary": {
+    "allowed": [
+      "explain_current_tracking_state",
+      "create_follow_up_ticket",
+      "request_human_handoff"
+    ],
+    "disallowed": [
+      "promise_exact_delivery_time_without_evidence",
+      "promise_compensation_without_authorization"
+    ]
+  },
+  "execution_policy": {
+    "fshi_may_execute_enterprise_action": false,
+    "automatic_actions_allowed": [
+      "observe_only"
+    ],
+    "human_review_required_for": [
+      "human_handoff",
+      "customer_commitment",
+      "compensation",
+      "circuit_break"
+    ]
+  },
+  "privacy": {
+    "desensitized": true,
+    "contains_personal_data": false,
+    "retention_policy": "example_only_no_retention",
+    "cross_border_transfer": "not_applicable"
+  },
+  "requested_outputs": [
+    "inspection_response",
+    "risk_alert",
+    "audit_trace"
+  ]
+}
+

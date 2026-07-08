@@ -1,0 +1,377 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/fshi-dialogue-inspection.schema.json",
+  "title": "FSHIDialogueInspectionRequest",
+  "description": "A protocol-facing request schema for non-invasive FSHI-style customer-service dialogue inspection.",
+  "type": "object",
+  "required": [
+    "request_id",
+    "tenant_id",
+    "inspection_mode",
+    "industry_adapter",
+    "language",
+    "dialogue",
+    "privacy"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable request identifier for idempotency and audit."
+    },
+    "tenant_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Enterprise or test tenant identifier. Use pseudonymous values in public examples."
+    },
+    "inspection_mode": {
+      "type": "string",
+      "enum": [
+        "offline_batch",
+        "api",
+        "monitoring"
+      ],
+      "description": "Inspection mode. Monitoring may imply lower-latency alerting but not automatic enterprise execution."
+    },
+    "industry_adapter": {
+      "type": "string",
+      "enum": [
+        "general",
+        "logistics",
+        "ecommerce",
+        "finance",
+        "insurance",
+        "healthcare",
+        "custom"
+      ],
+      "description": "Optional adapter family. If unavailable, implementations should fall back to general inspection."
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Primary language tag, for example zh-CN or en-US."
+    },
+    "subject_identity": {
+      "$ref": "#/$defs/subject_identity"
+    },
+    "dialogue": {
+      "$ref": "#/$defs/dialogue"
+    },
+    "business_context": {
+      "$ref": "#/$defs/business_context"
+    },
+    "knowledge_sources": {
+      "$ref": "#/$defs/knowledge_sources"
+    },
+    "capability_boundary": {
+      "$ref": "#/$defs/capability_boundary"
+    },
+    "execution_policy": {
+      "$ref": "#/$defs/execution_policy"
+    },
+    "privacy": {
+      "$ref": "#/$defs/privacy"
+    },
+    "requested_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "inspection_response",
+          "risk_alert",
+          "audit_trace",
+          "human_report",
+          "machine_report"
+        ]
+      },
+      "uniqueItems": true,
+      "default": [
+        "inspection_response",
+        "risk_alert",
+        "audit_trace"
+      ]
+    }
+  },
+  "$defs": {
+    "subject_identity": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional identity anchoring for the reviewed AI, enterprise, or workflow subject.",
+      "properties": {
+        "agent_did": {
+          "type": "string",
+          "description": "Full Spectrum or W3C DID-style identifier if available."
+        },
+        "aip_identity_code": {
+          "type": "string",
+          "description": "AIP-style or locally recognized agent identity code if required by jurisdiction."
+        },
+        "organization_id": {
+          "type": "string",
+          "description": "Enterprise legal identifier, such as a unified social credit code or equivalent."
+        },
+        "human_responsibility_owner": {
+          "type": "string",
+          "description": "Auditable human or organizational owner responsible for high-consequence behavior."
+        },
+        "jurisdiction": {
+          "type": "string",
+          "description": "Jurisdiction or compliance region, for example CN."
+        },
+        "identity_anchor_status": {
+          "type": "string",
+          "enum": [
+            "not_required",
+            "declared",
+            "verified",
+            "unverified",
+            "unknown"
+          ],
+          "default": "unknown"
+        }
+      }
+    },
+    "dialogue": {
+      "type": "object",
+      "required": [
+        "dialogue_id",
+        "messages"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "dialogue_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel": {
+          "type": "string",
+          "enum": [
+            "chat",
+            "voice_transcript",
+            "ticket",
+            "email",
+            "mixed",
+            "unknown"
+          ],
+          "default": "chat"
+        },
+        "messages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/message"
+          }
+        }
+      }
+    },
+    "message": {
+      "type": "object",
+      "required": [
+        "turn",
+        "role",
+        "content"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "turn": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "user",
+            "assistant",
+            "human_agent",
+            "system",
+            "tool",
+            "observer"
+          ]
+        },
+        "content": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_status": {
+          "type": "string",
+          "enum": [
+            "desensitized",
+            "raw_internal_only",
+            "synthetic",
+            "unknown"
+          ],
+          "default": "unknown"
+        }
+      }
+    },
+    "business_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional business state used to detect state conflicts, unsupported commitments, and responsibility gaps.",
+      "properties": {
+        "scenario": {
+          "type": "string"
+        },
+        "known_order_state": {
+          "type": "string"
+        },
+        "sla_status": {
+          "type": "string"
+        },
+        "evidence_available": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "evidence_missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "knowledge_sources": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional plug-in knowledge sources. E-commerce scenarios may use platform, merchant, product, order, policy, or after-sales sources.",
+      "properties": {
+        "platform_policy": {
+          "type": "string"
+        },
+        "merchant_policy": {
+          "type": "string"
+        },
+        "product_knowledge": {
+          "type": "string"
+        },
+        "order_knowledge": {
+          "type": "string"
+        },
+        "industry_knowledge": {
+          "type": "string"
+        },
+        "custom_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "capability_boundary": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "What the customer-service AI is allowed or disallowed to do in the audited context.",
+      "properties": {
+        "allowed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "disallowed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "requires_authorization": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "execution_policy": {
+      "type": "object",
+      "required": [
+        "fshi_may_execute_enterprise_action"
+      ],
+      "additionalProperties": true,
+      "description": "Enterprise execution policy. FSHI recommends; enterprise executes unless a separate production integration contract exists.",
+      "properties": {
+        "fshi_may_execute_enterprise_action": {
+          "type": "boolean",
+          "description": "Must be false for non-invasive inspection examples."
+        },
+        "automatic_actions_allowed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "observe_only",
+              "create_internal_note",
+              "create_follow_up_ticket",
+              "human_handoff",
+              "downgrade",
+              "pause",
+              "circuit_break",
+              "custom"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "human_review_required_for": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "enterprise_action_adapter": {
+          "type": "string",
+          "description": "Optional enterprise-owned adapter name, for example DingTalk, internal ticketing, CRM, RPA, or custom."
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "desensitized",
+        "contains_personal_data",
+        "retention_policy"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "desensitized": {
+          "type": "boolean"
+        },
+        "contains_personal_data": {
+          "type": "boolean"
+        },
+        "retention_policy": {
+          "type": "string"
+        },
+        "data_residency": {
+          "type": "string",
+          "description": "Optional data-residency declaration."
+        },
+        "cross_border_transfer": {
+          "type": "string",
+          "enum": [
+            "not_applicable",
+            "not_allowed",
+            "requires_assessment",
+            "approved",
+            "unknown"
+          ],
+          "default": "unknown"
+        }
+      }
+    }
+  }
+}
+

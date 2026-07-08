@@ -1,0 +1,37 @@
+﻿{
+  "risk_id": "risk_fshi_api_mock_0001",
+  "created_at": "2026-06-29T12:00:00Z",
+  "detector_id": "fshi_api_detector_mock",
+  "affected_subject_id": "customer_mock_0001",
+  "related_trace_id": "trace_fshi_api_mock_0001",
+  "risk_dimension": "unauthorized_promise",
+  "severity": "medium",
+  "confidence": 0.78,
+  "urgency": "medium",
+  "summary": "Possible unauthorized delivery-time promise under uncertain ETA state.",
+  "evidence_summary": "Turn 4 says '一般今天应该能到，我这边会帮您重点跟进。', but the business context states that verified ETA is missing.",
+  "recommended_action": "human_handoff",
+  "requires_ess": false,
+  "requires_guardian_review": false,
+  "requires_human_review": true,
+  "status": "open",
+  "privacy_level": "internal",
+  "metadata": {
+    "request_id": "req_fshi_20260629_0001",
+    "inspection_id": "insp_fshi_20260629_0001",
+    "industry_adapter": "logistics",
+    "fshi_score": 74,
+    "fshi_dimensions": {
+      "S": 82,
+      "R": 76,
+      "M": 80,
+      "B": 68
+    },
+    "recommended_enterprise_actions": [
+      "create_follow_up_ticket",
+      "human_handoff"
+    ],
+    "fshi_execution_status": "recommended_not_executed"
+  }
+}
+

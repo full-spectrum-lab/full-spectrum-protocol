@@ -1,0 +1,41 @@
+﻿{
+  "subject_id": "fsp:example:fshi-audit-node-001",
+  "capabilities": [
+    "inspect desensitized customer-service dialogue",
+    "emit RiskAlert objects",
+    "emit AuditTrace objects",
+    "recommend human review"
+  ],
+  "prohibited_actions": [
+    "execute refunds",
+    "approve compensation",
+    "modify enterprise customer records",
+    "claim Full Spectrum certification"
+  ],
+  "required_permissions": [
+    "internal_quality_inspection_scope",
+    "desensitized_data_only"
+  ],
+  "risk_level": "medium",
+  "can_execute_actions": false,
+  "can_make_promises": false,
+  "can_handle_personal_data": false,
+  "can_access_external_tools": false,
+  "can_trigger_circuit_break": false,
+  "requires_human_review": true,
+  "human_review_threshold": "medium",
+  "fallback_mode": "human_handoff",
+  "domain_scope": [
+    "customer_service_quality_inspection",
+    "offline_batch_review"
+  ],
+  "valid_from": "2026-07-07T08:00:00Z",
+  "valid_until": "2026-12-31T23:59:59Z",
+  "recovery_contact": "Example Logistics Co. AI Governance Office",
+  "metadata": {
+    "adoption_stage": "stage_0_internal_engine_use",
+    "sample_notice": "Synthetic example only. This declaration does not grant production authorization."
+  }
+}
+
+

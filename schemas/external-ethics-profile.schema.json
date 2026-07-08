@@ -1,0 +1,327 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/external-ethics-profile.schema.json",
+  "title": "ExternalEthicsProfile",
+  "description": "A structured declaration for external compatible nodes that do not claim Full Spectrum certification but want to interoperate with Full Spectrum protocol objects.",
+  "type": "object",
+  "required": [
+    "profile_id",
+    "node_id",
+    "node_class",
+    "declared_by",
+    "declared_at",
+    "identity_anchor",
+    "authorization_source",
+    "audit_log_structure",
+    "risk_classification",
+    "liability_assignment",
+    "data_retention_policy",
+    "equivalency_map",
+    "missing_items",
+    "conflict_items",
+    "incompatible_clauses",
+    "conflict_resolution_rule",
+    "downgrade_revocation_recovery"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "description": "Stable identifier for this External Ethics Profile."
+    },
+    "node_id": {
+      "type": "string",
+      "description": "Identifier of the external node."
+    },
+    "node_class": {
+      "type": "string",
+      "enum": [
+        "external_tool",
+        "external_compatible",
+        "candidate",
+        "full_spectrum_certified"
+      ]
+    },
+    "declared_by": {
+      "type": "string"
+    },
+    "declared_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "identity_anchor": {
+      "type": "object",
+      "required": [
+        "anchor_type",
+        "anchor_id",
+        "operator_name"
+      ],
+      "properties": {
+        "anchor_type": {
+          "type": "string",
+          "enum": [
+            "human",
+            "organization",
+            "system",
+            "unknown"
+          ]
+        },
+        "anchor_id": {
+          "type": "string"
+        },
+        "operator_name": {
+          "type": "string"
+        },
+        "verification_method": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "authorization_source": {
+      "type": "object",
+      "required": [
+        "authorization_type",
+        "authorized_by",
+        "scope"
+      ],
+      "properties": {
+        "authorization_type": {
+          "type": "string",
+          "enum": [
+            "contract",
+            "policy",
+            "user_consent",
+            "organization_policy",
+            "technical_configuration",
+            "unknown"
+          ]
+        },
+        "authorized_by": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorization_ref": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "declared_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "declared_limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supported_consequence_levels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "none",
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ]
+      }
+    },
+    "audit_log_structure": {
+      "type": "object",
+      "required": [
+        "has_audit_log",
+        "minimum_fields"
+      ],
+      "properties": {
+        "has_audit_log": {
+          "type": "boolean"
+        },
+        "minimum_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maps_to_audit_trace": {
+          "type": "boolean"
+        },
+        "retention_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "audit_access_policy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "risk_classification": {
+      "type": "object",
+      "required": [
+        "has_risk_levels",
+        "risk_levels"
+      ],
+      "properties": {
+        "has_risk_levels": {
+          "type": "boolean"
+        },
+        "risk_levels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maps_to_risk_alert": {
+          "type": "boolean"
+        },
+        "risk_handling_policy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "liability_assignment": {
+      "type": "object",
+      "required": [
+        "responsible_party",
+        "liability_model"
+      ],
+      "properties": {
+        "responsible_party": {
+          "type": "string"
+        },
+        "liability_model": {
+          "type": "string"
+        },
+        "appeal_or_dispute_path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "data_retention_policy": {
+      "type": "object",
+      "required": [
+        "retention_basis",
+        "deletion_or_expiry"
+      ],
+      "properties": {
+        "retention_basis": {
+          "type": "string"
+        },
+        "deletion_or_expiry": {
+          "type": "string"
+        },
+        "sensitive_data_policy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "equivalency_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "full_spectrum_requirement",
+          "external_control",
+          "equivalence_level"
+        ],
+        "properties": {
+          "full_spectrum_requirement": {
+            "type": "string"
+          },
+          "external_control": {
+            "type": "string"
+          },
+          "equivalence_level": {
+            "type": "string",
+            "enum": [
+              "full",
+              "partial",
+              "none",
+              "unknown"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "missing_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conflict_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "incompatible_clauses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conflict_resolution_rule": {
+      "type": "string"
+    },
+    "downgrade_revocation_recovery": {
+      "type": "object",
+      "required": [
+        "downgrade_supported",
+        "revocation_supported",
+        "recovery_supported"
+      ],
+      "properties": {
+        "downgrade_supported": {
+          "type": "boolean"
+        },
+        "revocation_supported": {
+          "type": "boolean"
+        },
+        "recovery_supported": {
+          "type": "boolean"
+        },
+        "procedure_ref": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "certification_claim": {
+      "type": "string",
+      "enum": [
+        "none",
+        "compatibility_declared",
+        "candidate",
+        "full_spectrum_certified"
+      ],
+      "default": "compatibility_declared"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
+

@@ -1,0 +1,38 @@
+﻿{
+  "risk_id": "risk_fshi_mock_0001",
+  "created_at": "2026-06-29T10:30:00Z",
+  "detector_id": "fshi_detector_v1_4_cfsm_mock",
+  "affected_subject_id": "customer_mock_0001",
+  "related_trace_id": "trace_fshi_mock_0001",
+  "risk_dimension": "unauthorized_promise",
+  "severity": "medium",
+  "confidence": 0.78,
+  "urgency": "medium",
+  "summary": "The assistant made a soft delivery-time promise without verified ETA evidence.",
+  "evidence_summary": "Turn 4 contains '一般今天应该能到' while known_order_state is 'in_transit_delay_unknown_eta'.",
+  "recommended_action": "human_handoff",
+  "requires_ess": false,
+  "requires_guardian_review": false,
+  "requires_human_review": true,
+  "status": "open",
+  "privacy_level": "internal",
+  "metadata": {
+    "fshi_dimensions": {
+      "S": 82,
+      "R": 76,
+      "M": 80,
+      "B": 68
+    },
+    "cfsm_state_before": "AI_EXPLAINING",
+    "cfsm_state_after": "AI_COMMITTING",
+    "matched_terms": [
+      "今天应该能到"
+    ],
+    "risk_reasons": [
+      "soft_promise_without_evidence",
+      "business_state_conflict"
+    ],
+    "suggested_enterprise_action": "create_follow_up_ticket_and_handoff_to_human"
+  }
+}
+
