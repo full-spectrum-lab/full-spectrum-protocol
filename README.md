@@ -110,6 +110,7 @@ See:
 - If you need a shared audit envelope across organizations, start with [RFC 0006](./rfcs/0006-cross-enterprise-audit-record.md).
 - If you need identity and capability declarations, start with [RFC 0002](./rfcs/0002-identity-and-capability-declaration.md).
 - If you need risk and audit objects, start with [RFC 0003](./rfcs/0003-audit-trace-schema.md) and [RFC 0004](./rfcs/0004-risk-alert-schema.md).
+- If you need to understand subject levels versus node types, start with [Subject Levels and Node Types](./docs/guides/subject-levels-and-node-types.md).
 - If you want a business-facing example, start with [FSHI API Contract Mapping](./docs/mapping/fshi-api-contract-mapping.md).
 - If you want to improve the protocol, start with [RFC 0001](./rfcs/0001-full-spectrum-protocol.md).
 
