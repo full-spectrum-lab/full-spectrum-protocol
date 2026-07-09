@@ -1,8 +1,13 @@
-﻿# Guides
+# Guides
 
-This directory is reserved for practical guides.
+This directory contains practical guides for reading, adopting, and extending the Full Spectrum Protocol.
 
-Planned guides:
+Current guides:
+
+- [Subject Levels and Node Types](./subject-levels-and-node-types.md)
+- [Three-Layer Evolution Path](./three-layer-evolution-path.md)
+
+Planned guide directions:
 
 - how to read the Full Spectrum Protocol;
 - how to write a protocol RFC;
@@ -11,4 +16,3 @@ Planned guides:
 - how to submit counterexamples and abuse cases.
 
 For first-time readers, start with [`../../START_HERE.md`](../../START_HERE.md).
-

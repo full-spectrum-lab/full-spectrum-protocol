@@ -184,6 +184,11 @@ A practical adoption path is:
 
 This repository currently focuses on the first two steps.
 
+See also:
+
+- [Three-Layer Evolution Path](./docs/guides/three-layer-evolution-path.md)
+- [Subject Levels and Node Types](./docs/guides/subject-levels-and-node-types.md)
+
 ---
 
 ## Machine validation
