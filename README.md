@@ -21,7 +21,8 @@ It currently provides:
 - synthetic examples;
 - mapping documents for standards and business scenarios;
 - a reference direction for FSHI customer-service inspection;
-- links to a minimal runnable governance engine;`r`n- shared ecosystem diagrams and public-facing commons assets.
+- links to a minimal runnable governance engine;
+- shared ecosystem diagrams and public-facing commons assets.
 
 It does not claim:
 
@@ -209,21 +210,22 @@ Validation runs through GitHub Actions on push and pull request to `main`.
 Recommended reading order:
 
 1. [START_HERE.md](./START_HERE.md)
-2. [Full Spectrum Protocol Outline v0.1](./docs/protocols/full-spectrum-protocol-outline-v0.1.md)
-3. [Glossary](./docs/glossary.md)
-4. [Specifications](./specs/README.md)
-5. [External Node Guide](./EXTERNAL_NODE_GUIDE.md)
-6. [RFC 0001: Full Spectrum Protocol](./rfcs/0001-full-spectrum-protocol.md)
-7. [RFC 0002: Identity and Capability Declaration](./rfcs/0002-identity-and-capability-declaration.md)
-8. [RFC 0003: Audit Trace Schema](./rfcs/0003-audit-trace-schema.md)
-9. [RFC 0004: RiskAlert Schema](./rfcs/0004-risk-alert-schema.md)
-10. [RFC 0005: Node Classification and External Ethics Profile](./rfcs/0005-node-classification-and-external-ethics-profile.md)
-11. [RFC 0006: Cross-Enterprise Audit Record Profile](./rfcs/0006-cross-enterprise-audit-record.md)
-12. [Protocol Mapping Center](./docs/mapping/README.md)
-13. [FSHI customer-service quality inspection use case](./docs/use-cases/FSHI_Customer_Service_Quality_Inspection.md)
-14. [Conformance and Testing Guide](./docs/testing/conformance-and-testing-guide.md)
-15. [Validations](./validations/)
-16. [ROADMAP.md](./ROADMAP.md)
+2. [Documentation index](./docs/README.md)
+3. [Full Spectrum Protocol Outline v0.1](./docs/protocols/full-spectrum-protocol-outline-v0.1.md)
+4. [Glossary](./docs/glossary.md)
+5. [Specifications](./specs/README.md)
+6. [External Node Guide](./EXTERNAL_NODE_GUIDE.md)
+7. [RFC 0001: Full Spectrum Protocol](./rfcs/0001-full-spectrum-protocol.md)
+8. [RFC 0002: Identity and Capability Declaration](./rfcs/0002-identity-and-capability-declaration.md)
+9. [RFC 0003: Audit Trace Schema](./rfcs/0003-audit-trace-schema.md)
+10. [RFC 0004: RiskAlert Schema](./rfcs/0004-risk-alert-schema.md)
+11. [RFC 0005: Node Classification and External Ethics Profile](./rfcs/0005-node-classification-and-external-ethics-profile.md)
+12. [RFC 0006: Cross-Enterprise Audit Record Profile](./rfcs/0006-cross-enterprise-audit-record.md)
+13. [Protocol Mapping Center](./docs/mapping/README.md)
+14. [FSHI customer-service quality inspection use case](./docs/use-cases/FSHI_Customer_Service_Quality_Inspection.md)
+15. [Conformance and Testing Guide](./docs/testing/conformance-and-testing-guide.md)
+16. [Validations](./validations/)
+17. [ROADMAP.md](./ROADMAP.md)
 
 ---
 

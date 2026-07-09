@@ -1,23 +1,26 @@
 ﻿# Schemas
 
-This directory is reserved for machine-readable protocol schemas.
+This directory contains machine-readable protocol schemas for the current public protocol draft.
 
-Planned schemas:
+## Current schemas
 
 - [`governance-event.schema.json`](./governance-event.schema.json)
 - [`identity-claim.schema.json`](./identity-claim.schema.json)
 - [`capability-declaration.schema.json`](./capability-declaration.schema.json)
-- `permission-request.schema.json`
-- `consent-record.schema.json`
 - [`risk-alert.schema.json`](./risk-alert.schema.json)
 - [`external-ethics-profile.schema.json`](./external-ethics-profile.schema.json)
-- `ess-request.schema.json`
-- `ess-result.schema.json`
-- `guardian-review.schema.json`
 - [`audit-trace.schema.json`](./audit-trace.schema.json)
 - [`fshi-dialogue-inspection.schema.json`](./fshi-dialogue-inspection.schema.json)
 - [`fshi-dialogue-inspection-response.schema.json`](./fshi-dialogue-inspection-response.schema.json)
 - [`cross-enterprise-audit-record.schema.json`](./cross-enterprise-audit-record.schema.json)
+
+## Planned next schemas
+
+- `permission-request.schema.json`
+- `consent-record.schema.json`
+- `ess-request.schema.json`
+- `ess-result.schema.json`
+- `guardian-review.schema.json`
 
 The purpose of schemas is to make the Full Spectrum Protocol inspectable and implementable by software systems.
 
@@ -52,4 +55,11 @@ The helper currently checks:
 - RiskAlert sample;
 - AuditTrace sample;
 - CrossEnterpriseAuditRecord governance sample.
+
+## Relationship to `specs/`
+
+- `schemas/` defines machine-readable contracts
+- `specs/` explains the human-readable meaning of those contracts
+
+When both exist for the same object, they should be read together.
 

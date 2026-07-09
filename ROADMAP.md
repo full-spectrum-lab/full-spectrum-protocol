@@ -4,7 +4,7 @@ This roadmap describes how the Full Spectrum Ethics Protocol Stack may evolve fr
 
 ## Phase 0: Public entry repair
 
-Status: largely complete on the `docs/public-entry-v0.1` branch; pending review and merge.
+Status: largely complete.
 
 - Fix README encoding and public entry.
 - Add Chinese and English entry documents.
@@ -43,6 +43,8 @@ Goal: make the protocol inspectable by developers.
 - Add audit trace schema.
 - Add risk alert schema.
 - Add external ethics profile schema.
+- Add cross-enterprise audit record schema.
+- Add FSHI request / response schemas.
 - Add example audit traces.
 - Add external node classification examples.
 - Add FSHI customer-service quality inspection sample.
@@ -67,6 +69,16 @@ Goal: make the protocol runnable.
 - Keep examples non-invasive: FSHI may recommend enterprise actions, but execution belongs to the enterprise unless explicit integration feedback exists.
 - Explain the relationship between the local engine, Cell Protocol, and the future protocol network.
 - Maintain a conformance and testing guide so contributors know what "validated" means at each stage.
+
+## Current practical focus
+
+At the moment, the most important public work is:
+
+1. keep the protocol repository readable as a protocol repository;
+2. keep schemas, RFCs, mappings, and examples internally consistent;
+3. keep the engine repository versioned and reproducible;
+4. keep enterprise-facing materials separated from protocol-core claims;
+5. prepare for broader external review without overstating maturity.
 
 ## Phase 4: External review
 
