@@ -26,12 +26,12 @@ raw-input.ecommerce.json
 
 | File | Spec | Description |
 | --- | --- | --- |
-| `raw-input.ecommerce.json` | [I/O Contract](../specs/io-contract.md) | Business raw input as received by the EcommerceAdapter. |
-| `governance-event.ecommerce.json` | [Governance Event](../specs/governance-event.md) | Normalized governance event (unauthorized commitment). |
-| `canonical-context.ecommerce.json` | [I/O Contract](../specs/io-contract.md) | Normalized context produced by `to_canonical_context`. |
-| `cell-manifest.ecommerce.json` | [L1 Cell Protocol](../specs/l1-cell-protocol.md) | Subject (AI customer service cell) declaration. |
-| `output-envelope.ecommerce.json` | [Governance Output Envelope](../specs/governance-output-envelope.md) | Standard engine output object. |
-| `enterprise-writeback.ecommerce.json` | [Enterprise Writeback](../specs/enterprise-writeback.md) | Enterprise-consumable decision object. |
+| `raw-input.ecommerce.json` | [I/O Contract](../../../specs/io-contract.md) | Business raw input as received by the EcommerceAdapter. |
+| `governance-event.ecommerce.json` | [Governance Event](../../../specs/governance-event.md) | Normalized governance event (unauthorized commitment). |
+| `canonical-context.ecommerce.json` | [I/O Contract](../../../specs/io-contract.md) | Normalized context produced by `to_canonical_context`. |
+| `cell-manifest.ecommerce.json` | [L1 Cell Protocol](../../../specs/l1-cell-protocol.md) | Subject (AI customer service cell) declaration. |
+| `output-envelope.ecommerce.json` | [Governance Output Envelope](../../../specs/governance-output-envelope.md) | Standard engine output object. |
+| `enterprise-writeback.ecommerce.json` | [Enterprise Writeback](../../../specs/enterprise-writeback.md) | Enterprise-consumable decision object. |
 | `report.ecommerce.md` | — | Human-readable summary of the chain. |
 
 ## How to run
