@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/full-spectrum-lab/full-spectrum-protocol/schemas/io-contract.schema.json",
+  "title": "IOContract",
+  "description": "Minimal mapping contract from a business system's raw input/output to Full Spectrum governance objects via a Business Adapter.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "adapter_id",
+    "raw_input_schema",
+    "to_governance_event",
+    "to_canonical_context",
+    "governance_output_envelope",
+    "enterprise_writeback"
+  ],
+  "properties": {
+    "adapter_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the Business Adapter (e.g. ecommerce, logistics)."
+    },
+    "raw_input_schema": {
+      "type": "object",
+      "description": "Declared shape of the business raw input."
+    },
+    "commitment_detection": {
+      "type": "object",
+      "description": "Rule/keyword or model-based commitment detector.",
+      "properties": {
+        "is_commitment": { "type": "boolean" },
+        "claim_type": { "type": "string" },
+        "detection_mode": {
+          "type": "string",
+          "enum": ["rule_based_keyword", "model_based", "hybrid"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "to_governance_event": {
+      "type": "object",
+      "description": "Mapping from raw input to a Governance Event."
+    },
+    "to_canonical_context": {
+      "type": "object",
+      "description": "Mapping that produces a Canonical Context."
+    },
+    "governance_output_envelope": {
+      "type": "object",
+      "description": "Expected engine output object (Governance Output Envelope)."
+    },
+    "enterprise_writeback": {
+      "type": "object",
+      "description": "Expected enterprise-consumable decision object (Enterprise Writeback)."
+    },
+    "report": {
+      "type": "string",
+      "description": "Human-readable Markdown report template or reference."
+    }
+  }
+}
