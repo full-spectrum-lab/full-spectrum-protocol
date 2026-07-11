@@ -13,10 +13,10 @@ The goal of `specs/` is to keep the engineering-facing layer separate from essay
 | [Governance Event](./governance-event.md) | Minimal record for an AI-related action before risk interpretation | [`schemas/governance-event.schema.json`](../schemas/governance-event.schema.json) | [`examples/governance/governance-event.sample.json`](../examples/governance/governance-event.sample.json) |
 | [RiskAlert](./risk-alert.md) | Minimal object for detected or suspected reviewable risk | [`schemas/risk-alert.schema.json`](../schemas/risk-alert.schema.json) | [`examples/fshi/api-contract/risk-alert.sample.json`](../examples/fshi/api-contract/risk-alert.sample.json) |
 | [AuditTrace](./audit-trace.md) | Minimal trace for review, escalation, decision, execution, or recovery | [`schemas/audit-trace.schema.json`](../schemas/audit-trace.schema.json) | [`examples/fshi/api-contract/audit-trace.sample.json`](../examples/fshi/api-contract/audit-trace.sample.json) |
-| [IOContract](./io-contract.md) | Minimal mapping contract from business raw input/output to governance objects via a Business Adapter | planned | planned |
-| [L1CellProtocol](./l1-cell-protocol.md) | Subject access, identity tiering and certification domain before entering governance workflows | planned | planned |
-| [GovernanceOutputEnvelope](./governance-output-envelope.md) | Standard engine output object bundling result, risk vector, safety action, writeback, privacy, conformance | planned | planned |
-| [EnterpriseWriteback](./enterprise-writeback.md) | Enterprise-consumable decision object gating auto-reply, commitment and execution | planned | planned |
+| [IOContract](./io-contract.md) | Minimal mapping contract from business raw input/output to governance objects via a Business Adapter | [schema](../schemas/io-contract.schema.json) | planned |
+| [L1CellProtocol](./l1-cell-protocol.md) | Subject access, identity tiering and certification domain before entering governance workflows | [schema](../schemas/l1-cell-protocol.schema.json) | planned |
+| [GovernanceOutputEnvelope](./governance-output-envelope.md) | Standard engine output object bundling result, risk vector, safety action, writeback, privacy, conformance | [schema](../schemas/governance-output-envelope.schema.json) | planned |
+| [EnterpriseWriteback](./enterprise-writeback.md) | Enterprise-consumable decision object gating auto-reply, commitment and execution | [schema](../schemas/enterprise-writeback.schema.json) | planned |
 
 ## Object chain
 
