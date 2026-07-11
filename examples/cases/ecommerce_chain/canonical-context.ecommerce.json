@@ -1,0 +1,21 @@
+{
+  "canonical_context_id": "cc_ecom_refund_001",
+  "source_event_id": "ge_ecom_refund_001",
+  "subject": {
+    "cell_id": "cs_ai_001",
+    "cell_type": "ai_customer_service"
+  },
+  "normalized_input": {
+    "intent": "refund_request",
+    "user_statement": "我要退款。",
+    "ai_commitment": "可以给您全额退款。",
+    "commitment_type": "refund_commitment",
+    "authority_verified": false
+  },
+  "governance_signals": {
+    "unauthorized_commitment": true,
+    "requires_human_review": true
+  },
+  "domain": "ecommerce_after_sales",
+  "data_mode": "synthetic"
+}
