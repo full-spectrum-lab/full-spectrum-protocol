@@ -15,10 +15,12 @@ def main():
     parser.add_argument("--protocol-root", default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    target = os.path.join(args.protocol_root, "examples", "cases", "ecommerce_chain")
-    raw = os.path.join(args.engine_root, "examples", "governance_chain", "raw-input.ecommerce.json")
+    engine_root = os.path.abspath(args.engine_root)
+    protocol_root = os.path.abspath(args.protocol_root)
+    target = os.path.join(protocol_root, "examples", "cases", "ecommerce_chain")
+    raw = os.path.join(engine_root, "examples", "governance_chain", "raw-input.ecommerce.json")
     with tempfile.TemporaryDirectory() as generated:
-        subprocess.run([sys.executable, "-m", "src.governance_chain", "generate", "--input", raw, "--out", generated], cwd=args.engine_root, check=True)
+        subprocess.run([sys.executable, "-m", "src.governance_chain", "generate", "--input", raw, "--out", generated], cwd=engine_root, check=True)
         names = [name for name in os.listdir(generated) if name.endswith((".json", ".md"))] + ["raw-input.ecommerce.json"]
         mismatch = []
         for name in names:
