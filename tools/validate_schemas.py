@@ -38,6 +38,7 @@ MAPPING = {
     "cross-enterprise-audit-record": "cross-enterprise-audit-record.schema.json",
     "external-ethics-profile": "external-ethics-profile.schema.json",
     "io-contract": "io-contract.schema.json",
+    "subject-declaration": "subject-declaration.schema.json",
 }
 
 
