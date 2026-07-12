@@ -1,0 +1,26 @@
+name: Engine example sync
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ecommerce-single-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout protocol
+        uses: actions/checkout@v4
+        with:
+          path: protocol
+      - name: Checkout engine generator
+        uses: actions/checkout@v4
+        with:
+          repository: full-spectrum-lab/full-spectrum-engine
+          path: engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify committed protocol example equals Engine CLI output
+        run: python protocol/tools/sync_engine_generated_examples.py --engine-root engine --protocol-root protocol --check

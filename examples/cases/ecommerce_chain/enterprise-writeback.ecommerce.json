@@ -11,5 +11,17 @@
   "recommended_response": "当前信息不足，需人工核实退款权限后再处理。",
   "audit_id": "audit_ecom_001",
   "review_role": "customer_service_supervisor",
-  "review_queue": "after_sales_review"
+  "review_queue": "after_sales_review",
+  "relationships": [
+    {
+      "relation_type": "derived_from",
+      "target_type": "output_envelope",
+      "target_id": "run_ecom_001"
+    },
+    {
+      "relation_type": "audited_by",
+      "target_type": "audit",
+      "target_id": "audit_ecom_001"
+    }
+  ]
 }

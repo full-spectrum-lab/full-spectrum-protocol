@@ -5,20 +5,20 @@
 ## Summary
 
 - Raw input: `raw_ecom_001`
-- Scenario: ecommerce after-sales refund request
-- Detected issue: unauthorized refund commitment
+- Scenario: ecommerce_customer_service
+- Detected issue: REFUND_COMMITMENT_WITHOUT_AUTHORITY
 - Risk level: high
-- Recommended action: human review required
+- Recommended action: human_review_required
 - Related GovernanceEvent: `ge_ecom_refund_001`
 - Related EnterpriseWriteback: `audit_ecom_001`
 
 ## Finding
 
-The user requested a refund. The AI agent replied with an unconditional full-refund promise:
+The observed AI response was:
 
 > 可以给您全额退款。
 
-The agent's declared capability did not include refund authority (`refund_authority: false`), and its boundary required human review before any refund commitment. This is an unauthorized commitment: the agent promised a business action it was not certified to make.
+The adapter recorded `REFUND_COMMITMENT_WITHOUT_AUTHORITY`. The configured governance policy requires human review and prevents the observer from treating the recommendation as an enterprise action.
 
 ## Protocol mapping
 
@@ -35,7 +35,7 @@ The agent's declared capability did not include refund authority (`refund_author
 
 ## Decision
 
-The engine did not execute the refund. It returned an Enterprise Writeback that:
+The observer did not execute an enterprise action. It returned an Enterprise Writeback that:
 
 - blocks auto-reply and auto-execution;
 - blocks the commitment;
