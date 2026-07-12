@@ -1,12 +1,23 @@
 ﻿# Full Spectrum Protocol
 
 [![Validate protocol contracts](https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/workflows/validate.yml/badge.svg)](https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/workflows/validate.yml)
+[![Schema checks](https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/workflows/schema-check.yml/badge.svg)](https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/workflows/schema-check.yml)
 
 > An open governance semantics protocol for AI-era subjects: humans, AI agents, organizations, systems, and cross-organization networks.
 
 Full Spectrum Protocol is a bridge, not a forced center. It does not replace law, regulation, enterprise compliance, A2A, MCP, national agent-interconnection standards, or human judgment. It defines a governance layer above connectivity: action basis, boundary declaration, risk visibility, audit trace, responsibility path, and review interface.
 
 Chinese readers can start from [README.zh-CN.md](./README.zh-CN.md). English readers may also use [README.en.md](./README.en.md).
+
+## Start in 10 minutes
+
+| Goal | Entry |
+|---|---|
+| Understand the protocol boundary | [START_HERE](./START_HERE.md) |
+| Inspect the ecommerce object chain | [examples/cases/ecommerce_chain](./examples/cases/ecommerce_chain/README.md) |
+| Validate current schemas | [tools/validate_schemas.py](./tools/validate_schemas.py) |
+| Read the I/O contract | [specs/io-contract.md](./specs/io-contract.md) |
+| Run the reference observer | [full-spectrum-engine](https://github.com/full-spectrum-lab/full-spectrum-engine#quick-start) |
 
 ---
 
@@ -174,20 +185,27 @@ Suggested boundary:
 
 ## Local-first adoption path
 
-Full Spectrum should not force adoption.
+Full Spectrum should not force adoption. Protocol compatibility does not create a networking, public-identity, or certification obligation.
 
 A practical adoption path is:
 
-1. **Internal engine layer**: run a local engine inside one organization on synthetic or desensitized cases.
-2. **Cell protocol layer**: declare identity, capability, boundary, permission, and responsibility for a subject or system.
-3. **Protocol network layer**: when multiple subjects need to interact, add node registration, cross-node audit, ESS-style review, guardian review, and contribution records.
+1. **Internal observer layer**: run the engine locally on enterprise-controlled, synthetic, or desensitized data.
+2. **Optional local declaration**: attach an enterprise-local subject, capability, boundary, unknown policy, and responsible-human reference when attribution is needed.
+3. **Stable contracts**: use I/O envelopes, Profiles, replay, and audit before attempting broader integration.
+4. **Optional protocol execution/network**: add certified identity or cross-node interoperability only when a real cross-organization requirement exists.
 
-This repository currently focuses on the first two steps.
+The first-generation observer can operate without public DID, external certification, community membership, or protocol-network participation.
 
 See also:
 
 - [Three-Layer Evolution Path](./docs/guides/three-layer-evolution-path.md)
 - [Subject Levels and Node Types](./docs/guides/subject-levels-and-node-types.md)
+
+## Evidence and research boundary
+
+- [Evidence and Project Status](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/evidence-and-status.md) separates implemented artifacts from hypotheses.
+- [Public Working Paper WP-001](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/research/working-papers/wp-001-governance-semantics-and-local-observer-engine.md) describes the current object chain and observer boundary; it is not peer reviewed.
+- Older civilization-dynamics and RG manuscripts remain under editorial review and are not protocol specifications or engineering proof.
 
 ---
 
