@@ -13,11 +13,13 @@ Chinese readers can start from [README.zh-CN.md](./README.zh-CN.md). English rea
 
 | Goal | Entry |
 |---|---|
+| See how Protocol, Engine and Observer fit together | [Three entry paths and three core components](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/three-entry-three-core-components.md) |
 | Understand the protocol boundary | [START_HERE](./START_HERE.md) |
 | Inspect the ecommerce object chain | [examples/cases/ecommerce_chain](./examples/cases/ecommerce_chain/README.md) |
 | Validate current schemas | [tools/validate_schemas.py](./tools/validate_schemas.py) |
 | Read the I/O contract | [specs/io-contract.md](./specs/io-contract.md) |
-| Run the reference observer | [full-spectrum-engine](https://github.com/full-spectrum-lab/full-spectrum-engine#quick-start) |
+| Run the reference governance engine | [full-spectrum-engine](https://github.com/full-spectrum-lab/full-spectrum-engine#quick-start) |
+| Inspect the Observer application boundary | [full-spectrum-observer](https://github.com/full-spectrum-lab/full-spectrum-observer) |
 
 ---
 
