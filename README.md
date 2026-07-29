@@ -150,6 +150,10 @@ The current project does not require a system to join a global protocol network 
 
 ## Protocol map
 
+[![From data to relationship protocols](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/diagrams/product-views/protocol-engine-observer-boundary-en-v01.png?raw=1)](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/visual-index.md)
+
+The map is explanatory. Normative truth remains the schemas, specifications, examples and conformance checks in this repository.
+
 | Layer | Question | Typical artifacts |
 | --- | --- | --- |
 | Identity | Who or what is acting? | Identity claim, digital identity declaration |
