@@ -5,6 +5,8 @@
 
 > An open governance semantics protocol for AI-era subjects: humans, AI agents, organizations, systems, and cross-organization networks.
 
+**Identity boundary:** Protocol defines governance semantics and machine-readable contracts. It is not an agent transport, message bus, planner or executor, and it does not replace A2A, MCP or other connectivity standards.
+
 Full Spectrum Protocol is a bridge, not a forced center. It does not replace law, regulation, enterprise compliance, A2A, MCP, national agent-interconnection standards, or human judgment. It defines a governance layer above connectivity: action basis, boundary declaration, risk visibility, audit trace, responsibility path, and review interface.
 
 Chinese readers can start from [README.zh-CN.md](./README.zh-CN.md). English readers may also use [README.en.md](./README.en.md).
