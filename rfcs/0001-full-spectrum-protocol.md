@@ -1,5 +1,10 @@
 ﻿# RFC 0001: Full Spectrum Protocol
 
+创建时间：2026-07-08 23:04（北京时间，UTC+8；依据 Git 首次提交）
+最后更新时间：2026-08-01 12:18（北京时间，UTC+8）
+
+> Engineering interpretation boundary: the Compassion Protocol is an internal value constraint of Full Spectrum Lab, not a philosophical assent test for external participation. Runtime systems must not calculate metaphysical truth, civilization legitimacy or free will as authoritative booleans/scores. Any restriction justified by continuity or safety remains subject to evidence, proportionality, least intervention, reversibility, expiry, independent review and accountable authorization.
+
 > Status: Draft  
 > Created: 2026-06-29  
 > Target repository: `full-spectrum-lab/full-spectrum-protocol`  

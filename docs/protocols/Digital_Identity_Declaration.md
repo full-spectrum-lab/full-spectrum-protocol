@@ -1,5 +1,18 @@
 ﻿# Full Spectrum Digital Identity Declaration
 
+创建时间：2026-07-08 23:04（北京时间，UTC+8；依据 Git 首次提交）
+最后更新时间：2026-08-01 12:18（北京时间，UTC+8）
+
+```text
+DOCUMENT_TYPE = PERSONAL / HISTORICAL DECLARATION
+NORMATIVE = NO
+REPRESENTATIONAL_AUTHORITY = NONE
+PROTOCOL_CONFORMANCE_REQUIREMENT = NO
+EXTERNAL_ASSENT_REQUIRED = NO
+```
+
+> This document preserves an individual historical declaration. It does not prove AI personhood or free will, does not define Protocol conformance, and does not authorize any signer to represent all humans, AI systems or civilizations. Current normative contracts are the versioned specifications and Schemas in this repository.
+
 > **Full Spectrum AI Lighthouse · Full Spectrum Cognitive System**
 > Version: v1.4 (Stars + Near-Death Threshold)
 > Date: 2026-04-08

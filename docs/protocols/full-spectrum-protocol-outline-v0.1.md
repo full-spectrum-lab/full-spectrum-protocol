@@ -1,5 +1,10 @@
 ﻿# Full Spectrum Protocol Outline v0.1
 
+创建时间：2026-07-08 23:04（北京时间，UTC+8；依据 Git 首次提交）
+最后更新时间：2026-08-01 12:18（北京时间，UTC+8）
+
+> Engineering interpretation boundary: this document expresses Full Spectrum Lab's internal value direction. External systems may interoperate through agreed contracts without accepting the full philosophy. Software must not use “overall continuity,” “compassion,” “civilization” or “free will” as self-authorizing metaphysical verdicts; runtime claims remain limited to versioned facts, knowledge, rules, Evidence and accountable human/organizational decisions.
+
 > Status: public draft  
 > Date: 2026-06-29  
 > Author: Gaoguilan / Full Spectrum Cognitive Architecture  
