@@ -3,7 +3,8 @@
 > Status: Formal project principle / `ACTIVE`  
 > Scope: Full Spectrum Protocol, Engine, Observer, Knowledge Governance, Enterprise Governance, Commons, and the CASEs, Packs, Adapters, Skills, and domain implementations built on them  
 > Version: v1.0  
-> Date: 2026-08-07
+> Created at: 2026-08-07 17:27 UTC+8
+> Last updated at: 2026-08-07 19:41 UTC+8
 
 ## 0. Executive Summary
 

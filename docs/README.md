@@ -1,5 +1,8 @@
 ﻿# Documentation Index
 
+> Created at: 2026-07-09 18:55 UTC+8
+> Last updated at: 2026-08-07 19:41 UTC+8
+
 This directory contains the human-readable documentation layer for `full-spectrum-protocol`.
 
 Use this page when you want to understand where protocol essays, boundary statements, mappings, use cases, and technical notes live.
