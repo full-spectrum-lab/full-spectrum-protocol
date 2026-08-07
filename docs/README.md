@@ -9,6 +9,7 @@ Use this page when you want to understand where protocol essays, boundary statem
 ### If you are new here
 
 - [START_HERE.md](../START_HERE.md)
+- [Cognition First: From Problem Definition to Verifiable Engineering](./principles/cognition-first.md)
 - [Glossary](./glossary.md)
 - [Boundary statement](./boundary/protocol-boundary-statement.md)
 - [FAQ](./boundary/faq.md)
@@ -56,6 +57,7 @@ Use this page when you want to understand where protocol essays, boundary statem
 | `getting-started/` | first-step implementation guidance |
 | `guides/` | future space for procedural guides |
 | `mapping/` | standards, ecosystem, and business mapping documents |
+| `principles/` | cross-repository engineering and governance principles |
 | `protocols/` | protocol-facing conceptual texts and protocol stack documents |
 | `roadmap/` | release criteria and future-stage notes |
 | `testing/` | validation and conformance guidance |
