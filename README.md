@@ -15,7 +15,8 @@ Chinese readers can start from [README.zh-CN.md](./README.zh-CN.md). English rea
 
 | Goal | Entry |
 |---|---|
-| See how Protocol, Engine and Observer fit together | [Three entry paths and three core components](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/three-entry-three-core-components.md) |
+| Start from the governance problem you need to solve | [Start from Your Question](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/start-from-your-question.md) |
+| See how Protocol, Engine, Knowledge Governance and Observer fit together | [Four independent engineering tracks](https://github.com/full-spectrum-lab/full-spectrum-commons/blob/main/docs/four-independent-engineering-tracks.md) |
 | Understand the protocol boundary | [START_HERE](./START_HERE.md) |
 | Inspect the ecommerce object chain | [examples/cases/ecommerce_chain](./examples/cases/ecommerce_chain/README.md) |
 | Validate current schemas | [tools/validate_schemas.py](./tools/validate_schemas.py) |
@@ -276,5 +277,4 @@ Please read:
 ## Safety note
 
 Do not store tokens, passwords, cookies, private keys, unredacted personal information, unauthorized enterprise data, or real customer data in this repository.
-
 
