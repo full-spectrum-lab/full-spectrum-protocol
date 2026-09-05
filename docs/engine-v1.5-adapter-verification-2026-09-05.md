@@ -1,5 +1,8 @@
 # Engine v1.5 Adapter 验证结果（2026-09-05）
 
+创建时间：2026-09-05 22:25（北京时间，UTC+8）  
+最后更新时间：2026-09-05 22:25（北京时间，UTC+8）
+
 **测试范围：** Observer 兼容适配器与 v1.5 fixture
 **执行命令：** `python -m pytest -q tests/compat/test_v15_adapter.py tests/compat/test_compatibility_matrix.py`
 
