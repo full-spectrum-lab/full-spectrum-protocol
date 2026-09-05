@@ -20,6 +20,10 @@
 - `v1.5.0` 与 `v0.4.0-beta` 的正式兼容声明；
 - 真实网络请求、真实凭据和生产部署验证。
 
+## .NET 运行时尝试
+
+Observer `scripts/test.ps1 -Gate IG1` 已尝试执行，但被仓库 `global.json` 要求的 .NET SDK `10.0.301` 阻塞；当前机器安装的是 `10.0.400`。因此 C#/.NET 运行时结果记为 `NOT_EXECUTED_ENVIRONMENT_BLOCKED`，未修改仓库版本约束。
+
 ## 当前状态
 
 ```yaml
@@ -37,6 +41,7 @@ limitations:
   - REAL_NETWORK_NOT_EXECUTED
   - REAL_CREDENTIALS_NOT_READ
   - PRODUCTION_DEPLOYMENT_NOT_CONFIRMED
+  - DOTNET_SDK_10_0_301_REQUIRED
 ```
 
 **解释：** 当前结果证明状态文件、Observer 自洽性和 Observer 独立复验链路有效，但不能证明 Protocol、Engine、Observer 三者已经完成正式兼容性验收。
