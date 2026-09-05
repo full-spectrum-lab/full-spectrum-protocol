@@ -1,5 +1,8 @@
 # Scoped cross-repository compatibility result (2026-09-05)
 
+创建时间：2026-09-05 22:20（北京时间，UTC+8）  
+最后更新时间：2026-09-05 22:55（北京时间，UTC+8）
+
 **Test ID:** `FS-COMPAT-SCOPED-001`  
 **Workflow:** `Scoped cross-repository compatibility`  
 **Run:** <https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/runs/33971355683>  
