@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fullspectrumprotocol.com/schemas/full-spectrum-status.schema.json",
+  "type": "object",
+  "required": ["schema_version", "project", "as_of", "release", "implementation_status", "verification_status", "maturity_level", "production_readiness", "target_commit", "evidence", "unknowns"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "project": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "release": {"type": "object", "required": ["current", "channel", "canonical_host"], "properties": {"current": {"type": "string"}, "channel": {"enum": ["stable", "prerelease", "alpha", "draft", "unreleased"]}, "canonical_host": {"enum": ["github", "gitee", "other"]}, "source_release": {"type": ["string", "null"]}, "mirror_hosts": {"type": "array", "items": {"type": "string"}}, "binary_assets_host": {"type": ["string", "null"]}}, "additionalProperties": true},
+    "implementation_status": {"enum": ["UNKNOWN", "NOT_EXECUTED", "NOT_IMPLEMENTED", "PARTIALLY_IMPLEMENTED", "IMPLEMENTED", "BLOCKED", "NOT_APPLICABLE"]},
+    "verification_status": {"enum": ["UNKNOWN", "NOT_EXECUTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED", "BLOCKED", "NOT_APPLICABLE"]},
+    "maturity_level": {"enum": ["DESIGNED", "IMPLEMENTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_READY"]},
+    "production_readiness": {"type": "object", "required": ["status", "boolean"], "properties": {"status": {"enum": ["READY", "NOT_READY", "UNKNOWN"]}, "boolean": {"type": "boolean"}, "context": {"type": "string"}, "verified_environment": {"type": "string"}}, "additionalProperties": true},
+    "target_commit": {"type": "string", "minLength": 1},
+    "latest_verified_commit": {"type": "string", "minLength": 1},
+    "evidence": {"type": "object", "required": ["level", "scope", "limitations"], "properties": {"level": {"enum": ["FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED"]}, "bundle": {"type": ["string", "null"]}, "bundle_sha256": {"type": ["string", "null"]}, "release_artifact_sha256": {"type": ["string", "null"]}, "verified_at": {"type": ["string", "null"], "format": "date-time"}, "verifier": {"type": ["string", "null"]}, "scope": {"enum": ["OFFLINE", "LOCAL", "NETWORK", "PRODUCTION", "UNKNOWN"]}, "limitations": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
+    "unknowns": {"type": "array", "items": {"type": "object", "required": ["item", "review_by", "disposition_on_expiry"], "properties": {"item": {"type": "string"}, "owner": {"type": "string"}, "review_by": {"type": "string", "format": "date"}, "disposition_on_expiry": {"enum": ["blocker", "out_of_scope"]}}, "additionalProperties": true}},
+    "reported": {"type": "array"},
+    "confirmed": {"type": "array"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1",
+  "as_of": "2026-09-05",
+  "canonical_host": "github",
+  "entries": [
+    {
+      "protocol": "unreleased-or-draft",
+      "engine": ["v1.4.0"],
+      "observer": ["v0.3.0-beta.2"],
+      "knowledge_governance": ["v0.1.0-alpha"],
+      "status": "REPORTED_COMPATIBILITY",
+      "evidence": "<replace-with-confirmed-matrix-or-ci-link>",
+      "limitations": ["Observer v0.4.0-beta requires a fresh compatibility confirmation."]
+    },
+    {
+      "protocol": "unreleased-or-draft",
+      "engine": ["v1.5.0"],
+      "observer": ["v0.4.0-beta"],
+      "knowledge_governance": ["v0.1.0-alpha"],
+      "status": "NOT_CONFIRMED",
+      "evidence": null,
+      "limitations": ["Candidate mapping only; not a release or production compatibility claim."]
+    }
+  ]
+}

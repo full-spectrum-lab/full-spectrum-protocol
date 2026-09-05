@@ -1,0 +1,21 @@
+name: Full Spectrum status schema check
+on:
+  push:
+    paths: ["**/full-spectrum-status.yaml", "schemas/full-spectrum-status.schema.json", "tools/validate_full_spectrum_status.py", ".github/workflows/status-schema-check.yml"]
+  pull_request:
+    paths: ["**/full-spectrum-status.yaml", "schemas/full-spectrum-status.schema.json", "tools/validate_full_spectrum_status.py", ".github/workflows/status-schema-check.yml"]
+jobs:
+  validate-status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: python -m pip install PyYAML jsonschema
+      - name: Validate status files
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=$(find . -path '*/status/full-spectrum-status.yaml' -type f -print)
+          if [ -z "$files" ]; then echo "No status files in this repository."; exit 0; fi
+          while IFS= read -r file; do python tools/validate_full_spectrum_status.py "$file"; done <<< "$files"
