@@ -48,3 +48,9 @@ limitations:
 ```
 
 **解释：** 当前结果证明 Observer 仓库内 C#/.NET 最小闭环、锁定 Engine worker、fixture、Observation 和 Audit 链路有效；不能自动升级为 Protocol、Engine、Observer 三仓库版本兼容性已正式确认。
+
+## 跨项目补充状态：Knowledge Governance / Team03
+
+来自 Team03/H4 的独立状态链已确认：最终目标提交 `4d79712` 完成，测试 `134/134 PASS`，`verify-k2/team03 PASS`，外部复审结论为 `APPROVE`，confirmed 状态写入提交 `1ccbf12`。
+
+其边界保持为：`H4 = PARTIALLY_CLOSED`、`REAL_NETWORK_ADAPTER = NOT_IMPLEMENTED`、`PRODUCTION_READY = NO`。这些结果不能自动作为 Protocol–Observer 或 Engine–Observer 兼容性的证据，Observer E2E 兼容状态仍维持未正式确认。
