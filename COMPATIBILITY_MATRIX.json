@@ -17,8 +17,8 @@
       "engine": ["v1.5.0"],
       "observer": ["v0.4.0-beta"],
       "knowledge_governance": ["v0.1.0-alpha"],
-      "status": "SCOPED_COMPOSITE_CI_PENDING_FIRST_RUN",
-      "evidence": [".github/workflows/scoped-cross-repo-compat.yml", "docs/engine-v1.5-adapter-verification-2026-09-05.md", "docs/engine-v1.5-runtime-compatibility-2026-09-05.md"],
+      "status": "SCOPED_COMPOSITE_CI_PASS_FORMAL_E2E_NOT_CONFIRMED",
+      "evidence": [".github/workflows/scoped-cross-repo-compat.yml", "https://github.com/full-spectrum-lab/full-spectrum-protocol/actions/runs/33971355683", "docs/scoped-cross-repo-compatibility-result-2026-09-05.md", "docs/engine-v1.5-adapter-verification-2026-09-05.md", "docs/engine-v1.5-runtime-compatibility-2026-09-05.md"],
       "pinned_commits": {
         "engine": "ab9939b2aaf2a921b6ae6e7a6af5d34cd07af424",
         "observer": "1946f8a0b1ffc67adf4f0095994adab030cdde2e"
