@@ -17,8 +17,8 @@
       "engine": ["v1.5.0"],
       "observer": ["v0.4.0-beta"],
       "knowledge_governance": ["v0.1.0-alpha"],
-      "status": "ADAPTER_AND_FIXTURE_PASS_RUNTIME_NOT_CONFIRMED",
-      "evidence": "docs/engine-v1.5-adapter-verification-2026-09-05.md",
+      "status": "ADAPTER_FIXTURE_AND_ENGINE_RUNTIME_PASS_OBSERVER_E2E_NOT_CONFIRMED",
+      "evidence": ["docs/engine-v1.5-adapter-verification-2026-09-05.md", "docs/engine-v1.5-runtime-compatibility-2026-09-05.md"],
       "limitations": ["Candidate mapping only; not a release or production compatibility claim."]
     }
   ]
