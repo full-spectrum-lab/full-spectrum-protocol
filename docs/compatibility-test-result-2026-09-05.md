@@ -37,8 +37,8 @@ engine_version: v1.5.0
 observer_version: v0.4.0-beta
 status: PASS_WITH_SCOPE_LIMITS
 scope: OFFLINE
-evidence_bundle: null
-evidence_bundle_sha256: null
+evidence_bundle: "https://github.com/full-spectrum-lab/full-spectrum-observer/raw/master/observer-ig5-evidence-20260905.zip"
+evidence_bundle_sha256: "00D26D2B488AACC29C114B7DD29400A8E160F416D31CB68068324D526755A5A4"
 limitations:
   - CROSS_REPO_VERSION_COMPATIBILITY_NOT_FORMALLY_CONFIRMED
   - REAL_NETWORK_NOT_EXECUTED
