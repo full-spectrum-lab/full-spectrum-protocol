@@ -11,11 +11,12 @@
 | Observer 状态 YAML 对统一 Schema 校验 | PASS | `full-spectrum-status.yaml` 校验通过 |
 | Observer manifest 自洽性 | PASS | 300/300 文件匹配，无缺失、无多余 |
 | Observer 独立复验脚本 | PASS | 26/26 场景通过 |
+| Observer IG5 reference pipeline / Engine Facade worker smoke | PASS | CASE005 golden、输出摘要、Observation 和 Audit 检查通过；`formal_gate` 仍为 `NOT_PASSED` |
 | Protocol 状态 Schema CI | PASS | GitHub Actions 已通过 |
 
 ## 尚未执行
 
-- Protocol schema → Engine fixture → Observer replay 的同一条端到端链路；
+- Protocol schema → Engine fixture → Observer replay 的正式端到端兼容链路；当前仅完成 Observer 内部 IG5 reference pipeline，未证明 C#/.NET 正式运行时；
 - `v1.5.0` 与 `v0.4.0-beta` 的正式兼容声明；
 - 真实网络请求、真实凭据和生产部署验证。
 
