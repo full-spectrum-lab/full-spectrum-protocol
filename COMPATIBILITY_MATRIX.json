@@ -17,9 +17,13 @@
       "engine": ["v1.5.0"],
       "observer": ["v0.4.0-beta"],
       "knowledge_governance": ["v0.1.0-alpha"],
-      "status": "ADAPTER_FIXTURE_AND_ENGINE_RUNTIME_PASS_OBSERVER_E2E_NOT_CONFIRMED",
-      "evidence": ["docs/engine-v1.5-adapter-verification-2026-09-05.md", "docs/engine-v1.5-runtime-compatibility-2026-09-05.md"],
-      "limitations": ["Candidate mapping only; not a release or production compatibility claim."]
+      "status": "SCOPED_COMPOSITE_CI_PENDING_FIRST_RUN",
+      "evidence": [".github/workflows/scoped-cross-repo-compat.yml", "docs/engine-v1.5-adapter-verification-2026-09-05.md", "docs/engine-v1.5-runtime-compatibility-2026-09-05.md"],
+      "pinned_commits": {
+        "engine": "ab9939b2aaf2a921b6ae6e7a6af5d34cd07af424",
+        "observer": "1946f8a0b1ffc67adf4f0095994adab030cdde2e"
+      },
+      "limitations": ["Scoped CI validates the Protocol status schema, Engine v1.5 compatibility API tests, Observer v1.5 adapter fixtures, and evidence integrity.", "Observer release worker remains locked to Engine v1.0.0; formal Protocol-Engine-Observer E2E compatibility is not confirmed.", "Not a release or production compatibility claim."]
     }
   ]
 }
