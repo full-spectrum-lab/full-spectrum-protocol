@@ -22,7 +22,9 @@
 
 ## .NET 运行时尝试
 
-Observer `scripts/test.ps1 -Gate IG1` 已尝试执行，但被仓库 `global.json` 要求的 .NET SDK `10.0.301` 阻塞；当前机器安装的是 `10.0.400`。因此 C#/.NET 运行时结果记为 `NOT_EXECUTED_ENVIRONMENT_BLOCKED`，未修改仓库版本约束。
+Observer `scripts/test.ps1 -Gate IG1` 已在补齐仓库要求的 .NET SDK `10.0.301` 后执行成功：IG0 baseline `51/51 PASS`，Release 构建 `0 warnings / 0 errors`。此外，Unit 与 Contract 测试分别全部通过（Unit 5 项、Contract 5 项）。
+
+尚未执行 IG3/IG4/IG5/IG6 的完整门禁，因为这些门禁还需要仓库指定的私有 Python 运行时和固定 win-x64 SQLite 原生目录。
 
 ## 当前状态
 
@@ -41,7 +43,7 @@ limitations:
   - REAL_NETWORK_NOT_EXECUTED
   - REAL_CREDENTIALS_NOT_READ
   - PRODUCTION_DEPLOYMENT_NOT_CONFIRMED
-  - DOTNET_SDK_10_0_301_REQUIRED
+  - IG3_IG4_IG5_REQUIRE_PRIVATE_PYTHON_AND_SQLITE_RUNTIME
 ```
 
 **解释：** 当前结果证明状态文件、Observer 自洽性和 Observer 独立复验链路有效，但不能证明 Protocol、Engine、Observer 三者已经完成正式兼容性验收。
