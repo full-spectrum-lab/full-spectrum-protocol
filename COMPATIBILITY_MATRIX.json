@@ -18,7 +18,7 @@
       "observer": ["v0.4.0-beta"],
       "knowledge_governance": ["v0.1.0-alpha"],
       "status": "NOT_CONFIRMED",
-      "evidence": null,
+      "evidence": "docs/compatibility-evidence-integrity-check-2026-09-05.md",
       "limitations": ["Candidate mapping only; not a release or production compatibility claim."]
     }
   ]
