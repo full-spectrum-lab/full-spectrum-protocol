@@ -14,6 +14,45 @@
     "production_readiness": {"type": "object", "required": ["status", "boolean"], "properties": {"status": {"enum": ["READY", "NOT_READY", "UNKNOWN"]}, "boolean": {"type": "boolean"}, "context": {"type": "string"}, "verified_environment": {"type": "string"}}, "additionalProperties": true},
     "target_commit": {"type": "string", "minLength": 1},
     "latest_verified_commit": {"type": "string", "minLength": 1},
+    "authority": {
+      "type": "object",
+      "required": ["source", "canonical_repository", "canonical_commit"],
+      "properties": {
+        "source": {"enum": ["repository_status", "release", "ci", "evidence_bundle", "maintainer_confirmation"]},
+        "canonical_repository": {"type": "string", "minLength": 1},
+        "canonical_commit": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "publication": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["LOCAL_ONLY", "COMMITTED_NOT_PUSHED", "PUBLISHED_REMOTE"]},
+        "github": {"enum": ["PASS", "FAIL", "UNKNOWN", "NOT_APPLICABLE"]},
+        "gitee": {"enum": ["PASS", "FAIL", "UNKNOWN", "NOT_APPLICABLE"]},
+        "last_checked_at": {"type": ["string", "null"], "format": "date-time"}
+      },
+      "additionalProperties": true
+    },
+    "capability": {
+      "type": "object",
+      "properties": {
+        "generation": {"enum": ["first", "second", "unknown"]},
+        "network_capability": {
+          "type": "object",
+          "properties": {
+            "observed": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN"]},
+            "verified": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN"]}
+          },
+          "additionalProperties": true
+        },
+        "runtime_scope": {"enum": ["OFFLINE", "CONTROLLED", "REAL_NETWORK", "PRODUCTION", "UNKNOWN"]},
+        "writeback_capability": {"enum": ["NONE", "LOCAL", "CONTROLLED", "NETWORK", "UNKNOWN"]},
+        "evidence_scope": {"enum": ["OFFLINE", "INDEPENDENT_OFFLINE", "REAL_NETWORK", "PRODUCTION", "UNKNOWN"]}
+      },
+      "additionalProperties": true
+    },
     "evidence": {"type": "object", "required": ["level", "scope", "limitations"], "properties": {"level": {"enum": ["FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED"]}, "bundle": {"type": ["string", "null"]}, "bundle_sha256": {"type": ["string", "null"]}, "release_artifact_sha256": {"type": ["string", "null"]}, "verified_at": {"type": ["string", "null"], "format": "date-time"}, "verifier": {"type": ["string", "null"]}, "scope": {"enum": ["OFFLINE", "LOCAL", "NETWORK", "PRODUCTION", "UNKNOWN"]}, "limitations": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
     "unknowns": {"type": "array", "items": {"type": "object", "required": ["item", "review_by", "disposition_on_expiry"], "properties": {"item": {"type": "string"}, "owner": {"type": "string"}, "review_by": {"type": "string", "format": "date"}, "disposition_on_expiry": {"enum": ["blocker", "out_of_scope"]}}, "additionalProperties": true}},
     "reported": {"type": "array"},
