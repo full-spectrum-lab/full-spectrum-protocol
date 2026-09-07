@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "generated_at": "2026-09-06T06:26:52+00:00",
+  "generated_at": "2026-09-07T03:03:48+00:00",
   "mode": "READ_ONLY",
   "projects": [
     {
@@ -21,6 +21,8 @@
       "implementation_status": "IMPLEMENTED",
       "verification_status": "INDEPENDENTLY_REPRODUCED",
       "maturity_level": "INDEPENDENTLY_REPRODUCED",
+      "generation": "unknown",
+      "contract": {},
       "production_readiness": {
         "status": "NOT_READY",
         "boolean": false,
@@ -28,6 +30,7 @@
         "verified_environment": "offline-independent-reproduction"
       },
       "capability": {},
+      "compatibility": {},
       "evidence": {
         "level": "INDEPENDENTLY_REPRODUCED",
         "scope": "OFFLINE",
@@ -61,6 +64,8 @@
       "implementation_status": "IMPLEMENTED",
       "verification_status": "INDEPENDENTLY_REPRODUCED",
       "maturity_level": "INDEPENDENTLY_REPRODUCED",
+      "generation": "unknown",
+      "contract": {},
       "production_readiness": {
         "status": "NOT_READY",
         "boolean": false,
@@ -68,6 +73,7 @@
         "verified_environment": "independent-second-host-offline"
       },
       "capability": {},
+      "compatibility": {},
       "evidence": {
         "level": "INDEPENDENTLY_REPRODUCED",
         "scope": "OFFLINE",
@@ -87,6 +93,58 @@
           "review_by": "2026-09-12",
           "disposition_on_expiry": "blocker"
         }
+      ]
+    },
+    {
+      "project": "full-spectrum-engine",
+      "source": "C:\\Users\\wangjian0926\\Desktop\\codex专属仓库\\qpp.wiki\\21_AI协作\\04_Codex实例4\\status.yaml",
+      "authority": {},
+      "publication": "COMMITTED_NOT_PUSHED",
+      "release": {},
+      "implementation_status": "NOT_CONFIRMED",
+      "verification_status": "NOT_EXECUTED",
+      "maturity_level": "DESIGNED",
+      "generation": "GEN2",
+      "contract": {
+        "status": "DRAFT_NOT_FROZEN",
+        "frozen": false
+      },
+      "production_readiness": {
+        "status": "NOT_READY",
+        "boolean": false
+      },
+      "capability": {
+        "network_capability": {
+          "declared": "NONE",
+          "observed": "UNKNOWN",
+          "verified": "UNKNOWN"
+        },
+        "runtime_scope": {
+          "declared": "LOCAL_FIRST",
+          "observed": "CONTROLLED_LOCAL",
+          "verified": "UNKNOWN"
+        },
+        "writeback_capability": {
+          "declared": "CONTRACT_ONLY",
+          "observed": "UNKNOWN",
+          "verified": "UNKNOWN"
+        }
+      },
+      "compatibility": {
+        "observer": "NOT_CONFIRMED",
+        "knowledge_governance": "NOT_CONFIRMED"
+      },
+      "evidence": {
+        "level": null,
+        "scope": null,
+        "bundle": null,
+        "bundle_sha256": null
+      },
+      "unknowns": [
+        "Engine 2.x 尚未实现",
+        "Observer–Engine 正式兼容尚未确认",
+        "Engine–Knowledge Governance 正式兼容尚未确认",
+        "真实网络能力未授权"
       ]
     }
   ],

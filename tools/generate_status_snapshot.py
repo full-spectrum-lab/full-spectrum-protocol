@@ -30,6 +30,8 @@ def publication_state(data: dict[str, Any], source: Path) -> str:
 
 
 def project_record(source: Path, data: dict[str, Any]) -> dict[str, Any]:
+    capability = data.get("capability", {})
+    compatibility = data.get("compatibility", {})
     return {
         "project": data.get("project", source.parent.parent.name),
         "source": str(source),
@@ -39,8 +41,11 @@ def project_record(source: Path, data: dict[str, Any]) -> dict[str, Any]:
         "implementation_status": data.get("implementation_status", "UNKNOWN"),
         "verification_status": data.get("verification_status", "UNKNOWN"),
         "maturity_level": data.get("maturity_level", "DESIGNED"),
+        "generation": data.get("generation", capability.get("generation", "unknown")),
+        "contract": data.get("contract", {}),
         "production_readiness": data.get("production_readiness", {"status": "UNKNOWN", "boolean": False}),
-        "capability": data.get("capability", {}),
+        "capability": capability,
+        "compatibility": compatibility,
         "evidence": {
             "level": data.get("evidence", {}).get("level"),
             "scope": data.get("evidence", {}).get("scope"),
@@ -52,11 +57,13 @@ def project_record(source: Path, data: dict[str, Any]) -> dict[str, Any]:
 
 
 def markdown(snapshot: dict[str, Any]) -> str:
-    lines = ["# Full Spectrum 状态快照（只读生成）", "", f"- 生成时间：`{snapshot['generated_at']}`", "- 生成模式：`READ_ONLY`", "- 高风险自动升级：`FORBIDDEN`", "", "## 项目状态", "", "| 项目 | 发布状态 | 实现 | 验证 | 成熟度 | 生产就绪 |", "|---|---|---|---|---|---|"]
+    lines = ["# Full Spectrum 状态快照（只读生成）", "", f"- 生成时间：`{snapshot['generated_at']}`", "- 生成模式：`READ_ONLY`", "- 高风险自动升级：`FORBIDDEN`", "", "## 项目状态", "", "| 项目 | 代际 | 实现 | 验证 | 发布 | 能力 | 兼容 | 生产就绪 |", "|---|---|---|---|---|---|---|---|"]
     for item in snapshot["projects"]:
         ready = item["production_readiness"].get("status", "UNKNOWN")
-        lines.append(f"| {item['project']} | {item['publication']} | {item['implementation_status']} | {item['verification_status']} | {item['maturity_level']} | {ready} |")
-    lines += ["", "## 三角兼容性", "", "```json", json.dumps(snapshot["triangle_status"], ensure_ascii=False, indent=2), "```", "", "## 约束", "", "- 本快照不把离线验证升级为真实网络、跨仓库正式兼容或生产就绪。", "- `LOCAL_ONLY`、`COMMITTED_NOT_PUSHED` 不得写成 `PUBLISHED_REMOTE`。", "- `NOT_CONFIRMED`、`UNKNOWN` 只能由人工裁决升级。", ""]
+        cap = item.get("capability", {})
+        compat = item.get("compatibility", {})
+        lines.append(f"| {item['project']} | {item['generation']} | {item['implementation_status']} | {item['verification_status']} | {item['publication']} | `{json.dumps(cap, ensure_ascii=False, separators=(',', ':'))}` | `{json.dumps(compat, ensure_ascii=False, separators=(',', ':'))}` | {ready} |")
+    lines += ["", "## 分层状态", "", "```json", json.dumps({"implementation_status": [p["implementation_status"] for p in snapshot["projects"]], "verification_status": [p["verification_status"] for p in snapshot["projects"]], "publication_status": [p["publication"] for p in snapshot["projects"]], "capability_status": [p["capability"] for p in snapshot["projects"]], "compatibility_status": snapshot["triangle_status"], "production_readiness": [p["production_readiness"] for p in snapshot["projects"]]}, ensure_ascii=False, indent=2), "```", "", "## 三角兼容性", "", "```json", json.dumps(snapshot["triangle_status"], ensure_ascii=False, indent=2), "```", "", "## 约束", "", "- 本快照不把离线验证升级为真实网络、跨仓库正式兼容或生产就绪。", "- `LOCAL_ONLY`、`COMMITTED_NOT_PUSHED` 不得写成 `PUBLISHED_REMOTE`。", "- `NOT_CONFIRMED`、`UNKNOWN` 只能由人工裁决升级。", ""]
     return "\n".join(lines)
 
 

@@ -50,6 +50,26 @@
       },
       "evidence": ["QPP FS-DOC-016", "QPP shared compatibility status"],
       "limitations": ["No formal Observer-Engine-Knowledge Governance E2E evidence.", "Real network implementation is not authorized.", "This entry is a governance boundary, not a compatibility PASS."]
+    },
+    {
+      "protocol": "current-schema-governance",
+      "engine": ["2.x-contract-pending"],
+      "observer": ["v0.4.0-beta"],
+      "knowledge_governance": ["C2"],
+      "status": "DESIGNED_NOT_IMPLEMENTED",
+      "generation": "GEN2",
+      "implementation_status": "NOT_CONFIRMED",
+      "verification_status": "NOT_EXECUTED",
+      "maturity_level": "DESIGNED",
+      "capability": {
+        "network_capability": {"declared": "NONE", "observed": "UNKNOWN", "verified": "UNKNOWN"},
+        "runtime_scope": {"declared": "LOCAL_FIRST", "observed": "CONTROLLED_LOCAL", "verified": "UNKNOWN"},
+        "writeback_capability": {"declared": "CONTRACT_ONLY", "observed": "UNKNOWN", "verified": "UNKNOWN"}
+      },
+      "compatibility": {"observer": "NOT_CONFIRMED", "knowledge_governance": "NOT_CONFIRMED"},
+      "production_readiness": {"status": "NOT_READY", "boolean": false},
+      "source_status": "QPP/21_AI协作/04_Codex实例4/status.yaml",
+      "limitations": ["Engine 2.x contract is not frozen.", "No fixed cross-repository fixture or composite CI evidence.", "Real network implementation is not authorized."]
     }
   ]
 }

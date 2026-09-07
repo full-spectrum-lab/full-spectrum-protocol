@@ -35,20 +35,16 @@
       },
       "additionalProperties": true
     },
+    "generation": {"enum": ["GEN1", "GEN2", "unknown"]},
+    "contract": {"type": "object", "properties": {"status": {"enum": ["DRAFT_NOT_FROZEN", "FROZEN", "UNKNOWN"]}, "frozen": {"type": "boolean"}}, "additionalProperties": true},
+    "compatibility": {"type": "object", "properties": {"observer": {"enum": ["CONFIRMED", "NOT_CONFIRMED", "UNKNOWN"]}, "knowledge_governance": {"enum": ["CONFIRMED", "NOT_CONFIRMED", "UNKNOWN"]}}, "additionalProperties": true},
     "capability": {
       "type": "object",
       "properties": {
-        "generation": {"enum": ["first", "second", "unknown"]},
-        "network_capability": {
-          "type": "object",
-          "properties": {
-            "observed": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN"]},
-            "verified": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN"]}
-          },
-          "additionalProperties": true
-        },
-        "runtime_scope": {"enum": ["OFFLINE", "CONTROLLED", "REAL_NETWORK", "PRODUCTION", "UNKNOWN"]},
-        "writeback_capability": {"enum": ["NONE", "LOCAL", "CONTROLLED", "NETWORK", "UNKNOWN"]},
+        "generation": {"enum": ["first", "second", "GEN1", "GEN2", "unknown"]},
+        "runtime_scope": {"anyOf": [{"enum": ["OFFLINE", "CONTROLLED", "REAL_NETWORK", "PRODUCTION", "UNKNOWN"]}, {"type": "object", "required": ["declared", "observed", "verified"], "properties": {"declared": {"enum": ["LOCAL_FIRST", "CONTROLLED_PILOT", "CROSS_NODE_PROTOCOL"]}, "observed": {"enum": ["UNKNOWN", "PASS", "FAIL", "CONTROLLED_LOCAL"]}, "verified": {"enum": ["UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": true}]},
+        "writeback_capability": {"anyOf": [{"enum": ["NONE", "LOCAL", "CONTROLLED", "NETWORK", "UNKNOWN"]}, {"type": "object", "required": ["declared", "observed", "verified"], "properties": {"declared": {"enum": ["DISABLED", "CONTRACT_ONLY", "CONTROLLED"]}, "observed": {"enum": ["UNKNOWN", "PASS", "FAIL"]}, "verified": {"enum": ["UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": true}]},
+        "network_capability": {"type": "object", "properties": {"declared": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP"]}, "observed": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN", "PASS", "FAIL"]}, "verified": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP", "UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": true},
         "evidence_scope": {"enum": ["OFFLINE", "INDEPENDENT_OFFLINE", "REAL_NETWORK", "PRODUCTION", "UNKNOWN"]}
       },
       "additionalProperties": true
