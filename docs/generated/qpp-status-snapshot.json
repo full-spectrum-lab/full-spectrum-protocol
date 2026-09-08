@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "generated_at": "2026-09-08T02:59:35+00:00",
+  "generated_at": "2026-09-08T03:05:19+00:00",
   "mode": "READ_ONLY",
   "projects": [
     {
@@ -278,6 +278,13 @@
     "observer_engine_compatibility": "NOT_CONFIRMED",
     "observer_knowledge_governance_compatibility": "NOT_CONFIRMED",
     "engine_knowledge_governance_compatibility": "NOT_CONFIRMED"
+  },
+  "observer_release_truth": {
+    "current_public_release": "v0.3.0-maintenance.6",
+    "target_commit": "df0b64c064f6debd33b3a1a60f97f96287cd5dc8",
+    "inspected_prerelease": "v0.4.0-beta",
+    "inspected_prerelease_commit": "2492715d54c504dc58d0a682f4559d731c56fc74",
+    "compatibility_promotion": "NONE"
   },
   "source_matrix": "COMPATIBILITY_MATRIX.json",
   "rules": {

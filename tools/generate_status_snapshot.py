@@ -131,6 +131,7 @@ def main() -> int:
         "mode": "READ_ONLY",
         "projects": [project_record(path, load_yaml(path)) for path in args.status],
         "triangle_status": matrix.get("triangle_status", {}),
+        "observer_release_truth": matrix.get("observer_release_truth", {}),
         "source_matrix": str(args.matrix),
         "rules": matrix.get("capability_rules", {}),
     }
