@@ -102,6 +102,7 @@
         "writeback_capability": {"declared": "CONTRACT_ONLY", "observed": "UNKNOWN", "verified": "UNKNOWN"}
       },
       "compatibility": {"observer": "NOT_CONFIRMED", "knowledge_governance": "NOT_CONFIRMED"},
+      "knowledge_governance_adapter": {"implementation_status": "IMPLEMENTED", "verification_status": "INDEPENDENT_LOCAL_OFFLINE_PASS", "target_commit": "869f61bd7bb970a2743058a52fe1e23570667028", "remote_branch": "engine2-kg-adapter-20260909", "remote_reachable": "PASS", "test_result": "147/147 PASS", "verify_k2": "PASS", "verify_team03": "PASS", "manifest_sha256": "D585BA3CAA518E2EB38F0153C8C35705D9ACF8F74BD748F983573922AC795220", "package_sha256": "D8E3ED9473B5D3C92569A2CCB5C984C8F9A6E93DBC01B5E1F67F9D231C6D354A", "scope": "KG_SINGLE_REPOSITORY_LOCAL_OFFLINE"},
       "production_readiness": {"status": "NOT_READY", "boolean": false},
       "evidence_scope": "OFFLINE",
       "credential_scope": "NONE",
