@@ -41,7 +41,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install verification dependencies
-        run: python -m pip install pytest PyYAML rfc8785==0.1.4 fastapi httpx numpy
+        run: |
+          python -m pip install -r engine/requirements.txt
+          python -m pip install rfc8785==0.1.4
 
       - name: Recompute Protocol canonical fixture
         run: python protocol/tools/verify_engine2_fixture.py protocol/fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
