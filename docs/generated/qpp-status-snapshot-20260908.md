@@ -1,8 +1,8 @@
 # Full Spectrum 状态快照（只读生成）
 
-- AUTHOR_DECLARED_CREATED_AT: 2026-09-08 11:22 UTC+8
-- AUTHOR_DECLARED_UPDATED_AT: 2026-09-08 11:22 UTC+8
-- 生成时间：`2026-09-08T03:22:27+00:00`
+- AUTHOR_DECLARED_CREATED_AT: 2026-09-08 20:18 UTC+8
+- AUTHOR_DECLARED_UPDATED_AT: 2026-09-08 20:18 UTC+8
+- 生成时间：`2026-09-08T12:18:23+00:00`
 - 生成模式：`READ_ONLY`
 - 高风险自动升级：`FORBIDDEN`
 
@@ -13,7 +13,7 @@
 | observer | unknown | IMPLEMENTED | UNKNOWN | PUBLISHED_REMOTE | `{}` | `{"protocol":"NOT_CONFIRMED","engine":"NOT_CONFIRMED","knowledge_governance":"NOT_CONFIRMED"}` | NOT_READY |
 | full-spectrum-knowledge-governance | unknown | DESIGNED | CODE_AND_RUNTIME_REVERIFY | LOCAL_ONLY | `{"k2_network_access":"NOT_EXECUTED_BY_DESIGN","real_network_adapter":"NOT_IMPLEMENTED","b1_persisted_audit_row_tamper":"PASS","b1_full_gap_closure":"NOT_PROVEN","h1_h3_full_gap_closure":"NOT_PROVEN","engine_kg_compatibility":"NOT_CONFIRMED","observer_kg_compatibility":"NOT_CONFIRMED"}` | `{}` | NOT_READY |
 | FS-VALIDATION-006 | NOT_APPLICABLE | NOT_APPLICABLE | PASS_WITH_LIMITATIONS | ARCHIVED_WITH_LIMITATIONS | `{}` | `{"protocol_observer":"NOT_CONFIRMED","observer_engine":"NOT_CONFIRMED"}` | NOT_READY |
-| full-spectrum-engine | GEN2 | NOT_CONFIRMED | NOT_EXECUTED | LOCAL_ONLY | `{"network_capability":{"declared":"NONE","observed":"UNKNOWN","verified":"UNKNOWN"},"runtime_scope":{"declared":"LOCAL_FIRST","observed":"CONTROLLED_LOCAL","verified":"UNKNOWN"},"writeback_capability":{"declared":"CONTRACT_ONLY","observed":"UNKNOWN","verified":"UNKNOWN"}}` | `{"observer":"NOT_CONFIRMED","knowledge_governance":"NOT_CONFIRMED"}` | NOT_READY |
+| full-spectrum-engine | GEN2 | NOT_IMPLEMENTED | NOT_EXECUTED | LOCAL_ONLY | `{"network_capability":{"declared":"NONE","observed":"UNKNOWN","verified":"UNKNOWN"},"runtime_scope":{"declared":"LOCAL_FIRST","observed":"CONTROLLED_LOCAL","verified":"UNKNOWN"},"writeback_capability":{"declared":"CONTRACT_ONLY","observed":"UNKNOWN","verified":"UNKNOWN"}}` | `{"observer":"NOT_CONFIRMED","knowledge_governance":"NOT_CONFIRMED"}` | NOT_READY |
 
 ## 分层状态
 
@@ -23,7 +23,7 @@
     "IMPLEMENTED",
     "DESIGNED",
     "NOT_APPLICABLE",
-    "NOT_CONFIRMED"
+    "NOT_IMPLEMENTED"
   ],
   "verification_status": [
     "UNKNOWN",

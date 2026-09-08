@@ -2,16 +2,19 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://fullspectrumprotocol.com/schemas/engine2-error-code-registry.json",
   "schema_version": "0.1",
-  "status": "CANDIDATE_APPROVED_FOR_CONTRACT_FREEZE",
+  "status": "FROZEN_CONTRACT_REGISTRY",
   "registered_error_codes": [
     "PROTOCOL_OBJECT_INVALID",
     "PROTOCOL_OBJECT_UNTRUSTED",
     "CREDENTIAL_EXPIRED",
     "CREDENTIAL_REVOKED",
     "EVIDENCE_DIGEST_MISMATCH",
-    "REPLAY_DEPENDENCY_MISSING"
+    "REPLAY_DEPENDENCY_MISSING",
+    "IDEMPOTENCY_CONFLICT",
+    "OBSERVER_RESULT_MUTATION_DETECTED",
+    "AUDIT_PERSISTENCE_FAILED"
   ],
-  "candidate_error_codes": [
+  "registered_semantics": [
     {"code": "IDEMPOTENCY_CONFLICT", "retryable": false, "meaning": "same idempotency key with different request digest"},
     {"code": "OBSERVER_RESULT_MUTATION_DETECTED", "retryable": false, "meaning": "Observer projection differs from original Engine result digest"},
     {"code": "AUDIT_PERSISTENCE_FAILED", "retryable": false, "meaning": "required audit persistence failed; retry only after proving no external side effect and idempotency"}
@@ -23,6 +26,6 @@
   "limitations": [
     "Approval covers contract semantics only.",
     "No Engine 2 implementation or runtime verification exists.",
-    "Formal registration remains subject to the four-instance contract freeze decision."
+    "Registration covers frozen contract semantics only and does not prove runtime implementation."
   ]
 }

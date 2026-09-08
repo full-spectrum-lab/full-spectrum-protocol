@@ -18,9 +18,9 @@
     "evidence_requirements": {"type": "object", "properties": {"target_commit": {"enum": ["REQUIRED", "OPTIONAL", "UNKNOWN"]}, "before_after_diff": {"enum": ["REQUIRED", "OPTIONAL", "UNKNOWN"]}, "ci_run_id": {"enum": ["REQUIRED", "REQUIRED_FOR_CONFIRMED", "OPTIONAL", "UNKNOWN"]}, "fixture_digest": {"enum": ["REQUIRED", "REQUIRED_FOR_CONFIRMED", "OPTIONAL", "UNKNOWN"]}, "evidence_manifest": {"enum": ["REQUIRED", "OPTIONAL", "UNKNOWN"]}, "manifest_sha256": {"enum": ["REQUIRED", "REQUIRED_FOR_CONFIRMED", "OPTIONAL", "UNKNOWN"]}, "independent_reverify": {"enum": ["REQUIRED", "REQUIRED_FOR_CONFIRMED", "OPTIONAL", "UNKNOWN"]}, "human_approval": {"enum": ["REQUIRED_FOR_HIGH_RISK_PROMOTION", "REQUIRED", "OPTIONAL", "UNKNOWN"]}}, "additionalProperties": true},
     "credential_scope": {"enum": ["NONE", "REFERENCE_ONLY", "LOCAL_TRUST_DOMAIN", "FEDERATED_TRUST_DOMAIN"]},
     "credential_lifecycle": {"type": "object", "properties": {"revocation": {"enum": ["UNKNOWN", "ACTIVE", "REVOKED"]}, "expiry": {"enum": ["UNKNOWN", "VALID", "EXPIRED"]}, "rotation": {"enum": ["UNKNOWN", "CURRENT", "ROTATION_REQUIRED", "ROTATED"]}}, "additionalProperties": false},
-    "error_codes_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
-    "replay_contract_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
-    "evidence_requirements_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
+    "error_codes_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "FROZEN_CONTRACT", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
+    "replay_contract_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "FROZEN_CONTRACT", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
+    "evidence_requirements_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "FROZEN_CONTRACT", "IMPLEMENTED", "VERIFIED", "UNKNOWN"]},
     "latest_verified_commit": {"type": "string", "minLength": 1},
     "authority": {
       "type": "object",

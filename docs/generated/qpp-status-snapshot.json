@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "generated_at": "2026-09-08T03:22:27+00:00",
+  "generated_at": "2026-09-08T12:18:23+00:00",
   "mode": "READ_ONLY",
   "projects": [
     {
@@ -132,15 +132,14 @@
       "evidence_requirements_status": "UNKNOWN",
       "evidence_requirements": {},
       "evidence": {
-        "level": "CODE_AND_RUNTIME_REVERIFY",
-        "scope": "Single capability local runtime reverify at target commit",
+        "level": "EXACT_ENVIRONMENT_RUNTIME_REVERIFY",
+        "scope": "Exact commit, LF checkout, .NET SDK 10.0.301 offline full gate",
         "bundle": null,
         "bundle_sha256": null
       },
-      "evidence_scope": "Single capability local runtime reverify at target commit",
+      "evidence_scope": "Exact commit, LF checkout, .NET SDK 10.0.301 offline full gate",
       "limitations": [
-        "本轮使用目标提交的临时源码 checkout，但未安装 global.json 要求的 .NET SDK 10.0.301",
-        "整套 137 项测试为 136/137；既有 v0.1 baseline hash 测试失败",
+        "本轮仅覆盖离线精确环境门禁和 B1 持久化审计行篡改失败关闭",
         "专家团不同测试计数属于不同时间点，不合并为当前单一计数",
         "离线证据不证明真实网络、真实凭据或生产就绪"
       ],
@@ -209,13 +208,13 @@
       "publication": "LOCAL_ONLY",
       "release": {},
       "inspected_prerelease": {},
-      "implementation_status": "NOT_CONFIRMED",
+      "implementation_status": "NOT_IMPLEMENTED",
       "verification_status": "NOT_EXECUTED",
       "maturity_level": "DESIGNED",
       "generation": "GEN2",
       "contract": {
-        "status": "DRAFT_NOT_FROZEN",
-        "frozen": false
+        "status": "FROZEN",
+        "frozen": true
       },
       "schema_field_baseline": {
         "id": "ENGINE2-SCHEMA-FIELDS-20260907",
@@ -253,9 +252,9 @@
         "expiry": "UNKNOWN",
         "rotation": "UNKNOWN"
       },
-      "error_codes_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
-      "replay_contract_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
-      "evidence_requirements_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
+      "error_codes_status": "FROZEN_CONTRACT",
+      "replay_contract_status": "FROZEN_CONTRACT",
+      "evidence_requirements_status": "FROZEN_CONTRACT",
       "evidence_requirements": {},
       "evidence": {
         "level": null,
@@ -266,7 +265,6 @@
       "evidence_scope": "UNKNOWN",
       "limitations": [],
       "unknowns": [
-        "Engine 2.x 尚未实现",
         "Observer–Engine 正式兼容尚未确认",
         "Engine–Knowledge Governance 正式兼容尚未确认",
         "真实网络能力未授权"
@@ -327,7 +325,7 @@
       },
       {
         "project": "full-spectrum-engine",
-        "value": "NOT_CONFIRMED"
+        "value": "NOT_IMPLEMENTED"
       }
     ],
     "case_validation_status": [
@@ -346,7 +344,7 @@
       {
         "project": "full-spectrum-knowledge-governance",
         "value": "CODE_AND_RUNTIME_REVERIFY",
-        "scope": "Single capability local runtime reverify at target commit"
+        "scope": "Exact commit, LF checkout, .NET SDK 10.0.301 offline full gate"
       },
       {
         "project": "full-spectrum-engine",
