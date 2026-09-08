@@ -72,14 +72,17 @@ jobs:
           PY
 
       - name: Run Engine 2 offline tests
+        if: ${{ always() }}
         working-directory: engine
         run: python -m pytest -q tests/test_engine2_offline.py tests/test_engine2_persistence_fixture.py tests/test_engine2_boundary_adapters.py
 
       - name: Run complete Engine regression
+        if: ${{ always() }}
         working-directory: engine
         run: python -m pytest -q
 
       - name: Preserve compatibility boundary
+        if: ${{ always() }}
         run: |
           echo "ENGINE2_OFFLINE_PREFLIGHT_ONLY"
           echo "OBSERVER_ENGINE_COMPATIBILITY=NOT_CONFIRMED"
