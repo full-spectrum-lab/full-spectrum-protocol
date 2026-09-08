@@ -1,0 +1,161 @@
+spec_id: ENGINE2-CROSS-REPO-FIXTURE-20260908
+spec_version: "0.3.0-rc"
+created_at: "2026-09-08T12:03:00+08:00"
+updated_at: "2026-09-08T13:04:00+08:00"
+owner: INSTANCE_4
+fixture_version_owner: PROTOCOL
+status: FREEZE_CANDIDATE
+contract_frozen: false
+implementation_status: NOT_IMPLEMENTED
+verification_status: NOT_EXECUTED
+
+ownership:
+  fixture_version: PROTOCOL
+  engine_adapter_evidence: ENGINE
+  observer_adapter_evidence: OBSERVER
+  kg_persistence_evidence: KNOWLEDGE_GOVERNANCE
+  qpp: READ_ONLY_STATUS_CONSUMER
+
+serialization:
+  canonical_serialization: RFC8785_JSON
+  yaml_role: AUTHORING_ONLY
+  duplicate_yaml_keys: REJECT
+  yaml_alias_handling: EXPAND_BEFORE_JSON_CONVERSION
+  conversion_rules:
+    - Parse YAML 1.2 with duplicate mapping keys rejected.
+    - Resolve anchors and aliases into an acyclic data tree; reject cycles and implementation-specific tags.
+    - Permit only JSON-compatible null, boolean, string, number, array, and object values.
+    - Convert every mapping key to a JSON string; reject non-string keys.
+    - Serialize the resulting JSON value using RFC 8785 and UTF-8.
+
+digest_policy:
+  algorithm: SHA-256
+  uppercase_hex: true
+  local_verification_profile: RFC8785_SAFE_SUBSET_ASCII_STRINGS_BOOLEANS_INTEGERS_ARRAYS_OBJECTS
+  formal_rfc8785_reverification: REQUIRED_BY_PROTOCOL_OWNER
+  scope: ENTIRE_RESOLVED_DOCUMENT_WITH_ONLY_DIGEST_POLICY_FIXTURE_SET_DIGEST_REPLACED_BY_EMPTY_STRING
+  invalidation_rule: ANY_DOCUMENT_CHANGE_INCLUDING_COMMIT_BINDINGS_REQUIRES_RECOMPUTATION
+  fixture_set_digest: 72D1B9335AECF2E98BDDC0A1929088E75D1CB008C937D8F9498AF58074C2A1DB
+  per_case_scope: RESOLVED_FIXTURE_CASE_WITH_BINDINGS_FIXTURE_DIGEST_REPLACED_BY_EMPTY_STRING
+  expected_result_scope: EXPECTED_MESSAGE_ONLY
+  audit_event_scope: AUDIT_MESSAGE_ONLY_OR_NOT_AVAILABLE
+
+bindings_template: &bindings
+  ENGINE_COMMIT: 88493007d4e00344c70a70ed0e5a5d652dec86f5
+  OBSERVER_COMMIT: 2492715d54c504dc58d0a682f4559d731c56fc74
+  OBSERVER_RELEASE_TRUTH_COMMIT: df0b64c064f6debd33b3a1a60f97f96287cd5dc8
+  KG_COMMIT: f264357b57339faa9129a067a225d4825b166c82
+  PROTOCOL_SCHEMA_VERSION: "engine2-status.schema.json@50c49c5b9036162287f1236825aed85cdd9ca199"
+  FIXTURE_DIGEST: TO_BE_COMPUTED
+  EXPECTED_RESULT_DIGEST: TO_BE_COMPUTED
+  ERROR_CODE: NONE
+  AUDIT_EVENT_DIGEST: TO_BE_COMPUTED
+
+message_types:
+  SnapshotBinding:
+    required: [engine_commit, observer_commit, kg_commit, protocol_schema_version, knowledge_snapshot_ref]
+  EngineRetrievalRequest:
+    required: [request_id, idempotency_key, generation, protocol_object, protocol_object_digest, snapshot_binding]
+    field_types: {snapshot_binding: SnapshotBinding}
+  EngineRetrievalResult:
+    required: [request_id, generation, decision, verification_status, result_digest, hard_gate, original_engine_result_digest]
+  AuditEvent:
+    required: [event_id, request_id, event_type, outcome, original_event_ref, input_digest, output_digest]
+  ErrorResponse:
+    required: [request_id, error_code, message, retryable, retry_preconditions, correlation_id]
+  ReplayRequest:
+    required: [replay_id, original_event_ref, evidence_manifest_sha256, expected_input_digest, expected_output_digest]
+  ReplayResult:
+    required: [replay_id, outcome, error_code, bindings_verified, output_digest, difference_digest]
+
+registered_error_codes:
+  - PROTOCOL_OBJECT_INVALID
+  - PROTOCOL_OBJECT_UNTRUSTED
+  - CREDENTIAL_EXPIRED
+  - CREDENTIAL_REVOKED
+  - EVIDENCE_DIGEST_MISMATCH
+  - REPLAY_DEPENDENCY_MISSING
+candidate_error_codes_pending_protocol_registration:
+  - IDEMPOTENCY_CONFLICT
+  - OBSERVER_RESULT_MUTATION_DETECTED
+  - AUDIT_PERSISTENCE_FAILED
+
+snapshot_template: &snapshot
+  engine_commit: 88493007d4e00344c70a70ed0e5a5d652dec86f5
+  observer_commit: 2492715d54c504dc58d0a682f4559d731c56fc74
+  kg_commit: f264357b57339faa9129a067a225d4825b166c82
+  protocol_schema_version: "engine2-status.schema.json@50c49c5b9036162287f1236825aed85cdd9ca199"
+  knowledge_snapshot_ref: fixture-knowledge-snapshot
+
+fixture_cases:
+  - id: offline_success
+    purpose: normal_offline_path
+    bindings: {<<: *bindings, FIXTURE_DIGEST: FB0CCE59B33D911CDC9439293B6D21691361B839086F85B120B1A00BF2BA1C56, EXPECTED_RESULT_DIGEST: CBABB93CA99B7A0AD832B53EC960B42AE6D93D9C1C56F0EC13FDE9A5E62B7216, AUDIT_EVENT_DIGEST: 9F428DF067089C39FC96CD208A7A51878E721B65804B8256A36813BAF99BAA7A}
+    request: {type: EngineRetrievalRequest, request_id: req-001, idempotency_key: idem-001, generation: GEN2, protocol_object: {descriptor: offline-fixture}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: EngineRetrievalResult, request_id: req-001, generation: GEN2, decision: ALLOW, verification_status: FIXTURE_EXPECTATION_ONLY, result_digest: TO_BE_COMPUTED, hard_gate: PASS, original_engine_result_digest: TO_BE_COMPUTED}
+    audit: {type: AuditEvent, event_id: audit-001, request_id: req-001, event_type: ENGINE_RETRIEVAL, outcome: ALLOW, original_event_ref: NONE, input_digest: TO_BE_COMPUTED, output_digest: TO_BE_COMPUTED}
+  - id: unknown_preserved
+    purpose: preserve_unknown
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 56EED5898C1E40CF91A71D0E919900A6A5B751189972EAB6116089D87A944141, EXPECTED_RESULT_DIGEST: 5CEFC478CE5CCB52B4DCB52620F09C25F2C33EB8C9897ED90F7A7BC3051D6CA3, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-002, idempotency_key: idem-002, generation: GEN2, protocol_object: {descriptor: unknown-input}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: EngineRetrievalResult, request_id: req-002, generation: GEN2, decision: UNKNOWN, verification_status: UNKNOWN, result_digest: TO_BE_COMPUTED, hard_gate: UNKNOWN, original_engine_result_digest: TO_BE_COMPUTED}
+  - id: hard_gate_preserved
+    purpose: preserve_hard_gate
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 78F20A82C4993CDD875FF61FA7751D54B6036BE2F9E2CDC3F43E03A441AA7F2F, EXPECTED_RESULT_DIGEST: CCAD32F80FEB92835B897D604FD73DD5FB3C15580D793C5D1F129ABC285E300B, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-003, idempotency_key: idem-003, generation: GEN2, protocol_object: {descriptor: blocked}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: EngineRetrievalResult, request_id: req-003, generation: GEN2, decision: DENY, verification_status: FIXTURE_EXPECTATION_ONLY, result_digest: TO_BE_COMPUTED, hard_gate: FAIL, original_engine_result_digest: TO_BE_COMPUTED}
+  - id: invalid_descriptor
+    purpose: reject_invalid_descriptor
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 8F70E720A60F8F8803DDD7154023C4162D2CE010F58F39FD4EC92374B9EE5FD5, EXPECTED_RESULT_DIGEST: 255B994631E597E412DDA4BCA531B8AD381117CEC034A9026888882DDF59692F, ERROR_CODE: PROTOCOL_OBJECT_INVALID, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-004, idempotency_key: idem-004, generation: GEN2, protocol_object: {descriptor: null}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: ErrorResponse, request_id: req-004, error_code: PROTOCOL_OBJECT_INVALID, message: invalid_descriptor, retryable: false, retry_preconditions: NONE, correlation_id: corr-004}
+  - id: digest_mismatch
+    purpose: reject_digest_mismatch
+    bindings: {<<: *bindings, FIXTURE_DIGEST: DDE70FD75DF8ED2B7CCE15C3D3258226C5343896BB00DA918FD56E7359968711, EXPECTED_RESULT_DIGEST: 313E8549200E5EAE863B1AC123B3D9CF19652368D6E272B9242C157456C871CE, ERROR_CODE: EVIDENCE_DIGEST_MISMATCH, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-005, idempotency_key: idem-005, generation: GEN2, protocol_object: {descriptor: digest-test}, protocol_object_digest: INTENTIONALLY_INVALID, snapshot_binding: *snapshot}
+    expected: {type: ErrorResponse, request_id: req-005, error_code: EVIDENCE_DIGEST_MISMATCH, message: digest_mismatch, retryable: false, retry_preconditions: NONE, correlation_id: corr-005}
+  - id: credential_expired
+    purpose: reject_expired_credential
+    bindings: {<<: *bindings, FIXTURE_DIGEST: B1A5C2AC01EB12410219D64CC3EEE97A4EA790B0CD7DC842FAE5C036C7B718B3, EXPECTED_RESULT_DIGEST: 0633B80A658B05CDCD3168838CB92891B66E360FDAA8119948E41FD192E13E38, ERROR_CODE: CREDENTIAL_EXPIRED, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-006, idempotency_key: idem-006, generation: GEN2, protocol_object: {descriptor: credential-test, credential_ref: cred-expired, credential_status: EXPIRED}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: ErrorResponse, request_id: req-006, error_code: CREDENTIAL_EXPIRED, message: credential_expired, retryable: false, retry_preconditions: NEW_VALID_CREDENTIAL_AND_NEW_AUTHORIZATION, correlation_id: corr-006}
+  - id: credential_revoked
+    purpose: reject_revoked_credential
+    bindings: {<<: *bindings, FIXTURE_DIGEST: B18003CD3F0D610C48CD493FFCECCD7751DAFA12053B8966D9DE36B2B622C9AF, EXPECTED_RESULT_DIGEST: 90950BE0F2BD0E593393C5FF5F447C83A54DD7CC20329EDE1B5042687860DACE, ERROR_CODE: CREDENTIAL_REVOKED, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: EngineRetrievalRequest, request_id: req-007, idempotency_key: idem-007, generation: GEN2, protocol_object: {descriptor: credential-test, credential_ref: cred-revoked, credential_status: REVOKED}, protocol_object_digest: TO_BE_COMPUTED, snapshot_binding: *snapshot}
+    expected: {type: ErrorResponse, request_id: req-007, error_code: CREDENTIAL_REVOKED, message: credential_revoked, retryable: false, retry_preconditions: NEW_VALID_CREDENTIAL_AND_NEW_AUTHORIZATION, correlation_id: corr-007}
+  - id: replay_tamper
+    purpose: reject_tampered_replay
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 77818C174AEC144328334C4FEF3EC1AE6433ED5B2731FC9AF8FFEC16F972A7B9, EXPECTED_RESULT_DIGEST: 780762772C2826AD320AAE8A02C6523D2CF9FBD284C3AFAC983343B473AAE869, ERROR_CODE: EVIDENCE_DIGEST_MISMATCH, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    request: {type: ReplayRequest, replay_id: replay-001, original_event_ref: audit-001, evidence_manifest_sha256: INTENTIONALLY_INVALID, expected_input_digest: TO_BE_COMPUTED, expected_output_digest: TO_BE_COMPUTED}
+    expected: {type: ReplayResult, replay_id: replay-001, outcome: FAIL_CLOSED, error_code: EVIDENCE_DIGEST_MISMATCH, bindings_verified: false, output_digest: NOT_AVAILABLE, difference_digest: TO_BE_COMPUTED}
+  - id: duplicate_request_idempotent
+    purpose: enforce_idempotency
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 96982EA875F20C2C7F8F74A63796E68809CD8B1322A9424593DEFD27F4C6DFC9, EXPECTED_RESULT_DIGEST: 4811D41363C41B64314C4D33F9CF4B2363AB7FC411F92BEE3841CC2AD550009C, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    requests: [{request_id: req-008, idempotency_key: idem-008, payload_digest: TO_BE_COMPUTED}, {request_id: req-008-retry, idempotency_key: idem-008, payload_digest: TO_BE_COMPUTED}]
+    expected: {same_semantic_result: true, external_side_effect_count: 1, audit_duplicate_marker: true}
+  - id: observer_mutation_rejected
+    purpose: observer_must_not_rewrite_engine_result
+    bindings: {<<: *bindings, FIXTURE_DIGEST: DE8EB13F6E3AA561C4042FCE3666CF021474DFB89B16CFCF0202DC58219E611F, EXPECTED_RESULT_DIGEST: 166F8BE1A7BAED2ECF91786D56E2FF2DCE31506C363B8F26A469ED6DC318D91C, ERROR_CODE: OBSERVER_RESULT_MUTATION_DETECTED, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    input: {request_id: req-009, engine_result_digest: TO_BE_COMPUTED, observer_projected_result_digest: INTENTIONALLY_DIFFERENT}
+    expected: {type: ErrorResponse, request_id: req-009, error_code: OBSERVER_RESULT_MUTATION_DETECTED, message: observer_result_mutation, retryable: false, retry_preconditions: RESTORE_UNMODIFIED_ENGINE_RESULT, correlation_id: corr-009}
+  - id: audit_failure_fail_closed
+    purpose: fail_closed_when_audit_persistence_fails
+    bindings: {<<: *bindings, FIXTURE_DIGEST: 1D7E190DE5F311C9A96E3326E235B9AA7E6AB472C98517D1310FB59A8F04E306, EXPECTED_RESULT_DIGEST: FC01AE002D018F459605899CDDCB2870D4B97AF8F3FB2C451706C59C386F31D3, ERROR_CODE: AUDIT_PERSISTENCE_FAILED, AUDIT_EVENT_DIGEST: NOT_AVAILABLE}
+    input: {request_id: req-010, engine_decision_before_audit: ALLOW, audit_persistence: FAIL, external_side_effect_observed: UNKNOWN, idempotency_guarantee: UNKNOWN}
+    expected: {type: ErrorResponse, request_id: req-010, error_code: AUDIT_PERSISTENCE_FAILED, message: audit_persistence_failed, retryable: false, retry_preconditions: RETRY_ONLY_WHEN_NO_EXTERNAL_SIDE_EFFECT_AND_IDEMPOTENCY_IS_PROVEN, correlation_id: corr-010, externally_visible_decision: DENY}
+
+promotion_boundaries:
+  design_is_implementation: false
+  offline_pass_is_network_pass: false
+  scoped_ci_is_formal_e2e: false
+  observer_network_is_engine_network: false
+  unknown_auto_promotion: forbidden
+  high_risk_human_approval: required
+
+limitations:
+  - Fixture values are contract examples, not execution evidence.
+  - Per-case fixture and expected-message digests are canonical authoring-fixture digests, not runtime result evidence.
+  - The three candidate error codes are not registered Protocol error codes.
+  - Engine 2 is not implemented and cross-repository compatibility is not confirmed.
+  - Real network implementation is not authorized.

@@ -13,10 +13,12 @@
   "engine2_contract_candidate": {
     "status": "FREEZE_CANDIDATE",
     "frozen": false,
-    "fixture_spec": "QPP/21_AI协作/04_Codex实例4/ENGINE_2_CROSS_REPO_FIXTURE_SPEC_20260908.yaml",
-    "fixture_spec_sha256": "D496AD70F1CB8454A0D508F9E9B3ECB7814F3BD6BA2D8C25CA9D806081CBB9D8",
+    "fixture_version": "0.3.0-rc",
+    "fixture_spec": "fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml",
+    "fixture_spec_sha256": "72D1B9335AECF2E98BDDC0A1929088E75D1CB008C937D8F9498AF58074C2A1DB",
+    "fixture_digest_verification": "RFC8785_INDEPENDENT_IMPLEMENTATION_PASS",
     "error_code_registry": "schemas/engine2-error-code-registry.json",
-    "candidate_error_codes_pending_registration": true,
+    "candidate_error_codes_decision": "APPROVED_FOR_CONTRACT_FREEZE_PENDING_FOUR_INSTANCE_DECISION",
     "canonical_serialization": "RFC8785_JSON",
     "fixture_owner": "PROTOCOL"
   },

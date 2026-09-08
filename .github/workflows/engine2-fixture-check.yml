@@ -1,0 +1,27 @@
+name: Engine 2 fixture check
+
+on:
+  push:
+    paths:
+      - "fixtures/engine2/**"
+      - "schemas/engine2-**"
+      - "tools/verify_engine2_fixture.py"
+      - ".github/workflows/engine2-fixture-check.yml"
+  pull_request:
+    paths:
+      - "fixtures/engine2/**"
+      - "schemas/engine2-**"
+      - "tools/verify_engine2_fixture.py"
+      - ".github/workflows/engine2-fixture-check.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install PyYAML rfc8785==0.1.4
+      - run: python tools/verify_engine2_fixture.py fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
