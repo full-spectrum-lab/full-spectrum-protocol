@@ -25,7 +25,7 @@ jobs:
       - name: Checkout Protocol
         uses: actions/checkout@v4
         with:
-          path: protocol
+          path: full-spectrum-protocol
 
       - name: Checkout pinned Engine implementation
         shell: bash
@@ -46,7 +46,7 @@ jobs:
           python -m pip install rfc8785==0.1.4
 
       - name: Recompute Protocol canonical fixture
-        run: python protocol/tools/verify_engine2_fixture.py protocol/fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
+        run: python full-spectrum-protocol/tools/verify_engine2_fixture.py full-spectrum-protocol/fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
 
       - name: Verify Engine evidence hashes and manifest contents
         shell: bash
