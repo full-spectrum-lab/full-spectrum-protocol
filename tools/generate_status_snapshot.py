@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -107,7 +107,8 @@ def project_record(source: Path, data: dict[str, Any]) -> dict[str, Any]:
 
 
 def markdown(snapshot: dict[str, Any]) -> str:
-    lines = ["# Full Spectrum 状态快照（只读生成）", "", f"- 生成时间：`{snapshot['generated_at']}`", "- 生成模式：`READ_ONLY`", "- 高风险自动升级：`FORBIDDEN`", "", "## 项目状态", "", "| 项目 | 代际 | 实现 | 验证 | 发布 | 能力 | 兼容 | 生产就绪 |", "|---|---|---|---|---|---|---|---|"]
+    beijing = datetime.fromisoformat(snapshot["generated_at"]).astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
+    lines = ["# Full Spectrum 状态快照（只读生成）", "", f"- AUTHOR_DECLARED_CREATED_AT: {beijing} UTC+8", f"- AUTHOR_DECLARED_UPDATED_AT: {beijing} UTC+8", f"- 生成时间：`{snapshot['generated_at']}`", "- 生成模式：`READ_ONLY`", "- 高风险自动升级：`FORBIDDEN`", "", "## 项目状态", "", "| 项目 | 代际 | 实现 | 验证 | 发布 | 能力 | 兼容 | 生产就绪 |", "|---|---|---|---|---|---|---|---|"]
     for item in snapshot["projects"]:
         ready = item["production_readiness"].get("status", "UNKNOWN")
         cap = item.get("capability", {})
