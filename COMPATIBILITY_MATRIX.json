@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "as_of": "2026-09-07",
+  "as_of": "2026-09-08",
   "as_of_commit": "3a9e131",
   "canonical_host": "github",
   "observer_release_truth": {
@@ -9,6 +9,16 @@
     "inspected_prerelease": "v0.4.0-beta",
     "inspected_prerelease_commit": "2492715d54c504dc58d0a682f4559d731c56fc74",
     "compatibility_promotion": "NONE"
+  },
+  "engine2_contract_candidate": {
+    "status": "FREEZE_CANDIDATE",
+    "frozen": false,
+    "fixture_spec": "QPP/21_AI协作/04_Codex实例4/ENGINE_2_CROSS_REPO_FIXTURE_SPEC_20260908.yaml",
+    "fixture_spec_sha256": "D496AD70F1CB8454A0D508F9E9B3ECB7814F3BD6BA2D8C25CA9D806081CBB9D8",
+    "error_code_registry": "schemas/engine2-error-code-registry.json",
+    "candidate_error_codes_pending_registration": true,
+    "canonical_serialization": "RFC8785_JSON",
+    "fixture_owner": "PROTOCOL"
   },
   "capability_rules": {
     "offline_pass_is_real_network_pass": false,

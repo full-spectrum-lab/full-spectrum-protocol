@@ -9,7 +9,7 @@
     "implementation_status": {"enum": ["NOT_CONFIRMED", "NOT_IMPLEMENTED", "PARTIALLY_IMPLEMENTED", "IMPLEMENTED"]},
     "verification_status": {"enum": ["NOT_EXECUTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED"]},
     "maturity_level": {"enum": ["DESIGNED", "IMPLEMENTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_READY"]},
-    "contract": {"type": "object", "required": ["status", "frozen"], "properties": {"status": {"enum": ["DRAFT_NOT_FROZEN", "FROZEN"]}, "frozen": {"type": "boolean"}}, "additionalProperties": false},
+    "contract": {"type": "object", "required": ["status", "frozen"], "properties": {"status": {"enum": ["DRAFT_NOT_FROZEN", "FREEZE_CANDIDATE", "FROZEN"]}, "frozen": {"type": "boolean"}}, "additionalProperties": false},
     "schema_field_baseline": {"type": "object", "required": ["id", "status", "path"], "properties": {"id": {"const": "ENGINE2-SCHEMA-FIELDS-20260907"}, "status": {"const": "FROZEN_FOR_PROTOCOL_SCHEMA_INTEGRATION"}, "path": {"type": "string", "minLength": 1}}, "additionalProperties": false},
     "capability": {"type": "object", "required": ["network_capability", "runtime_scope", "writeback_capability"], "properties": {
       "network_capability": {"$ref": "#/$defs/networkCapability"},

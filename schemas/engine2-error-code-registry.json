@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fullspectrumprotocol.com/schemas/engine2-error-code-registry.json",
+  "schema_version": "0.1",
+  "status": "CANDIDATE_PENDING_REGISTRATION",
+  "registered_error_codes": [
+    "PROTOCOL_OBJECT_INVALID",
+    "PROTOCOL_OBJECT_UNTRUSTED",
+    "CREDENTIAL_EXPIRED",
+    "CREDENTIAL_REVOKED",
+    "EVIDENCE_DIGEST_MISMATCH",
+    "REPLAY_DEPENDENCY_MISSING"
+  ],
+  "candidate_error_codes": [
+    {"code": "IDEMPOTENCY_CONFLICT", "retryable": false, "meaning": "same idempotency key with different request digest"},
+    {"code": "OBSERVER_RESULT_MUTATION_DETECTED", "retryable": false, "meaning": "Observer projection differs from original Engine result digest"},
+    {"code": "AUDIT_PERSISTENCE_FAILED", "retryable": false, "meaning": "required audit persistence failed; retry only after proving no external side effect and idempotency"}
+  ],
+  "registration_gate": {
+    "owner": "full-spectrum-protocol",
+    "requires": ["canonical_message_semantics", "fixture_case", "CI_RUN_ID", "evidence_manifest_sha256", "independent_reverify", "human_approval_for_high_risk"]
+  }
+}
