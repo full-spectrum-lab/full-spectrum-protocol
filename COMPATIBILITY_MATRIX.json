@@ -1,7 +1,15 @@
 {
   "schema_version": "0.1",
-  "as_of": "2026-09-06",
+  "as_of": "2026-09-07",
+  "as_of_commit": "3a9e131",
   "canonical_host": "github",
+  "observer_release_truth": {
+    "current_public_release": "v0.3.0-maintenance.6",
+    "target_commit": "df0b64c064f6debd33b3a1a60f97f96287cd5dc8",
+    "inspected_prerelease": "v0.4.0-beta",
+    "inspected_prerelease_commit": "2492715d54c504dc58d0a682f4559d731c56fc74",
+    "compatibility_promotion": "NONE"
+  },
   "capability_rules": {
     "offline_pass_is_real_network_pass": false,
     "observer_network_is_engine_network": false,
@@ -9,6 +17,7 @@
     "manual_high_risk_gate": true
   },
   "triangle_status": {
+    "protocol_observer_compatibility": "NOT_CONFIRMED",
     "observer_engine_compatibility": "NOT_CONFIRMED",
     "observer_knowledge_governance_compatibility": "NOT_CONFIRMED",
     "engine_knowledge_governance_compatibility": "NOT_CONFIRMED"
@@ -58,6 +67,9 @@
       "knowledge_governance": ["C2"],
       "status": "DESIGNED_NOT_IMPLEMENTED",
       "generation": "GEN2",
+      "schema_field_baseline": {"id": "ENGINE2-SCHEMA-FIELDS-20260907", "status": "FROZEN_FOR_PROTOCOL_SCHEMA_INTEGRATION"},
+      "as_of": "2026-09-07",
+      "as_of_commit": "3a9e131",
       "implementation_status": "NOT_CONFIRMED",
       "verification_status": "NOT_EXECUTED",
       "maturity_level": "DESIGNED",
@@ -68,6 +80,13 @@
       },
       "compatibility": {"observer": "NOT_CONFIRMED", "knowledge_governance": "NOT_CONFIRMED"},
       "production_readiness": {"status": "NOT_READY", "boolean": false},
+      "evidence_scope": "OFFLINE",
+      "credential_scope": "NONE",
+      "credential_lifecycle": {"revocation": "UNKNOWN", "expiry": "UNKNOWN", "rotation": "UNKNOWN"},
+      "error_codes_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
+      "replay_contract_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
+      "evidence_requirements_status": "FROZEN_FOR_SCHEMA_INTEGRATION",
+      "evidence_requirements": {"target_commit": "REQUIRED", "before_after_diff": "REQUIRED", "ci_run_id": "REQUIRED_FOR_CONFIRMED", "fixture_digest": "REQUIRED_FOR_CONFIRMED", "evidence_manifest": "REQUIRED", "manifest_sha256": "REQUIRED", "independent_reverify": "REQUIRED_FOR_CONFIRMED", "human_approval": "REQUIRED_FOR_HIGH_RISK_PROMOTION"},
       "source_status": "QPP/21_AI协作/04_Codex实例4/status.yaml",
       "limitations": ["Engine 2.x contract is not frozen.", "No fixed cross-repository fixture or composite CI evidence.", "Real network implementation is not authorized."]
     }

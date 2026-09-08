@@ -33,6 +33,14 @@ def check(path: Path) -> list[str]:
     authority = data.get("authority", {})
     evidence = data.get("evidence", {})
 
+    if data.get("contract", {}).get("status") == "DRAFT_NOT_FROZEN":
+        if data.get("production_readiness", {}).get("status") == "READY":
+            issues.append("draft contract cannot be production READY")
+        if data.get("compatibility", {}).get("observer") == "CONFIRMED":
+            issues.append("draft contract cannot confirm Observer compatibility")
+        if data.get("compatibility", {}).get("knowledge_governance") == "CONFIRMED":
+            issues.append("draft contract cannot confirm Knowledge Governance compatibility")
+
     if publication.get("state") == "PUBLISHED_REMOTE" and not authority.get("canonical_commit"):
         issues.append("published status requires authority.canonical_commit")
     if publication.get("state") == "PUBLISHED_REMOTE" and publication.get("last_checked_at") is None:

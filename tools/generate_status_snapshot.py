@@ -29,29 +29,79 @@ def publication_state(data: dict[str, Any], source: Path) -> str:
     return "LOCAL_ONLY" if ".git" not in source.parts else "UNKNOWN"
 
 
+def source_reference(source: Path) -> str:
+    parts = list(source.parts)
+    for marker in ("qpp.wiki", "full-spectrum-observer", "full-spectrum-protocol"):
+        if marker in parts:
+            return "/".join(parts[parts.index(marker):])
+    return source.name
+
+
 def project_record(source: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(data.get("case"), dict):
+        case = data["case"]
+        verification = case.get("verification_status", {})
+        return {
+            "record_type": "CASE_VALIDATION",
+            "project": case.get("id", "UNKNOWN_CASE"),
+            "source": source_reference(source),
+            "authority": {"target_commit": case.get("target_commit"), "target_branch": case.get("target_branch")},
+            "publication": case.get("archive_status", "UNKNOWN"),
+            "release": {"current": case.get("version")},
+            "implementation_status": "NOT_APPLICABLE",
+            "verification_status": verification.get("value", "UNKNOWN"),
+            "maturity_level": "NOT_APPLICABLE",
+            "generation": "NOT_APPLICABLE",
+            "contract": {},
+            "production_readiness": {"status": "NOT_READY", "boolean": bool(data.get("production_ready", False))},
+            "capability": {},
+            "compatibility": {"protocol_observer": data.get("protocol_observer_compatibility", "NOT_CONFIRMED"), "observer_engine": data.get("observer_engine_compatibility", "NOT_CONFIRMED")},
+            "credential_scope": "NOT_APPLICABLE",
+            "credential_lifecycle": {},
+            "error_codes_status": "NOT_APPLICABLE",
+            "replay_contract_status": "NOT_APPLICABLE",
+            "evidence_requirements_status": "NOT_APPLICABLE",
+            "evidence_requirements": {},
+            "evidence": verification.get("evidence", {}),
+            "evidence_scope": verification.get("evidence_scope", "CASE_ONLY"),
+            "limitations": verification.get("limitations", []),
+            "unknowns": [],
+        }
     capability = data.get("capability", {})
+    if not capability and isinstance(data.get("capabilities"), dict):
+        capability = data["capabilities"]
     compatibility = data.get("compatibility", {})
     return {
-        "project": data.get("project", source.parent.parent.name),
-        "source": str(source),
+        "record_type": "INSTANCE_OR_PROJECT_STATUS",
+        "project": data.get("project", data.get("repository", source.parent.parent.name)),
+        "source": source_reference(source),
         "authority": data.get("authority", {}),
         "publication": publication_state(data, source),
         "release": data.get("release", {}),
+        "inspected_prerelease": data.get("inspected_prerelease", {}),
         "implementation_status": data.get("implementation_status", "UNKNOWN"),
         "verification_status": data.get("verification_status", "UNKNOWN"),
         "maturity_level": data.get("maturity_level", "DESIGNED"),
         "generation": data.get("generation", capability.get("generation", "unknown")),
         "contract": data.get("contract", {}),
+        "schema_field_baseline": data.get("schema_field_baseline", {}),
         "production_readiness": data.get("production_readiness", {"status": "UNKNOWN", "boolean": False}),
         "capability": capability,
         "compatibility": compatibility,
+        "credential_scope": data.get("credential_scope", "UNKNOWN"),
+        "credential_lifecycle": data.get("credential_lifecycle", {}),
+        "error_codes_status": data.get("error_codes_status", "UNKNOWN"),
+        "replay_contract_status": data.get("replay_contract_status", "UNKNOWN"),
+        "evidence_requirements_status": data.get("evidence_requirements_status", "UNKNOWN"),
+        "evidence_requirements": data.get("evidence_requirements", {}),
         "evidence": {
             "level": data.get("evidence", {}).get("level"),
             "scope": data.get("evidence", {}).get("scope"),
             "bundle": data.get("evidence", {}).get("bundle"),
             "bundle_sha256": data.get("evidence", {}).get("bundle_sha256"),
         },
+        "evidence_scope": data.get("evidence_scope", data.get("evidence", {}).get("scope", "UNKNOWN")),
+        "limitations": data.get("evidence", {}).get("limitations", data.get("limitations", [])),
         "unknowns": data.get("unknowns", []),
     }
 
@@ -83,6 +133,15 @@ def main() -> int:
         "triangle_status": matrix.get("triangle_status", {}),
         "source_matrix": str(args.matrix),
         "rules": matrix.get("capability_rules", {}),
+    }
+    snapshot["layered_summary"] = {
+        "design_status": [{"project": p["project"], "maturity": p["maturity_level"]} for p in snapshot["projects"]],
+        "implementation_status": [{"project": p["project"], "value": p["implementation_status"]} for p in snapshot["projects"]],
+        "case_validation_status": [{"project": p["project"], "value": p["verification_status"], "scope": p.get("evidence_scope")} for p in snapshot["projects"] if p["record_type"] == "CASE_VALIDATION"],
+        "single_repository_validation_status": [{"project": p["project"], "value": p["verification_status"], "scope": p.get("evidence_scope")} for p in snapshot["projects"] if p["record_type"] != "CASE_VALIDATION"],
+        "cross_repository_compatibility_status": snapshot["triangle_status"],
+        "real_network_status": "NOT_IMPLEMENTED_OR_NOT_CONFIRMED",
+        "production_readiness": [{"project": p["project"], "value": p["production_readiness"]} for p in snapshot["projects"]],
     }
     args.json_out.parent.mkdir(parents=True, exist_ok=True)
     args.md_out.parent.mkdir(parents=True, exist_ok=True)

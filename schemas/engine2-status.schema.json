@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fullspectrumprotocol.com/schemas/engine2-status.schema.json",
+  "type": "object",
+  "required": ["project", "generation", "implementation_status", "verification_status", "maturity_level", "contract", "schema_field_baseline", "capability", "compatibility", "credential_scope", "credential_lifecycle", "error_codes_status", "replay_contract_status", "evidence_requirements_status", "production_readiness", "publication", "unknowns", "blockers"],
+  "properties": {
+    "project": {"const": "full-spectrum-engine"},
+    "generation": {"const": "GEN2"},
+    "implementation_status": {"enum": ["NOT_CONFIRMED", "NOT_IMPLEMENTED", "PARTIALLY_IMPLEMENTED", "IMPLEMENTED"]},
+    "verification_status": {"enum": ["NOT_EXECUTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED"]},
+    "maturity_level": {"enum": ["DESIGNED", "IMPLEMENTED", "FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_READY"]},
+    "contract": {"type": "object", "required": ["status", "frozen"], "properties": {"status": {"enum": ["DRAFT_NOT_FROZEN", "FROZEN"]}, "frozen": {"type": "boolean"}}, "additionalProperties": false},
+    "schema_field_baseline": {"type": "object", "required": ["id", "status", "path"], "properties": {"id": {"const": "ENGINE2-SCHEMA-FIELDS-20260907"}, "status": {"const": "FROZEN_FOR_PROTOCOL_SCHEMA_INTEGRATION"}, "path": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "capability": {"type": "object", "required": ["network_capability", "runtime_scope", "writeback_capability"], "properties": {
+      "network_capability": {"$ref": "#/$defs/networkCapability"},
+      "runtime_scope": {"$ref": "#/$defs/runtimeScope"},
+      "writeback_capability": {"$ref": "#/$defs/writebackCapability"}
+    }, "additionalProperties": false},
+    "compatibility": {"type": "object", "required": ["observer", "knowledge_governance"], "properties": {"observer": {"enum": ["NOT_CONFIRMED", "CONFIRMED"]}, "knowledge_governance": {"enum": ["NOT_CONFIRMED", "CONFIRMED"]}}, "additionalProperties": false},
+    "credential_scope": {"enum": ["NONE", "REFERENCE_ONLY", "LOCAL_TRUST_DOMAIN", "FEDERATED_TRUST_DOMAIN"]},
+    "credential_lifecycle": {"type": "object", "required": ["revocation", "expiry", "rotation"], "properties": {"revocation": {"enum": ["UNKNOWN", "ACTIVE", "REVOKED"]}, "expiry": {"enum": ["UNKNOWN", "VALID", "EXPIRED"]}, "rotation": {"enum": ["UNKNOWN", "CURRENT", "ROTATION_REQUIRED", "ROTATED"]}}, "additionalProperties": false},
+    "error_codes_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED"]},
+    "replay_contract_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED"]},
+    "evidence_requirements_status": {"enum": ["FROZEN_FOR_SCHEMA_INTEGRATION", "IMPLEMENTED", "VERIFIED"]},
+    "production_readiness": {"type": "object", "required": ["status", "boolean"], "properties": {"status": {"enum": ["NOT_READY", "READY"]}, "boolean": {"type": "boolean"}}, "additionalProperties": false},
+    "publication": {"type": "object", "required": ["state"], "properties": {"state": {"enum": ["LOCAL_ONLY", "COMMITTED_NOT_PUSHED", "PUBLISHED_REMOTE"]}, "note": {"type": "string"}}, "additionalProperties": false},
+    "unknowns": {"type": "array", "items": {"type": "string"}},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "networkCapability": {"type": "object", "required": ["declared", "observed", "verified"], "properties": {"declared": {"enum": ["NONE", "LOCAL_ONLY", "CONTROLLED_OUTBOUND", "PROTOCOL_INTEROP"]}, "observed": {"enum": ["UNKNOWN", "PASS", "FAIL"]}, "verified": {"enum": ["UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": false},
+    "runtimeScope": {"type": "object", "required": ["declared", "observed", "verified"], "properties": {"declared": {"enum": ["LOCAL_FIRST", "CONTROLLED_PILOT", "CROSS_NODE_PROTOCOL"]}, "observed": {"enum": ["UNKNOWN", "CONTROLLED_LOCAL", "CROSS_NODE"]}, "verified": {"enum": ["UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": false},
+    "writebackCapability": {"type": "object", "required": ["declared", "observed", "verified"], "properties": {"declared": {"enum": ["DISABLED", "CONTRACT_ONLY", "CONTROLLED"]}, "observed": {"enum": ["UNKNOWN", "PASS", "FAIL"]}, "verified": {"enum": ["UNKNOWN", "PASS", "FAIL"]}}, "additionalProperties": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"contract": {"properties": {"status": {"const": "DRAFT_NOT_FROZEN"}}}}},
+      "then": {"properties": {"contract": {"properties": {"frozen": {"const": false}}}, "production_readiness": {"properties": {"status": {"const": "NOT_READY"}, "boolean": {"const": false}}}}}
+    },
+    {
+      "if": {"properties": {"compatibility": {"properties": {"observer": {"const": "CONFIRMED"}}}}},
+      "then": {"properties": {"verification_status": {"enum": ["FIXTURE_VALIDATED", "INDEPENDENTLY_REPRODUCED", "PILOT_VALIDATED", "PRODUCTION_ACCEPTED"]}}}
+    }
+  ],
+  "additionalProperties": false
+}

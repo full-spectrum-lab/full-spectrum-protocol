@@ -14,17 +14,17 @@ except ImportError:
 
 
 def main() -> int:
-    if len(sys.argv) != 2:
-        print("usage: python validate_full_spectrum_status.py <status.yaml>")
+    if len(sys.argv) not in {2, 3}:
+        print("usage: python validate_full_spectrum_status.py <status.yaml> [schema.json]")
         return 2
     status_path = Path(sys.argv[1])
-    schema_path = Path(__file__).resolve().parents[1] / "schemas" / "full-spectrum-status.schema.json"
+    schema_path = Path(sys.argv[2]) if len(sys.argv) == 3 else Path(__file__).resolve().parents[1] / "schemas" / "full-spectrum-status.schema.json"
     status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
     schema = __import__("json").loads(schema_path.read_text(encoding="utf-8"))
     jsonschema.Draft202012Validator(schema).validate(status)
     if status["production_readiness"]["boolean"] and status["production_readiness"]["status"] != "READY":
         raise SystemExit("production_readiness boolean/status mismatch")
-    if status["production_readiness"]["status"] == "READY" and status["evidence"]["level"] != "PRODUCTION_ACCEPTED":
+    if status["production_readiness"]["status"] == "READY" and status.get("evidence", {}).get("level") != "PRODUCTION_ACCEPTED":
         raise SystemExit("READY requires PRODUCTION_ACCEPTED evidence")
     print(f"VALID: {status_path}")
     return 0
