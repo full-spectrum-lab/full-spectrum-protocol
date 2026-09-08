@@ -1,0 +1,88 @@
+name: Engine 2 offline cross-repository preflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "COMPATIBILITY_MATRIX.json"
+      - "fixtures/engine2/**"
+      - "schemas/engine2-**"
+      - "tools/verify_engine2_fixture.py"
+      - ".github/workflows/engine2-offline-preflight.yml"
+
+env:
+  ENGINE_REPOSITORY: https://gitee.com/full-spectrum/full-spectrum-engine.git
+  ENGINE_IMPLEMENTATION_COMMIT: 11c6f83593a327457940c6b5832aa03aa50713ee
+  ENGINE_EVIDENCE_COMMIT: db2070b3bf1410bdac501388dd3dab5119e04fba
+  ENGINE_MANIFEST_SHA256: 29D9565CA6ACAC1223E3EADC671CBD9A59962BEDD46C7AC4D927EAC0CE9B8412
+  ENGINE_FIXTURE_RESULT_SHA256: 7BD3C5145010D6D6139A7FE5F9AE7D6D7AAC1A6CEAC0FDD9900DA3180A3A3814
+
+jobs:
+  engine2-offline-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol
+        uses: actions/checkout@v4
+        with:
+          path: protocol
+
+      - name: Checkout pinned Engine implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none "$ENGINE_REPOSITORY" engine
+          git -C engine checkout --detach "$ENGINE_EVIDENCE_COMMIT"
+          test "$(git -C engine rev-parse HEAD)" = "$ENGINE_EVIDENCE_COMMIT"
+          git -C engine merge-base --is-ancestor "$ENGINE_IMPLEMENTATION_COMMIT" "$ENGINE_EVIDENCE_COMMIT"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install verification dependencies
+        run: python -m pip install pytest PyYAML rfc8785==0.1.4 fastapi httpx numpy
+
+      - name: Recompute Protocol canonical fixture
+        run: python protocol/tools/verify_engine2_fixture.py protocol/fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
+
+      - name: Verify Engine evidence hashes and manifest contents
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum engine/test-records/engine2-offline/manifest-20260908.json | awk '{print toupper($1)}')" = "$ENGINE_MANIFEST_SHA256"
+          test "$(sha256sum engine/test-records/engine2-offline/fixture-run-20260908.json | awk '{print toupper($1)}')" = "$ENGINE_FIXTURE_RESULT_SHA256"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("engine")
+          manifest = json.loads((root / "test-records/engine2-offline/manifest-20260908.json").read_text(encoding="utf-8"))
+          for relative, expected in manifest["files"].items():
+              actual = hashlib.sha256((root / relative).read_bytes()).hexdigest().upper()
+              if actual != expected:
+                  raise SystemExit(f"manifest mismatch: {relative}")
+          expected_commit = os.environ["ENGINE_IMPLEMENTATION_COMMIT"]
+          if manifest.get("implementation_commit") != expected_commit:
+              raise SystemExit("manifest must bind the remotely reachable implementation commit")
+          if manifest.get("publication_state") != "PUBLISHED_GITEE_MAIN":
+              raise SystemExit("manifest publication_state must be PUBLISHED_GITEE_MAIN")
+          PY
+
+      - name: Run Engine 2 offline tests
+        working-directory: engine
+        run: python -m pytest -q tests/test_engine2_offline.py tests/test_engine2_persistence_fixture.py tests/test_engine2_boundary_adapters.py
+
+      - name: Run complete Engine regression
+        working-directory: engine
+        run: python -m pytest -q
+
+      - name: Preserve compatibility boundary
+        run: |
+          echo "ENGINE2_OFFLINE_PREFLIGHT_ONLY"
+          echo "OBSERVER_ENGINE_COMPATIBILITY=NOT_CONFIRMED"
+          echo "ENGINE_KG_COMPATIBILITY=NOT_CONFIRMED"
+          echo "CROSS_REPO_E2E=NOT_CONFIRMED"
+          echo "PRODUCTION_READY=NO"

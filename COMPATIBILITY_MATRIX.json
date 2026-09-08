@@ -93,9 +93,9 @@
       "schema_field_baseline": {"id": "ENGINE2-SCHEMA-FIELDS-20260907", "status": "FROZEN_FOR_PROTOCOL_SCHEMA_INTEGRATION"},
       "as_of": "2026-09-07",
       "as_of_commit": "3a9e131",
-      "implementation_status": "NOT_IMPLEMENTED",
-      "verification_status": "NOT_EXECUTED",
-      "maturity_level": "DESIGNED",
+      "implementation_status": "PARTIALLY_IMPLEMENTED",
+      "verification_status": "FIXTURE_VALIDATED",
+      "maturity_level": "FIXTURE_VALIDATED",
       "capability": {
         "network_capability": {"declared": "NONE", "observed": "UNKNOWN", "verified": "UNKNOWN"},
         "runtime_scope": {"declared": "LOCAL_FIRST", "observed": "CONTROLLED_LOCAL", "verified": "UNKNOWN"},
@@ -111,7 +111,8 @@
       "evidence_requirements_status": "FROZEN_CONTRACT",
       "evidence_requirements": {"target_commit": "REQUIRED", "before_after_diff": "REQUIRED", "ci_run_id": "REQUIRED_FOR_CONFIRMED", "fixture_digest": "REQUIRED_FOR_CONFIRMED", "evidence_manifest": "REQUIRED", "manifest_sha256": "REQUIRED", "independent_reverify": "REQUIRED_FOR_CONFIRMED", "human_approval": "REQUIRED_FOR_HIGH_RISK_PROMOTION"},
       "source_status": "QPP/21_AI协作/04_Codex实例4/status.yaml",
-      "limitations": ["Contract freeze does not authorize Engine 2 implementation.", "No runtime cross-repository composite CI evidence exists.", "Real network implementation is not authorized."]
+      "evidence": {"base_commit": "88493007d4e00344c70a70ed0e5a5d652dec86f5", "core_implementation_commit": "3af893999b2f9e032e72925b650574782871e7c9", "implementation_commit": "11c6f83593a327457940c6b5832aa03aa50713ee", "evidence_commit": "db2070b3bf1410bdac501388dd3dab5119e04fba", "implementation_remote": "https://gitee.com/full-spectrum/full-spectrum-engine.git", "remote_reachable": "PASS", "ci_run_id": "NOT_AVAILABLE", "scope": "ENGINE2_LOCAL_OFFLINE_RUNTIME_WITH_ENGINE_BOUNDARY_ADAPTERS", "fixture_version": "0.3.0-rc", "fixture_spec_sha256": "72D1B9335AECF2E98BDDC0A1929088E75D1CB008C937D8F9498AF58074C2A1DB", "fixture_result_sha256": "7BD3C5145010D6D6139A7FE5F9AE7D6D7AAC1A6CEAC0FDD9900DA3180A3A3814", "manifest_sha256": "29D9565CA6ACAC1223E3EADC671CBD9A59962BEDD46C7AC4D927EAC0CE9B8412", "manifest_metadata": "PUBLISHED_GITEE_MAIN"},
+      "limitations": ["Engine-owned Observer projection and Knowledge Governance audit boundary adapters are implemented; no Observer or Knowledge Governance repository runtime is invoked.", "Repository-level Observer and Knowledge Governance adapters remain not implemented or not confirmed.", "No runtime cross-repository composite CI evidence exists.", "Real network implementation is not authorized."]
     }
   ]
 }
