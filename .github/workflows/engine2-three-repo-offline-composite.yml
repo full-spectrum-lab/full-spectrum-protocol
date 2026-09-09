@@ -11,6 +11,7 @@ env:
   ENGINE_COMMIT: 11c6f83593a327457940c6b5832aa03aa50713ee
   ENGINE_EVIDENCE_COMMIT: 0df9018a0a49b701a4076e82f28134ad6b8b4a21
   OBSERVER_COMMIT: 98da9559b8076770d9b5471ba0fde2cac4a6fe3c
+  OBSERVER_IMPLEMENTATION_COMMIT: 10b7f76f4bde0dd4dc88731dcd57c98936a72c1e
   KG_COMMIT: 869f61bd7bb970a2743058a52fe1e23570667028
 
 jobs:
@@ -79,10 +80,33 @@ jobs:
           dotnet restore FullSpectrum.Knowledge.slnx --locked-mode
           dotnet build FullSpectrum.Knowledge.slnx -c Release --no-restore
           dotnet run --project tests/FullSpectrum.Knowledge.Tests -c Release --no-build
+      - name: Run Observer to Engine to KG offline runtime chain
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force composite-evidence | Out-Null
+          python full-spectrum-protocol/tools/engine2_composite/run_observer_engine_projection.py `
+            --observer full-spectrum-observer `
+            --engine full-spectrum-engine `
+            --output composite-evidence/kg-envelope.json
+          dotnet run `
+            --project full-spectrum-protocol/tools/engine2_composite/KgReplayHarness/KgReplayHarness.csproj `
+            -p:KnowledgeGovernanceRoot=${{ github.workspace }}/full-spectrum-knowledge-governance `
+            -- composite-evidence/kg-envelope.json composite-evidence/kg-audit.sqlite3 composite-evidence/runtime-result.json
+          Get-ChildItem composite-evidence -File | Sort-Object Name | ForEach-Object {
+            "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash, $_.Name
+          } | Set-Content composite-evidence/SHA256SUMS.txt -Encoding utf8NoBOM
+      - name: Upload offline runtime evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine2-three-repo-offline-runtime-${{ github.run_id }}
+          path: composite-evidence
+          if-no-files-found: error
+          retention-days: 30
       - name: Composite boundary result
         run: |
           echo "OFFLINE_COMPONENTS_VALIDATED=PASS"
-          echo "OBSERVER_ENGINE_KG_RUNTIME_CHAIN=NOT_EXECUTED"
+          echo "OBSERVER_ENGINE_KG_RUNTIME_CHAIN=PASS"
           echo "FORMAL_COMPATIBILITY=NOT_CONFIRMED"
           echo "CROSS_REPO_E2E=NOT_CONFIRMED"
           echo "PRODUCTION_READY=NO"
