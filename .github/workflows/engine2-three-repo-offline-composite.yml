@@ -22,6 +22,9 @@ jobs:
         with:
           path: full-spectrum-protocol
           fetch-depth: 0
+      - name: Preserve canonical LF checkout bytes
+        shell: pwsh
+        run: git config --global core.autocrlf false
       - name: Checkout pinned Observer
         uses: actions/checkout@v4
         with:
