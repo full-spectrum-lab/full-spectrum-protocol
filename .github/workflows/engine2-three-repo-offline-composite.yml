@@ -25,12 +25,26 @@ jobs:
       - name: Checkout pinned Gitee repositories
         shell: pwsh
         run: |
-          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-observer.git full-spectrum-observer
-          git -C full-spectrum-observer checkout --detach $env:OBSERVER_COMMIT
-          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-engine.git full-spectrum-engine
-          git -C full-spectrum-engine checkout --detach $env:ENGINE_COMMIT
-          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-knowledge-governance.git full-spectrum-knowledge-governance
-          git -C full-spectrum-knowledge-governance checkout --detach $env:KG_COMMIT
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          git config --global http.version HTTP/1.1
+          function Get-PinnedRepo([string]$url, [string]$dir, [string]$commit) {
+            for ($attempt = 1; $attempt -le 3; $attempt++) {
+              try {
+                git -c http.version=HTTP/1.1 clone --filter=blob:none --no-checkout $url $dir
+                git -C $dir checkout --detach $commit
+                if ((git -C $dir rev-parse HEAD) -ne $commit) { throw "commit mismatch: $dir" }
+                return
+              } catch {
+                if (Test-Path $dir) { Remove-Item -Recurse -Force $dir }
+                if ($attempt -eq 3) { throw }
+                Start-Sleep -Seconds (5 * $attempt)
+              }
+            }
+          }
+          Get-PinnedRepo 'https://gitee.com/full-spectrum/full-spectrum-observer.git' 'full-spectrum-observer' $env:OBSERVER_COMMIT
+          Get-PinnedRepo 'https://gitee.com/full-spectrum/full-spectrum-engine.git' 'full-spectrum-engine' $env:ENGINE_COMMIT
+          Get-PinnedRepo 'https://gitee.com/full-spectrum/full-spectrum-knowledge-governance.git' 'full-spectrum-knowledge-governance' $env:KG_COMMIT
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11.9"
