@@ -2,6 +2,10 @@ name: Engine 2 three-repository offline composite validation
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/engine2-three-repo-offline-composite.yml"
 
 env:
   ENGINE_COMMIT: 11c6f83593a327457940c6b5832aa03aa50713ee
