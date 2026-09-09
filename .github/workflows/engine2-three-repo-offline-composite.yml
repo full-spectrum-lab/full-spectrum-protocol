@@ -1,0 +1,70 @@
+name: Engine 2 three-repository offline composite validation
+
+on:
+  workflow_dispatch:
+
+env:
+  ENGINE_COMMIT: 11c6f83593a327457940c6b5832aa03aa50713ee
+  ENGINE_EVIDENCE_COMMIT: 0df9018a0a49b701a4076e82f28134ad6b8b4a21
+  OBSERVER_COMMIT: 98da9559b8076770d9b5471ba0fde2cac4a6fe3c
+  KG_COMMIT: 869f61bd7bb970a2743058a52fe1e23570667028
+
+jobs:
+  offline-composite:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Protocol
+        uses: actions/checkout@v4
+        with:
+          path: full-spectrum-protocol
+          fetch-depth: 0
+      - name: Checkout pinned Gitee repositories
+        shell: pwsh
+        run: |
+          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-observer.git full-spectrum-observer
+          git -C full-spectrum-observer checkout --detach $env:OBSERVER_COMMIT
+          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-engine.git full-spectrum-engine
+          git -C full-spectrum-engine checkout --detach $env:ENGINE_COMMIT
+          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-knowledge-governance.git full-spectrum-knowledge-governance
+          git -C full-spectrum-knowledge-governance checkout --detach $env:KG_COMMIT
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.9"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.301"
+      - name: Verify pinned commits
+        shell: pwsh
+        run: |
+          if ((git -C full-spectrum-observer rev-parse HEAD) -ne $env:OBSERVER_COMMIT) { throw 'Observer commit mismatch' }
+          if ((git -C full-spectrum-engine rev-parse HEAD) -ne $env:ENGINE_COMMIT) { throw 'Engine commit mismatch' }
+          if ((git -C full-spectrum-knowledge-governance rev-parse HEAD) -ne $env:KG_COMMIT) { throw 'KG commit mismatch' }
+      - name: Verify Protocol fixture
+        run: python full-spectrum-protocol/tools/verify_engine2_fixture.py full-spectrum-protocol/fixtures/engine2/engine2-cross-repo-fixture-0.3.0-rc.yaml
+      - name: Run Observer adapter and pinned Engine tests
+        shell: pwsh
+        working-directory: full-spectrum-observer
+        env:
+          FSP_ENGINE2_PINNED_CHECKOUT: ${{ github.workspace }}\full-spectrum-engine
+        run: |
+          python -m pip install pytest==9.0.2 numpy==1.26.4 jsonschema==4.25.1 typing_extensions==4.15.0
+          python -m pytest -q tests/engine2 tests/compat
+      - name: Run Engine 2 offline tests
+        working-directory: full-spectrum-engine
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pytest -q tests/test_engine2_offline.py tests/test_engine2_persistence_fixture.py tests/test_engine2_boundary_adapters.py
+      - name: Run KG Engine 2 adapter tests
+        working-directory: full-spectrum-knowledge-governance
+        shell: pwsh
+        run: |
+          dotnet restore FullSpectrum.Knowledge.slnx --locked-mode
+          dotnet build FullSpectrum.Knowledge.slnx -c Release --no-restore
+          dotnet run --project tests/FullSpectrum.Knowledge.Tests -c Release --no-build
+      - name: Composite boundary result
+        run: |
+          echo "OFFLINE_COMPONENTS_VALIDATED=PASS"
+          echo "OBSERVER_ENGINE_KG_RUNTIME_CHAIN=NOT_EXECUTED"
+          echo "FORMAL_COMPATIBILITY=NOT_CONFIRMED"
+          echo "CROSS_REPO_E2E=NOT_CONFIRMED"
+          echo "PRODUCTION_READY=NO"
