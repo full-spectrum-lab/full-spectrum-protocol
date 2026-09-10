@@ -50,8 +50,8 @@ def verify(root: Path, schema_path: Path) -> None:
         actual_digest = canonical_digest(document)
         if actual_digest != expected_digest:
             raise ValueError(f"{name}: digest mismatch")
-    if manifest["fixture_status"] != "FREEZE_CANDIDATE":
-        raise ValueError("fixture must remain FREEZE_CANDIDATE before review")
+    if manifest["fixture_status"] != "FROZEN":
+        raise ValueError("published fixture must remain FROZEN")
     binding = manifest["repository_binding"]
     for field in (
         "protocol_contract_commit",

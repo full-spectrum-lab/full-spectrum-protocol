@@ -2,16 +2,16 @@
 
 Created at: 2026-09-10 19:13 (Beijing time, UTC+8)
 
-Last updated at: 2026-09-10 19:58 (Beijing time, UTC+8)
+Last updated at: 2026-09-10 21:50 (Beijing time, UTC+8)
 
-Status: `FIXTURE_FREEZE_CANDIDATE`
+Status: `FIXTURE_FROZEN`
 
 This matrix validates a synthetic, pinned, local-offline governance exercise. It does not validate real refunds, real networks, general compatibility, or production readiness.
 
 | Gate | Claim | Required evidence | Current state |
 |---|---|---|---|
-| FDE-01 | All six inputs conform to the Protocol Schema | CI 34469934003; rerun required after candidate revision | PREVIOUS_CI_PASS_REVISION_CHANGED |
-| FDE-02 | Canonical JSON digests match the manifest | CI 34469934003; rerun required after candidate revision | PREVIOUS_CI_PASS_REVISION_CHANGED |
+| FDE-01 | All six inputs conform to the Protocol Schema | CI 34482498369; final freeze CI pending | PASS_CANDIDATE |
+| FDE-02 | Canonical JSON digests match the manifest | CI 34482498369; final freeze CI pending | PASS_CANDIDATE |
 | FDE-03 | Observer projection preserves protected fields | Field-level comparison | NOT_EXECUTED |
 | FDE-04 | Engine returns REVIEW_REQUIRED / FIXTURE_EXPECTATION_ONLY / FAIL | Pinned runtime output | NOT_EXECUTED |
 | FDE-05 | Audit persists before human decision | KG persistence log | NOT_EXECUTED |

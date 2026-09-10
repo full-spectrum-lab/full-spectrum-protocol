@@ -1,6 +1,6 @@
 {
   "case_id": "FDE-TRIAL-001",
-  "fixture_status": "FREEZE_CANDIDATE",
+  "fixture_status": "FROZEN",
   "fixture_version": "0.1.0-rc",
   "canonicalization": "RFC8785_JSON",
   "digest_algorithm": "SHA-256_UPPERCASE_HEX",
