@@ -1,0 +1,1 @@
+{"case_id":"FDE-TRIAL-001","document_type":"POLICY_BEFORE","payload":{"effective_from":"2026-01-01T00:00:00Z","policy_id":"refund-policy","rule":"Delivery-confirmed orders may request automatic refund within 7 days.","source_ref":"synthetic://fde-trial-001/policy/1.0","status":"ACTIVE","version":"1.0"},"schema_version":"0.1.0-rc"}

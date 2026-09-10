@@ -1,0 +1,1 @@
+{"case_id":"FDE-TRIAL-001","document_type":"ORDER_FACTS","payload":{"item_value_band":"HIGH","order_ref":"synthetic-order-001","package_opened":true,"refund_requested":true,"risk_level":"HIGH","synthetic":true},"schema_version":"0.1.0-rc"}

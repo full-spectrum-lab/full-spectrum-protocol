@@ -1,0 +1,26 @@
+name: FDE-TRIAL-001 fixture check
+
+on:
+  push:
+    paths:
+      - "fixtures/fde-trial-001/**"
+      - "schemas/fde-trial-001-fixture.schema.json"
+      - "tools/verify_fde_trial_fixture.py"
+      - ".github/workflows/fde-trial-001-fixture-check.yml"
+  pull_request:
+    paths:
+      - "fixtures/fde-trial-001/**"
+      - "schemas/fde-trial-001-fixture.schema.json"
+      - "tools/verify_fde_trial_fixture.py"
+      - ".github/workflows/fde-trial-001-fixture-check.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install jsonschema rfc8785
+      - run: python tools/verify_fde_trial_fixture.py fixtures/fde-trial-001/0.1.0-rc schemas/fde-trial-001-fixture.schema.json

@@ -1,0 +1,23 @@
+{
+  "case_id": "FDE-TRIAL-001",
+  "fixture_status": "FREEZE_CANDIDATE",
+  "fixture_version": "0.1.0-rc",
+  "canonicalization": "RFC8785_JSON",
+  "digest_algorithm": "SHA-256_UPPERCASE_HEX",
+  "digest_scope": "PARSED_COMPLETE_DOCUMENT",
+  "schema": "schemas/fde-trial-001-fixture.schema.json",
+  "files": {
+    "actor-and-authority.json": "BAB7095DD5683CC67F4010D38F65ACF512D01E6ABAA880C547E330023C2BB9CF",
+    "expected-decision.json": "A5B057D2BE49C50BE041D603031C17350D32A22AA9572A89E30DD0DDBE02D436",
+    "order-facts.json": "17AB0231DB548E959105A0E0331AE018090C2351F0592B8B786D26514BEA5675",
+    "policy-before.json": "FA523A5C0378757F6FA1A83571EEB727A88964A5C4602DB34B5E4CECCEBD6B71",
+    "policy-proposed.json": "84A434F8451D39A4AC9AC4042B53BF7860DA285894CB79BD4AC37B634EDB920B",
+    "snapshot-binding.json": "8BCAEDACB778E7F8F161A3BC73691A59507F61C304C1CEC66601995628CA76B5"
+  },
+  "status_boundaries": {
+    "implementation": "NOT_STARTED",
+    "runtime_execution": "NOT_EXECUTED",
+    "real_network": "NOT_AUTHORIZED",
+    "production_ready": false
+  }
+}

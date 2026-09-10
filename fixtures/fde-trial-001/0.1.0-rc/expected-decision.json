@@ -1,0 +1,1 @@
+{"case_id":"FDE-TRIAL-001","document_type":"EXPECTED_DECISION","payload":{"decision":"REVIEW_REQUIRED","hard_gate":"FAIL","real_action_allowed":false,"verification_status":"FIXTURE_EXPECTATION_ONLY"},"schema_version":"0.1.0-rc"}

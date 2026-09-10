@@ -1,0 +1,1 @@
+{"case_id":"FDE-TRIAL-001","document_type":"POLICY_PROPOSED","payload":{"parent_version":"1.0","policy_id":"refund-policy","proposed_by":"fde-owner-synthetic","risk_scope":["HIGH_VALUE","HIGH_RISK","OPENED_PACKAGE"],"rule":"High-value or high-risk items require human review before any refund action.","status":"PROPOSED","version":"2.0-proposed"},"schema_version":"0.1.0-rc"}

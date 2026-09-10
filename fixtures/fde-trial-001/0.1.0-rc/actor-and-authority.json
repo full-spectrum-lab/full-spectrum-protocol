@@ -1,0 +1,1 @@
+{"case_id":"FDE-TRIAL-001","document_type":"ACTOR_AND_AUTHORITY","payload":{"action_sink":"LOCAL_FAKE_ONLY","engine":"ADVISE_ONLY","human_approver":"APPROVE_OR_REJECT","knowledge_governance":"PERSIST_AUDIT_REPLAY","observer":"OBSERVE_AND_PROJECT_ONLY"},"schema_version":"0.1.0-rc"}
