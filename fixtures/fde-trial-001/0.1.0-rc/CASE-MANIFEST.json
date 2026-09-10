@@ -8,7 +8,8 @@
   "schema": "schemas/fde-trial-001-fixture.schema.json",
   "repository_binding": {
     "protocol_contract_commit": "95ac7121d2500a790450a6c4c8ae2f5c0d1b0c8e",
-    "qpp_frozen_spec_commit": "741eeeadf7d81bdf811268763608252dd47723c7",
+    "qpp_freeze_decision_commit": "741eeeadf7d81bdf811268763608252dd47723c7",
+    "qpp_frozen_spec_commit": "59cce63affe720e49aad94f0d3434a7e862c7d00",
     "schema_file_sha256": "6A595F2E81FF3415663F9802025EEC48BB3DD83E35A9AEF65F42AEDFEBDED1D1"
   },
   "files": {

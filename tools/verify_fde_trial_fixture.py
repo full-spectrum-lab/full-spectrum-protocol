@@ -53,7 +53,11 @@ def verify(root: Path, schema_path: Path) -> None:
     if manifest["fixture_status"] != "FREEZE_CANDIDATE":
         raise ValueError("fixture must remain FREEZE_CANDIDATE before review")
     binding = manifest["repository_binding"]
-    for field in ("protocol_contract_commit", "qpp_frozen_spec_commit"):
+    for field in (
+        "protocol_contract_commit",
+        "qpp_freeze_decision_commit",
+        "qpp_frozen_spec_commit",
+    ):
         if len(binding[field]) != 40:
             raise ValueError(f"{field}: full commit required")
     schema_digest = hashlib.sha256(schema_path.read_bytes()).hexdigest().upper()
