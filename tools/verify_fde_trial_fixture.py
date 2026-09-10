@@ -39,11 +39,30 @@ def verify(root: Path, schema_path: Path) -> None:
     for name, expected_digest in expected_files.items():
         document = load_json(root / name)
         jsonschema.Draft202012Validator(schema).validate(document)
+        if name in {"policy-before.json", "policy-proposed.json"}:
+            assert isinstance(document, dict)
+            payload = document["payload"]
+            assert isinstance(payload, dict)
+            source_digest = hashlib.sha256(payload["rule"].encode("utf-8")).hexdigest().upper()
+            if source_digest != payload["source_content_sha256"]:
+                raise ValueError(f"{name}: source_content_sha256 mismatch")
         actual_digest = canonical_digest(document)
         if actual_digest != expected_digest:
             raise ValueError(f"{name}: digest mismatch")
     if manifest["fixture_status"] != "FREEZE_CANDIDATE":
         raise ValueError("fixture must remain FREEZE_CANDIDATE before review")
+    binding = manifest["repository_binding"]
+    for field in ("protocol_contract_commit", "qpp_frozen_spec_commit"):
+        if len(binding[field]) != 40:
+            raise ValueError(f"{field}: full commit required")
+    schema_digest = hashlib.sha256(schema_path.read_bytes()).hexdigest().upper()
+    if schema_digest != binding["schema_file_sha256"]:
+        raise ValueError("schema_file_sha256 mismatch")
+    projection = manifest["observer_projection_contract"]
+    if set(projection["document_keys"]) != set(expected_files):
+        raise ValueError("observer document_keys must cover all fixture documents")
+    if set(projection["protected_json_pointers"]) != set(expected_files):
+        raise ValueError("protected pointer sets must cover all fixture documents")
     print(f"VALID: {root} ({len(expected_files)} documents)")
 
 

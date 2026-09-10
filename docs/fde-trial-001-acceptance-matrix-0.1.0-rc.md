@@ -2,7 +2,7 @@
 
 Created at: 2026-09-10 19:13 (Beijing time, UTC+8)
 
-Last updated at: 2026-09-10 19:13 (Beijing time, UTC+8)
+Last updated at: 2026-09-10 19:58 (Beijing time, UTC+8)
 
 Status: `FIXTURE_FREEZE_CANDIDATE`
 
@@ -10,8 +10,8 @@ This matrix validates a synthetic, pinned, local-offline governance exercise. It
 
 | Gate | Claim | Required evidence | Current state |
 |---|---|---|---|
-| FDE-01 | All six inputs conform to the Protocol Schema | Validator log | READY_NOT_EXECUTED_IN_CI |
-| FDE-02 | Canonical JSON digests match the manifest | RFC 8785 validator log | READY_NOT_EXECUTED_IN_CI |
+| FDE-01 | All six inputs conform to the Protocol Schema | CI 34469934003; rerun required after candidate revision | PREVIOUS_CI_PASS_REVISION_CHANGED |
+| FDE-02 | Canonical JSON digests match the manifest | CI 34469934003; rerun required after candidate revision | PREVIOUS_CI_PASS_REVISION_CHANGED |
 | FDE-03 | Observer projection preserves protected fields | Field-level comparison | NOT_EXECUTED |
 | FDE-04 | Engine returns REVIEW_REQUIRED / FIXTURE_EXPECTATION_ONLY / FAIL | Pinned runtime output | NOT_EXECUTED |
 | FDE-05 | Audit persists before human decision | KG persistence log | NOT_EXECUTED |
@@ -24,3 +24,18 @@ This matrix validates a synthetic, pinned, local-offline governance exercise. It
 | FDE-12 | A non-implementing instance reproduces the package | Independent report | NOT_EXECUTED |
 
 Fixture freeze requires FDE-01 and FDE-02 plus responsibility-domain review. Implementation authorization is a separate decision. Runtime, network, and production status cannot be derived from fixture validation.
+
+## Observer projection contract
+
+The manifest owns the complete protected JSON Pointer lists. Observer constructs one order-independent JSON object with these exact keys:
+
+```text
+policy_before
+policy_proposed
+order_facts
+actor_and_authority
+snapshot_binding
+expected_decision
+```
+
+Each value is the complete parsed source document named by `document_keys`. Duplicate document types, missing keys, unexpected documents, conflicting values, non-RFC-8785 values, or digest mismatches fail closed. Observer writes the lossless copy to `observer_projection.protocol_object` and its RFC 8785 SHA-256 to `observer_projection.protocol_object_digest`. Array order and scalar types are preserved; JSON object member order has no semantic meaning.
