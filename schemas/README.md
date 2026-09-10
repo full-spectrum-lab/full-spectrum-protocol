@@ -1,5 +1,9 @@
 ﻿# Schemas
 
+Created at: 2026-07-08 23:04 UTC+8
+
+Last updated at: 2026-09-11 04:02 UTC+8
+
 This directory contains machine-readable protocol schemas for the current public protocol draft.
 
 ## Current schemas
@@ -13,6 +17,8 @@ This directory contains machine-readable protocol schemas for the current public
 - [`fshi-dialogue-inspection.schema.json`](./fshi-dialogue-inspection.schema.json)
 - [`fshi-dialogue-inspection-response.schema.json`](./fshi-dialogue-inspection-response.schema.json)
 - [`cross-enterprise-audit-record.schema.json`](./cross-enterprise-audit-record.schema.json)
+- [`fde-trial-001-fixture.schema.json`](./fde-trial-001-fixture.schema.json)
+- [`fde-trial-001-runtime-message.schema.json`](./fde-trial-001-runtime-message.schema.json)
 
 ## Planned next schemas
 
