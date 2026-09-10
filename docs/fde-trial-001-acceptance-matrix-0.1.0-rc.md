@@ -1,5 +1,9 @@
 # FDE-TRIAL-001 Acceptance Matrix 0.1.0-rc
 
+Created at: 2026-09-10 19:13 (Beijing time, UTC+8)
+
+Last updated at: 2026-09-10 19:13 (Beijing time, UTC+8)
+
 Status: `FIXTURE_FREEZE_CANDIDATE`
 
 This matrix validates a synthetic, pinned, local-offline governance exercise. It does not validate real refunds, real networks, general compatibility, or production readiness.
