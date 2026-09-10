@@ -13,6 +13,8 @@ This directory contains machine-readable protocol schemas for the current public
 - [`fshi-dialogue-inspection.schema.json`](./fshi-dialogue-inspection.schema.json)
 - [`fshi-dialogue-inspection-response.schema.json`](./fshi-dialogue-inspection-response.schema.json)
 - [`cross-enterprise-audit-record.schema.json`](./cross-enterprise-audit-record.schema.json)
+- [`fde-trial-001-fixture.schema.json`](./fde-trial-001-fixture.schema.json)
+- [`fde-trial-001-runtime-message.schema.json`](./fde-trial-001-runtime-message.schema.json)
 
 ## Planned next schemas
 
@@ -62,4 +64,3 @@ The helper currently checks:
 - `specs/` explains the human-readable meaning of those contracts
 
 When both exist for the same object, they should be read together.
-

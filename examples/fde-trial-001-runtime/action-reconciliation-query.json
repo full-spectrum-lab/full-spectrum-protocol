@@ -1,0 +1,1 @@
+{"schema_version":"fde-trial-001-runtime/0.1.0-rc","case_id":"FDE-TRIAL-001","fixture_version":"0.1.0-rc","message_type":"ACTION_RECONCILIATION_QUERY","payload":{"query_id":"fde-query-001","correlation_id":"fde-correlation-001","action_idempotency_key":"fde-action-key-001","requested_at":"2026-09-11T00:03:00Z"}}
