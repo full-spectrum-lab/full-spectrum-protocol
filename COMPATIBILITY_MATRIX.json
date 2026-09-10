@@ -45,6 +45,15 @@
     "observer_knowledge_governance_compatibility": "NOT_CONFIRMED",
     "engine_knowledge_governance_compatibility": "NOT_CONFIRMED"
   },
+  "scoped_compatibility_decision": {
+    "decision_id": "ENGINE2-PINNED-OFFLINE-COMPAT-20260910",
+    "scope": "PINNED_COMMITS_FIXED_FIXTURE_LOCAL_OFFLINE",
+    "observer_engine": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+    "observer_knowledge_governance": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+    "engine_knowledge_governance": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+    "general_compatibility": "NOT_CONFIRMED",
+    "source": "status/engine2-pinned-offline-compatibility-20260910.json"
+  },
   "entries": [
     {
       "protocol": "unreleased-or-draft",

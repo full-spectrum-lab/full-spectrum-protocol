@@ -1,0 +1,47 @@
+{
+  "$schema": "../schemas/scoped-compatibility-decision.schema.json",
+  "schema_version": "0.1",
+  "decision_id": "ENGINE2-PINNED-OFFLINE-COMPAT-20260910",
+  "as_of": "2026-09-10",
+  "scope": "PINNED_COMMITS_FIXED_FIXTURE_LOCAL_OFFLINE",
+  "evidence": {
+    "protocol_commit": "761e9a03f13e8590d5961ce84ec99dccc75a26dd",
+    "observer_commit": "98da9559b8076770d9b5471ba0fde2cac4a6fe3c",
+    "engine_commit": "11c6f83593a327457940c6b5832aa03aa50713ee",
+    "knowledge_governance_commit": "869f61bd7bb970a2743058a52fe1e23570667028",
+    "ci_run_id": "34311655853",
+    "runtime_chain": "PASS_PINNED_LOCAL_OFFLINE",
+    "independent_reverify": "PASS",
+    "envelope_canonical_sha256": "01A0A1F05F8A7AF074DCAAACD82CC6EAD707D683D71885A43BECBF997C7D3070",
+    "artifact_id": "10088613145",
+    "artifact_sha256": "F9AEBF458CBCF14451D1301A664425BB74D7CB2CDFD8A6481B5FDFDFA07632BB",
+    "remote_artifact_archive_byte_reverify": "NOT_EXECUTED_AUTHENTICATION_REQUIRED"
+  },
+  "relationships": {
+    "observer_engine": {
+      "scoped_status": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+      "general_status": "NOT_CONFIRMED",
+      "reviewers": [4, 5],
+      "limitations": ["The main runtime chain covers one ALLOW fixture; negative semantics are primarily component-level evidence.", "No real network or general-version claim."]
+    },
+    "observer_knowledge_governance": {
+      "scoped_status": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+      "general_status": "NOT_CONFIRMED",
+      "reviewers": [1],
+      "limitations": ["Protocol deterministically mediates Observer projection into the KG envelope; this is not a general direct interface.", "Engine private audit storage was not read or compared event-by-event."]
+    },
+    "engine_knowledge_governance": {
+      "scoped_status": "CONFIRMED_OFFLINE_FIXED_FIXTURE",
+      "general_status": "NOT_CONFIRMED",
+      "reviewers": [1, 4],
+      "limitations": ["The fixed chain validates Engine facts at the KG boundary through Protocol mediation.", "Negative paths are not all exercised end-to-end in the three-repository chain."]
+    }
+  },
+  "global_boundaries": {
+    "general_compatibility": "NOT_CONFIRMED",
+    "cross_repo_e2e": "NOT_CONFIRMED",
+    "real_network_authorization": "NOT_AUTHORIZED",
+    "production_ready": "NO",
+    "automatic_promotion": "FORBIDDEN"
+  }
+}

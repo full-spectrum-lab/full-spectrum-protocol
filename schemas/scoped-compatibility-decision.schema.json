@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://full-spectrum.dev/schemas/scoped-compatibility-decision.schema.json",
+  "title": "Scoped Compatibility Decision",
+  "type": "object",
+  "required": ["schema_version", "decision_id", "as_of", "scope", "evidence", "relationships", "global_boundaries"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "0.1"},
+    "decision_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date"},
+    "scope": {"const": "PINNED_COMMITS_FIXED_FIXTURE_LOCAL_OFFLINE"},
+    "evidence": {
+      "type": "object",
+      "required": ["protocol_commit", "observer_commit", "engine_commit", "knowledge_governance_commit", "ci_run_id", "runtime_chain", "independent_reverify", "envelope_canonical_sha256"],
+      "properties": {
+        "protocol_commit": {"$ref": "#/$defs/commit"},
+        "observer_commit": {"$ref": "#/$defs/commit"},
+        "engine_commit": {"$ref": "#/$defs/commit"},
+        "knowledge_governance_commit": {"$ref": "#/$defs/commit"},
+        "ci_run_id": {"type": "string", "pattern": "^[0-9]+$"},
+        "runtime_chain": {"const": "PASS_PINNED_LOCAL_OFFLINE"},
+        "independent_reverify": {"const": "PASS"},
+        "envelope_canonical_sha256": {"$ref": "#/$defs/sha256"},
+        "artifact_id": {"type": "string"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "remote_artifact_archive_byte_reverify": {"enum": ["PASS", "NOT_EXECUTED_AUTHENTICATION_REQUIRED"]}
+      },
+      "additionalProperties": false
+    },
+    "relationships": {
+      "type": "object",
+      "required": ["observer_engine", "observer_knowledge_governance", "engine_knowledge_governance"],
+      "additionalProperties": {"$ref": "#/$defs/relationship"}
+    },
+    "global_boundaries": {
+      "type": "object",
+      "required": ["general_compatibility", "cross_repo_e2e", "real_network_authorization", "production_ready", "automatic_promotion"],
+      "properties": {
+        "general_compatibility": {"const": "NOT_CONFIRMED"},
+        "cross_repo_e2e": {"const": "NOT_CONFIRMED"},
+        "real_network_authorization": {"const": "NOT_AUTHORIZED"},
+        "production_ready": {"const": "NO"},
+        "automatic_promotion": {"const": "FORBIDDEN"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "sha256": {"type": "string", "pattern": "^[0-9A-F]{64}$"},
+    "relationship": {
+      "type": "object",
+      "required": ["scoped_status", "general_status", "reviewers", "limitations"],
+      "properties": {
+        "scoped_status": {"const": "CONFIRMED_OFFLINE_FIXED_FIXTURE"},
+        "general_status": {"const": "NOT_CONFIRMED"},
+        "reviewers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 1, "maximum": 5}},
+        "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    }
+  }
+}
