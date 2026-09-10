@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from datetime import datetime
 from pathlib import Path
 
 import jsonschema
@@ -63,6 +64,21 @@ def verify(root: Path, schema_path: Path) -> None:
         raise ValueError("observer document_keys must cover all fixture documents")
     if set(projection["protected_json_pointers"]) != set(expected_files):
         raise ValueError("protected pointer sets must cover all fixture documents")
+    documents = {name: load_json(root / name) for name in expected_files}
+    before = documents["policy-before.json"]["payload"]
+    proposed = documents["policy-proposed.json"]["payload"]
+    snapshot = documents["snapshot-binding.json"]["payload"]
+    authority = documents["actor-and-authority.json"]["payload"]["human_approver"]
+    if proposed["parent_snapshot_ref"] != before["snapshot_ref"]:
+        raise ValueError("parent snapshot binding mismatch")
+    if proposed["candidate_snapshot_ref"] != snapshot["knowledge_snapshot_ref"]:
+        raise ValueError("candidate snapshot binding mismatch")
+    if manifest["knowledge_snapshot_binding"]["candidate_policy_document_digest"] != expected_files["policy-proposed.json"]:
+        raise ValueError("candidate policy manifest binding mismatch")
+    if authority["policy_id"] != proposed["policy_id"] or authority["policy_version"] != proposed["version"]:
+        raise ValueError("approver policy binding mismatch")
+    if datetime.fromisoformat(authority["issued_at"].replace("Z", "+00:00")) >= datetime.fromisoformat(authority["expires_at"].replace("Z", "+00:00")):
+        raise ValueError("approver authority expiry must follow issue time")
     print(f"VALID: {root} ({len(expected_files)} documents)")
 
 

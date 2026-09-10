@@ -6,13 +6,53 @@
   "digest_algorithm": "SHA-256_UPPERCASE_HEX",
   "digest_scope": "PARSED_COMPLETE_DOCUMENT",
   "schema": "schemas/fde-trial-001-fixture.schema.json",
+  "repository_binding": {
+    "protocol_contract_commit": "95ac7121d2500a790450a6c4c8ae2f5c0d1b0c8e",
+    "qpp_frozen_spec_commit": "741eeeadf7d81bdf811268763608252dd47723c7",
+    "schema_file_sha256": "6A595F2E81FF3415663F9802025EEC48BB3DD83E35A9AEF65F42AEDFEBDED1D1"
+  },
   "files": {
-    "actor-and-authority.json": "BAB7095DD5683CC67F4010D38F65ACF512D01E6ABAA880C547E330023C2BB9CF",
+    "actor-and-authority.json": "E2D08D14747DE934C0C56136D236C7151551DECFA4153C9661F2C4119EDC8660",
     "expected-decision.json": "A5B057D2BE49C50BE041D603031C17350D32A22AA9572A89E30DD0DDBE02D436",
     "order-facts.json": "17AB0231DB548E959105A0E0331AE018090C2351F0592B8B786D26514BEA5675",
-    "policy-before.json": "FA523A5C0378757F6FA1A83571EEB727A88964A5C4602DB34B5E4CECCEBD6B71",
-    "policy-proposed.json": "84A434F8451D39A4AC9AC4042B53BF7860DA285894CB79BD4AC37B634EDB920B",
+    "policy-before.json": "CB94069AE256936C20AE11FB9F7845189748B2C418173E4BA282568F211AC8BC",
+    "policy-proposed.json": "36AE2D30ED5AD970E106A95D414AF4E6975ABC24C65366B2E36DA837335DE0DD",
     "snapshot-binding.json": "8BCAEDACB778E7F8F161A3BC73691A59507F61C304C1CEC66601995628CA76B5"
+  },
+  "knowledge_snapshot_binding": {
+    "parent_snapshot_ref": "synthetic://fde-trial-001/kg/refund-policy/1.0",
+    "candidate_snapshot_ref": "synthetic://fde-trial-001/kg/refund-policy/2.0-proposed",
+    "candidate_policy_document_digest": "36AE2D30ED5AD970E106A95D414AF4E6975ABC24C65366B2E36DA837335DE0DD"
+  },
+  "observer_projection_contract": {
+    "source_documents_are_projected_in_full": true,
+    "protocol_object_path": "/observer_projection/protocol_object",
+    "protocol_object_digest_path": "/observer_projection/protocol_object_digest",
+    "document_keys": {
+      "actor-and-authority.json": "actor_and_authority",
+      "expected-decision.json": "expected_decision",
+      "order-facts.json": "order_facts",
+      "policy-before.json": "policy_before",
+      "policy-proposed.json": "policy_proposed",
+      "snapshot-binding.json": "snapshot_binding"
+    },
+    "protected_json_pointers": {
+      "actor-and-authority.json": ["/schema_version", "/case_id", "/document_type", "/payload/action_sink", "/payload/engine", "/payload/human_approver", "/payload/knowledge_governance", "/payload/observer"],
+      "expected-decision.json": ["/schema_version", "/case_id", "/document_type", "/payload/decision", "/payload/hard_gate", "/payload/real_action_allowed", "/payload/verification_status"],
+      "order-facts.json": ["/schema_version", "/case_id", "/document_type", "/payload/item_value_band", "/payload/order_ref", "/payload/package_opened", "/payload/refund_requested", "/payload/risk_level", "/payload/synthetic"],
+      "policy-before.json": ["/schema_version", "/case_id", "/document_type", "/payload/effective_from", "/payload/policy_id", "/payload/rule", "/payload/snapshot_ref", "/payload/source_content_sha256", "/payload/source_digest_scope", "/payload/source_ref", "/payload/status", "/payload/version"],
+      "policy-proposed.json": ["/schema_version", "/case_id", "/document_type", "/payload/candidate_snapshot_ref", "/payload/parent_snapshot_ref", "/payload/parent_version", "/payload/policy_id", "/payload/proposed_by", "/payload/risk_scope", "/payload/rule", "/payload/source_content_sha256", "/payload/source_digest_scope", "/payload/source_ref", "/payload/status", "/payload/version"],
+      "snapshot-binding.json": ["/schema_version", "/case_id", "/document_type", "/payload/engine_commit", "/payload/kg_commit", "/payload/knowledge_snapshot_ref", "/payload/observer_commit", "/payload/protocol_schema_version"]
+    },
+    "assembly_rules": {
+      "object_member_order_semantics": "ORDER_INDEPENDENT_RFC8785",
+      "array_order": "PRESERVE",
+      "scalar_types": "PRESERVE",
+      "duplicate_or_missing_document": "FAIL_CLOSED",
+      "unexpected_document": "FAIL_CLOSED",
+      "conflicting_value": "FAIL_CLOSED",
+      "digest_mismatch": "FAIL_CLOSED"
+    }
   },
   "status_boundaries": {
     "implementation": "NOT_STARTED",
