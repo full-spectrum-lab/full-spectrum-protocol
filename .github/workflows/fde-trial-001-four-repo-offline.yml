@@ -66,7 +66,7 @@ jobs:
           dotnet restore full-spectrum-knowledge-governance/FullSpectrum.Knowledge.slnx --locked-mode
           dotnet build full-spectrum-knowledge-governance/FullSpectrum.Knowledge.slnx -c Release --no-restore
           dotnet run --project full-spectrum-knowledge-governance/tests/FullSpectrum.Knowledge.Tests -c Release --no-build
-      - name: Run four-repository FDE chain three times
+      - name: Run Observer and Engine orchestration three times
         shell: pwsh
         run: |
           $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine;$pwd/full-spectrum-engine/src"
@@ -74,9 +74,18 @@ jobs:
             $dir="composite-evidence/run-$($_)"; New-Item -ItemType Directory -Force $dir | Out-Null
             python full-spectrum-protocol/tools/engine2_composite/run_fde_trial_001.py --protocol protocol-contract --observer full-spectrum-observer --engine full-spectrum-engine --kg full-spectrum-knowledge-governance --output "$dir/bundle.json"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Run KG persistence reopen and replay three times
+        shell: pwsh
+        run: |
+          1..3 | ForEach-Object {
+            $dir="composite-evidence/run-$($_)"
             dotnet run --project full-spectrum-protocol/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj -p:KnowledgeGovernanceRoot="$pwd/full-spectrum-knowledge-governance" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Verify three deterministic orchestration bundles
+        shell: pwsh
+        run: |
           $bundles=@(Get-ChildItem composite-evidence -Recurse -File -Filter bundle.json)
           if ($bundles.Count -ne 3) {
             Write-Output "::error title=FDE bundle count mismatch::Expected 3 orchestration bundles, found $($bundles.Count)"
