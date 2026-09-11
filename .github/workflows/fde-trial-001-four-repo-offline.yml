@@ -70,11 +70,21 @@ jobs:
         shell: pwsh
         run: |
           $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine;$pwd/full-spectrum-engine/src"
+          $protocolRoot=(Resolve-Path full-spectrum-protocol).Path
+          $contractRoot=(Resolve-Path protocol-contract).Path
+          $observerRoot=(Resolve-Path full-spectrum-observer).Path
+          $engineRoot=(Resolve-Path full-spectrum-engine).Path
+          $kgRoot=(Resolve-Path full-spectrum-knowledge-governance).Path
           1..3 | ForEach-Object {
-            $dir="composite-evidence/run-$($_)"; New-Item -ItemType Directory -Force $dir | Out-Null
-            python full-spectrum-protocol/tools/engine2_composite/run_fde_trial_001.py --protocol protocol-contract --observer full-spectrum-observer --engine full-spectrum-engine --kg full-spectrum-knowledge-governance --output "$dir/bundle.json"
-            dotnet run --project full-spectrum-protocol/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj -p:KnowledgeGovernanceRoot="$pwd/full-spectrum-knowledge-governance" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json"
+            $dir=(New-Item -ItemType Directory -Force "composite-evidence/run-$($_)").FullName
+            python "$protocolRoot/tools/engine2_composite/run_fde_trial_001.py" --protocol $contractRoot --observer $observerRoot --engine $engineRoot --kg $kgRoot --output "$dir/bundle.json"
+            if ($LASTEXITCODE -ne 0) { throw "Orchestrator run $($_) failed" }
+            dotnet run --project "$protocolRoot/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj" "-p:KnowledgeGovernanceRoot=$kgRoot" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json"
+            if ($LASTEXITCODE -ne 0) { throw "KG replay run $($_) failed" }
           }
+          $bundleHashes=Get-ChildItem composite-evidence/run-*/bundle.json | ForEach-Object { (Get-FileHash $_ -Algorithm SHA256).Hash } | Sort-Object -Unique
+          if ($bundleHashes.Count -ne 1) { throw 'Three orchestration bundles are not byte-identical' }
+          "BUNDLE_SHA256=$($bundleHashes[0])"
       - name: Generate evidence manifest
         shell: pwsh
         run: |
