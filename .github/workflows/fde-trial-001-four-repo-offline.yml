@@ -77,10 +77,20 @@ jobs:
           $kgRoot=(Resolve-Path full-spectrum-knowledge-governance).Path
           1..3 | ForEach-Object {
             $dir=(New-Item -ItemType Directory -Force "composite-evidence/run-$($_)").FullName
-            python "$protocolRoot/tools/engine2_composite/run_fde_trial_001.py" --protocol $contractRoot --observer $observerRoot --engine $engineRoot --kg $kgRoot --output "$dir/bundle.json"
-            if ($LASTEXITCODE -ne 0) { throw "Orchestrator run $($_) failed" }
-            dotnet run --project "$protocolRoot/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj" "-p:KnowledgeGovernanceRoot=$kgRoot" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json"
-            if ($LASTEXITCODE -ne 0) { throw "KG replay run $($_) failed" }
+            $orchestratorOutput = python "$protocolRoot/tools/engine2_composite/run_fde_trial_001.py" --protocol $contractRoot --observer $observerRoot --engine $engineRoot --kg $kgRoot --output "$dir/bundle.json" 2>&1
+            $orchestratorOutput | Tee-Object "$dir/orchestrator.log"
+            if ($LASTEXITCODE -ne 0) {
+              $detail=($orchestratorOutput | Select-Object -Last 20) -join '%0A'
+              Write-Output "::error title=FDE orchestrator run $($_) failed::$detail"
+              exit 1
+            }
+            $kgOutput = dotnet run --project "$protocolRoot/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj" "-p:KnowledgeGovernanceRoot=$kgRoot" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json" 2>&1
+            $kgOutput | Tee-Object "$dir/kg-replay.log"
+            if ($LASTEXITCODE -ne 0) {
+              $detail=($kgOutput | Select-Object -Last 20) -join '%0A'
+              Write-Output "::error title=KG replay run $($_) failed::$detail"
+              exit 1
+            }
           }
           $bundleHashes=Get-ChildItem composite-evidence/run-*/bundle.json | ForEach-Object { (Get-FileHash $_ -Algorithm SHA256).Hash } | Sort-Object -Unique
           if ($bundleHashes.Count -ne 1) { throw 'Three orchestration bundles are not byte-identical' }
