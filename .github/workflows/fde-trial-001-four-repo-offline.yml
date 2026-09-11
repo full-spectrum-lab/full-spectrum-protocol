@@ -69,6 +69,7 @@ jobs:
       - name: Run four-repository FDE chain three times
         shell: pwsh
         run: |
+          $PSNativeCommandUseErrorActionPreference=$false
           $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine;$pwd/full-spectrum-engine/src"
           $protocolRoot=(Resolve-Path full-spectrum-protocol).Path
           $contractRoot=(Resolve-Path protocol-contract).Path
@@ -93,9 +94,15 @@ jobs:
             }
           }
           $bundles=@(Get-ChildItem composite-evidence -Recurse -File -Filter bundle.json)
-          if ($bundles.Count -ne 3) { throw "Expected 3 orchestration bundles, found $($bundles.Count)" }
+          if ($bundles.Count -ne 3) {
+            Write-Output "::error title=FDE bundle count mismatch::Expected 3 orchestration bundles, found $($bundles.Count)"
+            exit 1
+          }
           $bundleHashes=@($bundles | ForEach-Object { (Get-FileHash $_ -Algorithm SHA256).Hash } | Sort-Object -Unique)
-          if ($bundleHashes.Count -ne 1) { throw 'Three orchestration bundles are not byte-identical' }
+          if ($bundleHashes.Count -ne 1) {
+            Write-Output "::error title=FDE deterministic digest mismatch::$($bundleHashes -join ',')"
+            exit 1
+          }
           "BUNDLE_SHA256=$($bundleHashes[0])"
       - name: Generate evidence manifest
         shell: pwsh
