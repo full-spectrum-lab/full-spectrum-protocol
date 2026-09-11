@@ -51,7 +51,7 @@ jobs:
           if ((git -C full-spectrum-observer rev-parse HEAD) -ne $env:OBSERVER_COMMIT) { throw 'Observer mismatch' }
           if ((git -C full-spectrum-engine rev-parse HEAD) -ne $env:ENGINE_COMMIT) { throw 'Engine mismatch' }
           if ((git -C full-spectrum-knowledge-governance rev-parse HEAD) -ne $env:KG_COMMIT) { throw 'KG mismatch' }
-          git -C full-spectrum-protocol worktree add --detach protocol-contract $env:PROTOCOL_COMMIT
+          git -C full-spectrum-protocol worktree add --detach "$pwd/protocol-contract" $env:PROTOCOL_COMMIT
       - name: Run Observer and Engine FDE tests
         shell: pwsh
         run: |
