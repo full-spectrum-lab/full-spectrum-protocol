@@ -40,7 +40,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with: {dotnet-version: "10.0.301"}
       - name: Install pinned dependencies
-        run: python -m pip install jsonschema==4.25.1 rfc8785==0.1.4
+        run: python -m pip install pytest==9.0.2 jsonschema==4.25.1 rfc8785==0.1.4
       - name: Verify all pinned commits
         shell: pwsh
         run: |
@@ -54,6 +54,8 @@ jobs:
         shell: pwsh
         run: |
           $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine/src"
+          $env:FDE_PROTOCOL_CHECKOUT="$pwd/protocol-contract"
+          $env:FSP_ENGINE2_PINNED_CHECKOUT="$pwd/full-spectrum-engine"
           python -m pytest -q full-spectrum-observer/tests/engine2/test_fde_trial_001_adapter.py
           python -m pytest -q full-spectrum-engine/tests/test_engine2_fde_trial_001.py
       - name: Run KG FDE tests
