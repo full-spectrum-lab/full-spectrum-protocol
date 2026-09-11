@@ -44,7 +44,8 @@ jobs:
       - name: Verify all pinned commits
         shell: pwsh
         run: |
-          if (-not (git -C full-spectrum-protocol cat-file -e "$env:PROTOCOL_COMMIT^{commit}")) { throw 'Protocol contract commit unavailable' }
+          git -C full-spectrum-protocol cat-file -e "$env:PROTOCOL_COMMIT^{commit}"
+          if ($LASTEXITCODE -ne 0) { throw 'Protocol contract commit unavailable' }
           if ((git -C full-spectrum-observer rev-parse HEAD) -ne $env:OBSERVER_COMMIT) { throw 'Observer mismatch' }
           if ((git -C full-spectrum-engine rev-parse HEAD) -ne $env:ENGINE_COMMIT) { throw 'Engine mismatch' }
           if ((git -C full-spectrum-knowledge-governance rev-parse HEAD) -ne $env:KG_COMMIT) { throw 'KG mismatch' }
