@@ -53,7 +53,7 @@ jobs:
       - name: Run Observer and Engine FDE tests
         shell: pwsh
         run: |
-          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine/src"
+          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine;$pwd/full-spectrum-engine/src"
           $env:FDE_PROTOCOL_CHECKOUT="$pwd/protocol-contract"
           $env:FSP_ENGINE2_PINNED_CHECKOUT="$pwd/full-spectrum-engine"
           python -m pytest -q full-spectrum-observer/tests/engine2/test_fde_trial_001_adapter.py
@@ -67,7 +67,7 @@ jobs:
       - name: Run four-repository FDE chain three times
         shell: pwsh
         run: |
-          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine/src"
+          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine;$pwd/full-spectrum-engine/src"
           1..3 | ForEach-Object {
             $dir="composite-evidence/run-$($_)"; New-Item -ItemType Directory -Force $dir | Out-Null
             python full-spectrum-protocol/tools/engine2_composite/run_fde_trial_001.py --protocol protocol-contract --observer full-spectrum-observer --engine full-spectrum-engine --kg full-spectrum-knowledge-governance --output "$dir/bundle.json"
