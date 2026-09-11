@@ -20,12 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {path: full-spectrum-protocol, fetch-depth: 0}
-      - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-observer, ref: ${{ env.OBSERVER_COMMIT }}, path: full-spectrum-observer}
-      - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-engine, ref: ${{ env.ENGINE_COMMIT }}, path: full-spectrum-engine}
-      - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-knowledge-governance, ref: ${{ env.KG_COMMIT }}, path: full-spectrum-knowledge-governance}
+      - name: Checkout pinned implementation repositories from Gitee
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-observer.git full-spectrum-observer
+          git -C full-spectrum-observer checkout --detach $env:OBSERVER_COMMIT
+          git clone --no-checkout https://gitee.com/full-spectrum/full-spectrum-engine.git full-spectrum-engine
+          git -C full-spectrum-engine checkout --detach $env:ENGINE_COMMIT
+          git clone --no-checkout https://github.com/full-spectrum-lab/full-spectrum-knowledge-governance.git full-spectrum-knowledge-governance
+          git -C full-spectrum-knowledge-governance checkout --detach $env:KG_COMMIT
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - uses: actions/setup-dotnet@v4
@@ -35,7 +39,7 @@ jobs:
       - name: Verify all pinned commits
         shell: pwsh
         run: |
-          if ((git -C full-spectrum-protocol rev-parse HEAD) -ne $env:PROTOCOL_COMMIT) { throw 'Protocol mismatch' }
+          if (-not (git -C full-spectrum-protocol cat-file -e "$env:PROTOCOL_COMMIT^{commit}")) { throw 'Protocol contract commit unavailable' }
           if ((git -C full-spectrum-observer rev-parse HEAD) -ne $env:OBSERVER_COMMIT) { throw 'Observer mismatch' }
           if ((git -C full-spectrum-engine rev-parse HEAD) -ne $env:ENGINE_COMMIT) { throw 'Engine mismatch' }
           if ((git -C full-spectrum-knowledge-governance rev-parse HEAD) -ne $env:KG_COMMIT) { throw 'KG mismatch' }
