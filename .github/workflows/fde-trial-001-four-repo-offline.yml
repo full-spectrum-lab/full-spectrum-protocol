@@ -92,7 +92,9 @@ jobs:
               exit 1
             }
           }
-          $bundleHashes=Get-ChildItem composite-evidence/run-*/bundle.json | ForEach-Object { (Get-FileHash $_ -Algorithm SHA256).Hash } | Sort-Object -Unique
+          $bundles=@(Get-ChildItem composite-evidence -Recurse -File -Filter bundle.json)
+          if ($bundles.Count -ne 3) { throw "Expected 3 orchestration bundles, found $($bundles.Count)" }
+          $bundleHashes=@($bundles | ForEach-Object { (Get-FileHash $_ -Algorithm SHA256).Hash } | Sort-Object -Unique)
           if ($bundleHashes.Count -ne 1) { throw 'Three orchestration bundles are not byte-identical' }
           "BUNDLE_SHA256=$($bundleHashes[0])"
       - name: Generate evidence manifest
