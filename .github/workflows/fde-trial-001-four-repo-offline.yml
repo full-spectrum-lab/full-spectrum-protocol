@@ -1,0 +1,76 @@
+name: FDE-TRIAL-001 four-repository local offline chain
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/engine2_composite/run_fde_trial_001.py"
+      - "tools/engine2_composite/FdeKgHarness/**"
+      - ".github/workflows/fde-trial-001-four-repo-offline.yml"
+
+env:
+  PROTOCOL_COMMIT: e08822cce605f14958c30f736dd0b0be3719de32
+  OBSERVER_COMMIT: c878df38bfbf78af016e3cf99f57eeb0d99a2da2
+  ENGINE_COMMIT: 5c9932b9180a882ff9e4eb432634ce22bbc9b1e6
+  KG_COMMIT: fd5ecaa59a40b7478c20480ad1de7dbc5fc0ff84
+
+jobs:
+  offline-chain:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: full-spectrum-protocol, fetch-depth: 0}
+      - uses: actions/checkout@v4
+        with: {repository: full-spectrum-lab/full-spectrum-observer, ref: ${{ env.OBSERVER_COMMIT }}, path: full-spectrum-observer}
+      - uses: actions/checkout@v4
+        with: {repository: full-spectrum-lab/full-spectrum-engine, ref: ${{ env.ENGINE_COMMIT }}, path: full-spectrum-engine}
+      - uses: actions/checkout@v4
+        with: {repository: full-spectrum-lab/full-spectrum-knowledge-governance, ref: ${{ env.KG_COMMIT }}, path: full-spectrum-knowledge-governance}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - uses: actions/setup-dotnet@v4
+        with: {dotnet-version: "10.0.301"}
+      - name: Install pinned dependencies
+        run: python -m pip install jsonschema==4.25.1 rfc8785==0.1.4
+      - name: Verify all pinned commits
+        shell: pwsh
+        run: |
+          if ((git -C full-spectrum-protocol rev-parse HEAD) -ne $env:PROTOCOL_COMMIT) { throw 'Protocol mismatch' }
+          if ((git -C full-spectrum-observer rev-parse HEAD) -ne $env:OBSERVER_COMMIT) { throw 'Observer mismatch' }
+          if ((git -C full-spectrum-engine rev-parse HEAD) -ne $env:ENGINE_COMMIT) { throw 'Engine mismatch' }
+          if ((git -C full-spectrum-knowledge-governance rev-parse HEAD) -ne $env:KG_COMMIT) { throw 'KG mismatch' }
+          git -C full-spectrum-protocol worktree add --detach protocol-contract $env:PROTOCOL_COMMIT
+      - name: Run Observer and Engine FDE tests
+        shell: pwsh
+        run: |
+          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine/src"
+          python -m pytest -q full-spectrum-observer/tests/engine2/test_fde_trial_001_adapter.py
+          python -m pytest -q full-spectrum-engine/tests/test_engine2_fde_trial_001.py
+      - name: Run KG FDE tests
+        shell: pwsh
+        run: |
+          dotnet restore full-spectrum-knowledge-governance/FullSpectrum.Knowledge.slnx --locked-mode
+          dotnet build full-spectrum-knowledge-governance/FullSpectrum.Knowledge.slnx -c Release --no-restore
+          dotnet run --project full-spectrum-knowledge-governance/tests/FullSpectrum.Knowledge.Tests -c Release --no-build
+      - name: Run four-repository FDE chain three times
+        shell: pwsh
+        run: |
+          $env:PYTHONPATH="$pwd/full-spectrum-observer/src;$pwd/full-spectrum-engine/src"
+          1..3 | ForEach-Object {
+            $dir="composite-evidence/run-$($_)"; New-Item -ItemType Directory -Force $dir | Out-Null
+            python full-spectrum-protocol/tools/engine2_composite/run_fde_trial_001.py --protocol protocol-contract --observer full-spectrum-observer --engine full-spectrum-engine --kg full-spectrum-knowledge-governance --output "$dir/bundle.json"
+            dotnet run --project full-spectrum-protocol/tools/engine2_composite/FdeKgHarness/FdeKgHarness.csproj -p:KnowledgeGovernanceRoot="$pwd/full-spectrum-knowledge-governance" -- "$dir/bundle.json" "$dir/fde.sqlite3" "$dir/result.json"
+          }
+      - name: Generate evidence manifest
+        shell: pwsh
+        run: |
+          Get-ChildItem composite-evidence -Recurse -File | Sort-Object FullName | ForEach-Object { "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash, $_.FullName.Substring((Resolve-Path composite-evidence).Path.Length + 1) } | Set-Content composite-evidence/SHA256SUMS.txt -Encoding utf8NoBOM
+      - uses: actions/upload-artifact@v4
+        with: {name: fde-trial-001-four-repo-offline-${{ github.run_id }}, path: composite-evidence, if-no-files-found: error}
+      - name: Conservative boundary
+        run: |
+          echo "FOUR_REPOSITORY_LOCAL_OFFLINE=PASS"
+          echo "FDE_TRIAL_001=PASS_LOCAL_OFFLINE"
+          echo "GENERAL_COMPATIBILITY=NOT_CONFIRMED"
+          echo "REAL_NETWORK=NOT_AUTHORIZED"
+          echo "PRODUCTION_READY=NO"

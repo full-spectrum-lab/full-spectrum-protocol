@@ -1,0 +1,18 @@
+using System.Text.Json;
+using FullSpectrum.Knowledge.Storage;
+
+if (args.Length != 3) return 2;
+var bundle = JsonDocument.Parse(File.ReadAllText(args[0])).RootElement;
+var path = Path.GetFullPath(args[1]);
+var before = bundle.GetProperty("snapshot_before"); var proposed = bundle.GetProperty("snapshot_proposed"); var audit = bundle.GetProperty("audit"); var human = bundle.GetProperty("human"); var action = bundle.GetProperty("action");
+var inputJson=audit.GetProperty("engine_input").GetRawText(); var resultJson=audit.GetProperty("engine_result").GetRawText();
+using (var r=new FdeTrial001Registry(path)) {
+ r.AppendSnapshot(new FdePolicySnapshot("FDE-TRIAL-001","0.1.0-rc",before.GetProperty("snapshot_ref").GetString()!,null,"refund-policy","1.0","ACTIVE",before.GetProperty("source_ref").GetString()!,before.GetProperty("source_digest_scope").GetString()!,before.GetProperty("source_content_sha256").GetString()!,"CB94069AE256936C20AE11FB9F7845189748B2C418173E4BA282568F211AC8BC"));
+ r.AppendSnapshot(new FdePolicySnapshot("FDE-TRIAL-001","0.1.0-rc",proposed.GetProperty("candidate_snapshot_ref").GetString()!,proposed.GetProperty("parent_snapshot_ref").GetString()!,"refund-policy","2.0-proposed","PROPOSED",proposed.GetProperty("source_ref").GetString()!,proposed.GetProperty("source_digest_scope").GetString()!,proposed.GetProperty("source_content_sha256").GetString()!,"36AE2D30ED5AD970E106A95D414AF4E6975ABC24C65366B2E36DA837335DE0DD"));
+ r.AppendEngineAudit(new FdeEngineAuditRecord(audit.GetProperty("event_id").GetString()!,audit.GetProperty("request_id").GetString()!,audit.GetProperty("correlation_id").GetString()!,"FDE-TRIAL-001","0.1.0-rc",audit.GetProperty("knowledge_snapshot_ref").GetString()!,inputJson,audit.GetProperty("engine_input_sha256").GetString()!,resultJson,audit.GetProperty("engine_result_sha256").GetString()!,audit.GetProperty("original_engine_result_sha256").GetString()!,DateTimeOffset.Parse(audit.GetProperty("occurred_at").GetString()!)));
+ r.AppendHumanDecision(new FdeHumanDecisionEvent(human.GetProperty("event_id").GetString()!,human.GetProperty("correlation_id").GetString()!,"FDE-TRIAL-001","0.1.0-rc",human.GetProperty("engine_audit_event_id").GetString()!,human.GetProperty("knowledge_snapshot_ref").GetString()!,"refund-policy","2.0-proposed","APPROVE","ACTIVE",human.GetProperty("actor_id").GetString()!,human.GetProperty("authority_ref").GetString()!,human.GetProperty("authority_scope").EnumerateArray().Select(x=>x.GetString()!).ToArray(),DateTimeOffset.Parse(human.GetProperty("authority_issued_at").GetString()!),DateTimeOffset.Parse(human.GetProperty("authority_expires_at").GetString()!),DateTimeOffset.Parse(human.GetProperty("occurred_at").GetString()!)));
+ var receipt=action.GetProperty("receipt_json").GetString()!;
+ r.AppendActionOutcome(new FdeActionOutcomeRecord(action.GetProperty("event_id").GetString()!,"FDE-TRIAL-001","0.1.0-rc",action.GetProperty("human_decision_event_id").GetString()!,action.GetProperty("correlation_id").GetString()!,"ACTION_RECEIPT",FdeTrial001Registry.ActionType,action.GetProperty("target_ref").GetString()!,action.GetProperty("action_idempotency_key").GetString()!,action.GetProperty("input_sha256").GetString()!,action.GetProperty("result_sha256").GetString()!,receipt,DateTimeOffset.Parse(action.GetProperty("occurred_at").GetString()!)));
+}
+using(var r=new FdeTrial001Registry(path)){var replay=r.Replay(); File.WriteAllText(Path.GetFullPath(args[2]),JsonSerializer.Serialize(new {status="PASS",scope="FOUR_REPOSITORY_LOCAL_OFFLINE",replay="PASS",candidate_state=replay.CandidateState,real_network="NOT_AUTHORIZED",production_ready=false}));}
+Console.WriteLine("FDE_FOUR_REPOSITORY_RUNTIME_CHAIN=PASS"); return 0;
