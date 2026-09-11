@@ -21,11 +21,20 @@ jobs:
       - uses: actions/checkout@v4
         with: {path: full-spectrum-protocol, fetch-depth: 0}
       - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-observer, ref: ${{ env.OBSERVER_COMMIT }}, path: full-spectrum-observer}
+        with:
+          repository: full-spectrum-lab/full-spectrum-observer
+          ref: ${{ env.OBSERVER_COMMIT }}
+          path: full-spectrum-observer
       - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-engine, ref: ${{ env.ENGINE_COMMIT }}, path: full-spectrum-engine}
+        with:
+          repository: full-spectrum-lab/full-spectrum-engine
+          ref: ${{ env.ENGINE_COMMIT }}
+          path: full-spectrum-engine
       - uses: actions/checkout@v4
-        with: {repository: full-spectrum-lab/full-spectrum-knowledge-governance, ref: ${{ env.KG_COMMIT }}, path: full-spectrum-knowledge-governance}
+        with:
+          repository: full-spectrum-lab/full-spectrum-knowledge-governance
+          ref: ${{ env.KG_COMMIT }}
+          path: full-spectrum-knowledge-governance
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - uses: actions/setup-dotnet@v4
